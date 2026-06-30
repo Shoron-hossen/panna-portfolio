@@ -1,16 +1,16 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+import express, { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 
 const app = express();
-const PORT = 3000;
+const PORT: number = 3000;
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Data file path
-const DATA_FILE = path.join(__dirname, 'data', 'content.json');
+const DATA_FILE: string = path.join(__dirname, 'data', 'content.json');
 
 // Ensure data directory exists
 if (!fs.existsSync(path.join(__dirname, 'data'))) {
@@ -18,7 +18,7 @@ if (!fs.existsSync(path.join(__dirname, 'data'))) {
 }
 
 // Default content data
-const defaultContent = {
+const defaultContent: Record<string, any> = {
     site: {
         name: "Panna.",
         fullName: "MD Sakawat Hossain Panna",
@@ -182,9 +182,9 @@ if (!fs.existsSync(DATA_FILE)) {
 }
 
 // Helper to read content
-function readContent() {
+function readContent(): Record<string, any> {
     try {
-        const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+        const raw: string = fs.readFileSync(DATA_FILE, 'utf-8');
         return JSON.parse(raw);
     } catch (e) {
         return defaultContent;
@@ -192,7 +192,7 @@ function readContent() {
 }
 
 // Helper to write content
-function writeContent(data) {
+function writeContent(data: Record<string, any>): void {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
@@ -200,12 +200,12 @@ function writeContent(data) {
 app.use(express.static(__dirname));
 
 // API: Get all content
-app.get('/api/content', (req, res) => {
+app.get('/api/content', (_req: Request, res: Response) => {
     res.json(readContent());
 });
 
 // API: Update all content
-app.post('/api/content', (req, res) => {
+app.post('/api/content', (req: Request, res: Response) => {
     try {
         writeContent(req.body);
         res.json({ success: true, message: 'Content updated successfully' });
@@ -215,10 +215,10 @@ app.post('/api/content', (req, res) => {
 });
 
 // API: Update specific section
-app.put('/api/content/:section', (req, res) => {
+app.put('/api/content/:section', (req: Request, res: Response) => {
     try {
-        const content = readContent();
-        const section = req.params.section;
+        const content: Record<string, any> = readContent();
+const section: string = req.params.section as string;
         content[section] = { ...content[section], ...req.body };
         writeContent(content);
         res.json({ success: true, message: `${section} updated successfully` });
@@ -228,7 +228,7 @@ app.put('/api/content/:section', (req, res) => {
 });
 
 // API: Reset content to defaults
-app.post('/api/content/reset', (req, res) => {
+app.post('/api/content/reset', (_req: Request, res: Response) => {
     try {
         writeContent(defaultContent);
         res.json({ success: true, message: 'Content reset to defaults' });
@@ -238,7 +238,7 @@ app.post('/api/content/reset', (req, res) => {
 });
 
 // Serve homepage with dynamic content
-app.get('/', (req, res) => {
+app.get('/', (_req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 'homepage.html'));
 });
 
@@ -248,6 +248,6 @@ app.listen(PORT, () => {
     console.log(`📋 Admin Panel: http://localhost:${PORT}/admin.html`);
     console.log(`🏠 Homepage: http://localhost:${PORT}/homepage.html`);
     console.log(`💼 Career Page: http://localhost:${PORT}/career.html`);
-    console.log(`📸 Showcase: http://localhost:${PORT}/project show case.html`);
+    console.log(`📸 Showcase: http://localhost:${PORT}/showcase.html`);
     console.log(`\nPress Ctrl+C to stop the server.\n`);
 });
