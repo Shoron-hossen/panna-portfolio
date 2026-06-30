@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin Panel | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0; width: 260px; background: #1a1a1a; color: #fff;
+            padding: 24px 0; overflow-y: auto; z-index: 100;
+        }
+        .sidebar-header { padding: 0 24px 24px; border-bottom: 1px solid #333; }
+        .sidebar-header h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .sidebar-header p { font-size: 12px; color: #888; }
+        .nav-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 24px; cursor: pointer;
+            transition: all 0.2s; font-size: 14px; color: #aaa; border-left: 3px solid transparent;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .nav-item.active { background: rgba(255,255,255,0.1); color: #fff; border-left-color: #4f46e5; }
+        .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+        
+        /* Main Content */
+        .main { margin-left: 260px; min-height: 100vh; }
+        .topbar {
+            background: #fff; padding: 16px 32px; border-bottom: 1px solid #e5e5e5;
+            display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50;
+        }
+        .topbar h1 { font-size: 20px; font-weight: 600; }
+        .topbar-actions { display: flex; gap: 12px; }
+        .btn {
+            padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary { background: #1a1a1a; color: #fff; }
+        .btn-primary:hover { background: #333; }
+        .btn-success { background: #16a34a; color: #fff; }
+        .btn-success:hover { background: #15803d; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-outline { background: #fff; color: #1a1a1a; border: 1px solid #e5e5e5; }
+        .btn-outline:hover { background: #f5f5f5; }
+        
+        .content { padding: 32px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        
+        /* Form Elements */
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px 16px; border: 1px solid #e5e5e5; border-radius: 8px;
+            font-size: 14px; font-family: 'Inter', sans-serif; transition: border-color 0.2s;
+            background: #fff;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        
+        .card {
+            background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 24px;
+            margin-bottom: 24px;
+        }
+        .card-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+            padding-bottom: 16px; border-bottom: 1px solid #f0f0f0;
+        }
+        .card-header h3 { font-size: 16px; font-weight: 600; }
+        
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .tag {
+            display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+            background: #f0f0f0; border-radius: 20px; font-size: 13px;
+        }
+        .tag button { background: none; border: none; cursor: pointer; color: #888; font-size: 16px; }
+        .tag button:hover { color: #dc2626; }
+        
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; padding: 16px 24px; border-radius: 8px;
+            color: #fff; font-size: 14px; font-weight: 500; z-index: 1000;
+            transform: translateY(100px); opacity: 0; transition: all 0.3s;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast-success { background: #16a34a; }
+        .toast-error { background: #dc2626; }
+        
+        .list-item {
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 16px;
+            background: #f9f9f9; border-radius: 8px; margin-bottom: 8px;
+        }
+        .list-item-actions { display: flex; gap: 8px; }
+        .list-item-actions button { background: none; border: none; cursor: pointer; color: #888; padding: 4px; }
+        .list-item-actions button:hover { color: #1a1a1a; }
+        
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none;
+            justify-content: center; align-items: center; z-index: 200;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: #fff; border-radius: 12px; padding: 32px; max-width: 500px; width: 90%;
+            max-height: 80vh; overflow-y: auto;
+        }
+        .modal h3 { margin-bottom: 16px; font-size: 18px; }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+        
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main { margin-left: 0; }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin Panel</h2>
+            <p>Portfolio Content Manager</p>
+        </div>
+        <nav style="margin-top: 24px;">
+            <div class="nav-item active" onclick="showSection('dashboard', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </div>
+            <div class="nav-item" onclick="showSection('site', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m-5.196-3l5.196-3 5.196 3m-10.392 0l5.196-3 5.196 3"/></svg>
+                Site Settings
+            </div>
+            <div class="nav-item" onclick="showSection('hero', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Hero Section
+            </div>
+            <div class="nav-item" onclick="showSection('about', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+                About Section
+            </div>
+            <div class="nav-item" onclick="showSection('career', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                Career Section
+            </div>
+            <div class="nav-item" onclick="showSection('showcase', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                Showcase Section
+            </div>
+            <div class="nav-item" onclick="showSection('contact', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+                Contact & Links
+            </div>
+            <div class="nav-item" onclick="showSection('careerpage', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+                Career Pages
+            </div>
+        </nav>
+        <div style="position: absolute; bottom: 24px; left: 24px; right: 24px; padding-top: 16px; border-top: 1px solid #333;">
+            <a href="/" style="color: #888; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 8px;" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+                View Live Site
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="topbar">
+            <h1 id="page-title">Dashboard</h1>
+            <div class="topbar-actions">
+                <button class="btn btn-outline" onclick="resetContent()">Reset Defaults</button>
+                <button class="btn btn-success" onclick="saveAllContent()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+                    Save All Changes
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Dashboard -->
+            <div id="section-dashboard" class="section active">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 32px;">
+                    <div class="card" style="margin-bottom: 0;">
+                        <h3 style="color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Site Name</h3>
+                        <p id="dash-site-name" style="font-size: 24px; font-weight: 700;">Panna.</p>
+                    </div>
+                    <div class="card" style="margin-bottom: 0;">
+                        <h3 style="color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Full Name</h3>
+                        <p id="dash-full-name" style="font-size: 24px; font-weight: 700;">-</p>
+                    </div>
+                    <div class="card" style="margin-bottom: 0;">
+                        <h3 style="color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Quick Links</h3>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
+                            <a href="/" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" target="_blank">Homepage</a>
+                            <a href="/career.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" target="_blank">Career</a>
+                            <a href="/project show case.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" target="_blank">Showcase</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Getting Started</h3>
+                    </div>
+                    <p style="color: #666; line-height: 1.8;">
+                        Welcome to the Admin Panel. Use the sidebar navigation to edit different sections of your portfolio. 
+                        Changes are stored locally and will be reflected on the live site after saving.
+                    </p>
+                    <ul style="margin-top: 16px; color: #666; line-height: 2; padding-left: 20px;">
+                        <li>Edit your personal info in <strong>Site Settings</strong></li>
+                        <li>Update the hero section content</li>
+                        <li>Modify your career details and skills</li>
+                        <li>Add or remove skills, tasks, and experiences</li>
+                        <li>Click <strong>Save All Changes</strong> when done</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Site Settings -->
+            <div id="section-site" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>Site Information</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Site Name</label>
+                            <input type="text" id="site-name" placeholder="Panna.">
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="site-fullName" placeholder="MD Sakawat Hossain Panna">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tagline</label>
+                            <input type="text" id="site-tagline" placeholder="Textile Engineer & Photographer">
+                        </div>
+                        <div class="form-group">
+                            <label>Copyright Text</label>
+                            <input type="text" id="site-copyright" placeholder="© 2024 MD SAKAWAT HOSSAIN PANNA">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Footer Text</label>
+                        <input type="text" id="site-footerText" placeholder="Designed for Excellence">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section -->
+            <div id="section-hero" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>Hero Content</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="hero-subtitle" placeholder="Precision in Textiles & Light">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading (use <br/> for line break)</label>
+                            <input type="text" id="hero-heading" placeholder="MD Sakawat<br/>Hossain Panna">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="hero-description" placeholder="A specialized Textile Engineer..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Focus</label>
+                            <input type="text" id="hero-focus" placeholder="Sustainable R&D">
+                        </div>
+                        <div class="form-group">
+                            <label>Expertise</label>
+                            <input type="text" id="hero-expertise" placeholder="Fabric Engineering">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Portrait Image URL</label>
+                        <input type="text" id="hero-portraitUrl" placeholder="https://...">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Degree Title</label>
+                            <input type="text" id="hero-degreeTitle" placeholder="B.Sc. Textile Engineering">
+                        </div>
+                        <div class="form-group">
+                            <label>Degree College</label>
+                            <input type="text" id="hero-degreeCollege" placeholder="Pabna Textile Engineering College">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div id="section-about" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>About / Mission</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="about-subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading</label>
+                            <input type="text" id="about-heading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="about-description" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Quote</label>
+                        <textarea id="about-quote" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Core Principles</h3></div>
+                    <div class="tag-container" id="corePrinciples-tags"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="corePrinciples-input" placeholder="Add new principle..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <button class="btn btn-primary" onclick="addTag('corePrinciples')">Add</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Primary Domains</h3></div>
+                    <div class="tag-container" id="primaryDomains-tags"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="primaryDomains-input" placeholder="Add new domain..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <button class="btn btn-primary" onclick="addTag('primaryDomains')">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Section -->
+            <div id="section-career" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>Career Highlights Header</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="career-subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading</label>
+                            <input type="text" id="career-heading">
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Main Experience</h3></div>
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label>Badge</label>
+                            <input type="text" id="career-badge">
+                        </div>
+                        <div class="form-group">
+                            <label>Company</label>
+                            <input type="text" id="career-company">
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <input type="text" id="career-role">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Period</label>
+                        <input type="text" id="career-period">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Experience Tasks</h3></div>
+                    <div id="careerTasks-list"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="careerTasks-input" placeholder="Add new task..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <button class="btn btn-primary" onclick="addListItem('careerTasks')">Add</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Key Skills</h3></div>
+                    <div class="tag-container" id="keySkills-tags"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="keySkills-input" placeholder="Add new skill..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <button class="btn btn-primary" onclick="addTag('keySkills')">Add</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Soft Skills</h3></div>
+                    <div class="tag-container" id="softSkills-tags"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="softSkills-input" placeholder="Add new soft skill..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <button class="btn btn-primary" onclick="addTag('softSkills')">Add</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Academic Results</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>SSC GPA</label>
+                            <input type="text" id="career-ssc-gpa">
+                        </div>
+                        <div class="form-group">
+                            <label>SSC Label</label>
+                            <input type="text" id="career-ssc-label">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>BSc CGPA</label>
+                            <input type="text" id="career-bsc-gpa">
+                        </div>
+                        <div class="form-group">
+                            <label>BSc Label</label>
+                            <input type="text" id="career-bsc-label">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Showcase Section -->
+            <div id="section-showcase" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>Showcase Section</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="showcase-subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading</label>
+                            <input type="text" id="showcase-heading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="showcase-description" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact & Links -->
+            <div id="section-contact" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>Contact Section</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="contact-subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading (use <br/> for line break)</label>
+                            <input type="text" id="contact-heading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="contact-email">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Social Links</h3></div>
+                    <div class="form-group">
+                        <label>LinkedIn URL</label>
+                        <input type="url" id="links-linkedin">
+                    </div>
+                    <div class="form-group">
+                        <label>Instagram URL</label>
+                        <input type="url" id="links-instagram">
+                    </div>
+                    <div class="form-group">
+                        <label>Behance URL</label>
+                        <input type="url" id="links-behance">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Pages -->
+            <div id="section-careerpage" class="section">
+                <div class="card">
+                    <div class="card-header"><h3>Career 1 - Engineering Path</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="cp-c1-subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading</label>
+                            <input type="text" id="cp-c1-heading">
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Career 2 - Trajectory</h3></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subtitle</label>
+                            <input type="text" id="cp-c2-subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading</label>
+                            <input type="text" id="cp-c2-heading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Description</label>
+                        <textarea id="cp-c2-heroDescription" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Expertise Pillars</h3></div>
+                    <div id="cp-c2-pillars-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPillarModal()">+ Add Pillar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Pillar Modal -->
+    <div id="pillarModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Pillar</h3>
+            <div class="form-group">
+                <label>Icon (Material Symbol name)</label>
+                <input type="text" id="pillar-icon" placeholder="inventory_2">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="pillar-title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="pillar-description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags (comma separated)</label>
+                <input type="text" id="pillar-tags" placeholder="ERP Systems, Market Analysis">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closePillarModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="savePillar()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let contentData = {};
+        
+        // Load content from API
+        async function loadContent() {
+            try {
+                const res = await fetch('/api/content');
+                contentData = await res.json();
+                populateForm();
+                showToast('Content loaded successfully', 'success');
+            } catch (e) {
+                showToast('Failed to load content', 'error');
+            }
+        }
+        
+        // Save content to API
+        async function saveAllContent() {
+            collectFormData();
+            try {
+                const res = await fetch('/api/content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contentData)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast('All changes saved successfully!', 'success');
+                } else {
+                    showToast('Failed to save changes', 'error');
+                }
+            } catch (e) {
+                showToast('Failed to save: ' + e.message, 'error');
+            }
+        }
+        
+        // Reset content
+        async function resetContent() {
+            if (!confirm('Are you sure you want to reset all content to defaults?')) return;
+            try {
+                const res = await fetch('/api/content/reset', { method: 'POST' });
+                const result = await res.json();
+                if (result.success) {
+                    await loadContent();
+                    showToast('Content reset to defaults', 'success');
+                }
+            } catch (e) {
+                showToast('Failed to reset content', 'error');
+            }
+        }
+        
+        // Show toast notification
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast toast-' + type + ' show';
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+        
+        // Navigation
+        function showSection(sectionId, navItem) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('section-' + sectionId).classList.add('active');
+            navItem.classList.add('active');
+            document.getElementById('page-title').textContent = navItem.textContent.trim();
+            collectFormData(); // Save current state before switching
+        }
+        
+        // Populate form with data
+        function populateForm() {
+            // Site
+            setVal('site-name', contentData.site?.name);
+            setVal('site-fullName', contentData.site?.fullName);
+            setVal('site-tagline', contentData.site?.tagline);
+            setVal('site-copyright', contentData.site?.copyright);
+            setVal('site-footerText', contentData.site?.footerText);
+            
+            // Hero
+            setVal('hero-subtitle', contentData.hero?.subtitle);
+            setVal('hero-heading', contentData.hero?.heading);
+            setVal('hero-description', contentData.hero?.description);
+            setVal('hero-focus', contentData.hero?.focus);
+            setVal('hero-expertise', contentData.hero?.expertise);
+            setVal('hero-portraitUrl', contentData.hero?.portraitUrl);
+            setVal('hero-degreeTitle', contentData.hero?.degreeTitle);
+            setVal('hero-degreeCollege', contentData.hero?.degreeCollege);
+            
+            // About
+            setVal('about-subtitle', contentData.about?.subtitle);
+            setVal('about-heading', contentData.about?.heading);
+            setVal('about-description', contentData.about?.description);
+            setVal('about-quote', contentData.about?.quote);
+            renderTags('corePrinciples', contentData.about?.corePrinciples || []);
+            renderTags('primaryDomains', contentData.about?.primaryDomains || []);
+            
+            // Career
+            setVal('career-subtitle', contentData.career?.subtitle);
+            setVal('career-heading', contentData.career?.heading);
+            setVal('career-badge', contentData.career?.mainExperience?.badge);
+            setVal('career-company', contentData.career?.mainExperience?.company);
+            setVal('career-role', contentData.career?.mainExperience?.role);
+            setVal('career-period', contentData.career?.mainExperience?.period);
+            renderListItems('careerTasks', contentData.career?.mainExperience?.tasks || []);
+            renderTags('keySkills', contentData.career?.keySkills || []);
+            renderTags('softSkills', contentData.career?.softSkills || []);
+            setVal('career-ssc-gpa', contentData.career?.academics?.ssc?.gpa);
+            setVal('career-ssc-label', contentData.career?.academics?.ssc?.label);
+            setVal('career-bsc-gpa', contentData.career?.academics?.bsc?.gpa);
+            setVal('career-bsc-label', contentData.career?.academics?.bsc?.label);
+            
+            // Showcase
+            setVal('showcase-subtitle', contentData.showcase?.subtitle);
+            setVal('showcase-heading', contentData.showcase?.heading);
+            setVal('showcase-description', contentData.showcase?.description);
+            
+            // Contact
+            setVal('contact-subtitle', contentData.contact?.subtitle);
+            setVal('contact-heading', contentData.contact?.heading);
+            setVal('contact-email', contentData.contact?.email);
+            
+            // Links
+            setVal('links-linkedin', contentData.links?.linkedin);
+            setVal('links-instagram', contentData.links?.instagram);
+            setVal('links-behance', contentData.links?.behance);
+            
+            // Career Pages
+            setVal('cp-c1-subtitle', contentData.careerPage?.career1?.subtitle);
+            setVal('cp-c1-heading', contentData.careerPage?.career1?.heading);
+            setVal('cp-c2-subtitle', contentData.careerPage?.career2?.subtitle);
+            setVal('cp-c2-heading', contentData.careerPage?.career2?.heading);
+            setVal('cp-c2-heroDescription', contentData.careerPage?.career2?.heroDescription);
+            renderPillars(contentData.careerPage?.career2?.pillars || []);
+            
+            // Dashboard
+            document.getElementById('dash-site-name').textContent = contentData.site?.name || '-';
+            document.getElementById('dash-full-name').textContent = contentData.site?.fullName || '-';
+        }
+        
+        function setVal(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.value = value || '';
+        }
+        
+        function getVal(id) {
+            return document.getElementById(id)?.value || '';
+        }
+        
+        // Collect all form data
+        function collectFormData() {
+            // Site
+            contentData.site = {
+                name: getVal('site-name'),
+                fullName: getVal('site-fullName'),
+                tagline: getVal('site-tagline'),
+                copyright: getVal('site-copyright'),
+                footerText: getVal('site-footerText')
+            };
+            
+            // Hero
+            contentData.hero = {
+                subtitle: getVal('hero-subtitle'),
+                heading: getVal('hero-heading'),
+                description: getVal('hero-description'),
+                focus: getVal('hero-focus'),
+                expertise: getVal('hero-expertise'),
+                portraitUrl: getVal('hero-portraitUrl'),
+                degreeTitle: getVal('hero-degreeTitle'),
+                degreeCollege: getVal('hero-degreeCollege')
+            };
+            
+            // About
+            contentData.about = {
+                subtitle: getVal('about-subtitle'),
+                heading: getVal('about-heading'),
+                description: getVal('about-description'),
+                quote: getVal('about-quote'),
+                corePrinciples: contentData.about?.corePrinciples || [],
+                primaryDomains: contentData.about?.primaryDomains || []
+            };
+            
+            // Career
+            if (!contentData.career) contentData.career = {};
+            contentData.career.subtitle = getVal('career-subtitle');
+            contentData.career.heading = getVal('career-heading');
+            contentData.career.mainExperience = {
+                badge: getVal('career-badge'),
+                company: getVal('career-company'),
+                role: getVal('career-role'),
+                period: getVal('career-period'),
+                tasks: contentData.career?.mainExperience?.tasks || []
+            };
+            contentData.career.keySkills = contentData.career?.keySkills || [];
+            contentData.career.softSkills = contentData.career?.softSkills || [];
+            if (!contentData.career.academics) contentData.career.academics = {};
+            contentData.career.academics.ssc = {
+                gpa: getVal('career-ssc-gpa'),
+                label: getVal('career-ssc-label')
+            };
+            contentData.career.academics.bsc = {
+                gpa: getVal('career-bsc-gpa'),
+                label: getVal('career-bsc-label')
+            };
+            
+            // Showcase
+            contentData.showcase = {
+                subtitle: getVal('showcase-subtitle'),
+                heading: getVal('showcase-heading'),
+                description: getVal('showcase-description')
+            };
+            
+            // Contact
+            contentData.contact = {
+                subtitle: getVal('contact-subtitle'),
+                heading: getVal('contact-heading'),
+                email: getVal('contact-email')
+            };
+            
+            // Links
+            contentData.links = {
+                linkedin: getVal('links-linkedin'),
+                instagram: getVal('links-instagram'),
+                behance: getVal('links-behance')
+            };
+            
+            // Career Pages
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
+            contentData.careerPage.career1.subtitle = getVal('cp-c1-subtitle');
+            contentData.careerPage.career1.heading = getVal('cp-c1-heading');
+            if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
+            contentData.careerPage.career2.subtitle = getVal('cp-c2-subtitle');
+            contentData.careerPage.career2.heading = getVal('cp-c2-heading');
+            contentData.careerPage.career2.heroDescription = getVal('cp-c2-heroDescription');
+        }
+        
+        // Tag management
+        function renderTags(key, items) {
+            const container = document.getElementById(key + '-tags');
+            container.innerHTML = items.map((item, i) => 
+                `<span class="tag">${item} <button onclick="removeTag('${key}', ${i})">&times;</button></span>`
+            ).join('');
+        }
+        
+        function addTag(key) {
+            const input = document.getElementById(key + '-input');
+            const value = input.value.trim();
+            if (!value) return;
+            if (!contentData.about) contentData.about = {};
+            if (!contentData.career) contentData.career = {};
+            
+            const tagMap = {
+                'corePrinciples': () => { if (!contentData.about.corePrinciples) contentData.about.corePrinciples = []; return contentData.about.corePrinciples; },
+                'primaryDomains': () => { if (!contentData.about.primaryDomains) contentData.about.primaryDomains = []; return contentData.about.primaryDomains; },
+                'keySkills': () => { if (!contentData.career.keySkills) contentData.career.keySkills = []; return contentData.career.keySkills; },
+                'softSkills': () => { if (!contentData.career.softSkills) contentData.career.softSkills = []; return contentData.career.softSkills; }
+            };
+            
+            const arr = tagMap[key]();
+            arr.push(value);
+            renderTags(key, arr);
+            input.value = '';
+        }
+        
+        function removeTag(key, index) {
+            const tagArrays = {
+                'corePrinciples': contentData.about?.corePrinciples,
+                'primaryDomains': contentData.about?.primaryDomains,
+                'keySkills': contentData.career?.keySkills,
+                'softSkills': contentData.career?.softSkills
+            };
+            const arr = tagArrays[key];
+            if (arr) {
+                arr.splice(index, 1);
+                renderTags(key, arr);
+            }
+        }
+        
+        // List item management
+        function renderListItems(key, items) {
+            const container = document.getElementById(key + '-list');
+            container.innerHTML = items.map((item, i) => 
+                `<div class="list-item"><span>${item}</span><div class="list-item-actions"><button onclick="removeListItem('${key}', ${i})" title="Remove">✕</button></div></div>`
+            ).join('');
+        }
+        
+        function addListItem(key) {
+            const input = document.getElementById(key + '-input');
+            const value = input.value.trim();
+            if (!value) return;
+            
+            if (key === 'careerTasks') {
+                if (!contentData.career.mainExperience) contentData.career.mainExperience = {};
+                if (!contentData.career.mainExperience.tasks) contentData.career.mainExperience.tasks = [];
+                contentData.career.mainExperience.tasks.push(value);
+                renderListItems(key, contentData.career.mainExperience.tasks);
+            }
+            input.value = '';
+        }
+        
+        function removeListItem(key, index) {
+            if (key === 'careerTasks' && contentData.career?.mainExperience?.tasks) {
+                contentData.career.mainExperience.tasks.splice(index, 1);
+                renderListItems(key, contentData.career.mainExperience.tasks);
+            }
+        }
+        
+        // Pillar management
+        function renderPillars(pillars) {
+            const container = document.getElementById('cp-c2-pillars-list');
+            container.innerHTML = pillars.map((p, i) => 
+                `<div class="list-item">
+                    <div><strong>${p.title}</strong><br><small style="color: #888;">${p.description?.substring(0, 80)}...</small></div>
+                    <div class="list-item-actions">
+                        <button onclick="editPillar(${i})" title="Edit">✎</button>
+                        <button onclick="removePillar(${i})" title="Remove">✕</button>
+                    </div>
+                </div>`
+            ).join('');
+        }
+        
+        let editingPillarIndex = -1;
+        
+        function openPillarModal(index) {
+            editingPillarIndex = index !== undefined ? index : -1;
+            const pillars = contentData.careerPage?.career2?.pillars || [];
+            if (editingPillarIndex >= 0) {
+                const p = pillars[editingPillarIndex];
+                document.getElementById('pillar-icon').value = p.icon || '';
+                document.getElementById('pillar-title').value = p.title || '';
+                document.getElementById('pillar-description').value = p.description || '';
+                document.getElementById('pillar-tags').value = (p.tags || []).join(', ');
+            } else {
+                document.getElementById('pillar-icon').value = '';
+                document.getElementById('pillar-title').value = '';
+                document.getElementById('pillar-description').value = '';
+                document.getElementById('pillar-tags').value = '';
+            }
+            document.getElementById('pillarModal').classList.add('show');
+        }
+        
+        function closePillarModal() {
+            document.getElementById('pillarModal').classList.remove('show');
+        }
+        
+        function editPillar(index) {
+            openPillarModal(index);
+        }
+        
+        function savePillar() {
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
+            if (!contentData.careerPage.career2.pillars) contentData.careerPage.career2.pillars = [];
+            
+            const pillar = {
+                icon: document.getElementById('pillar-icon').value,
+                title: document.getElementById('pillar-title').value,
+                description: document.getElementById('pillar-description').value,
+                tags: document.getElementById('pillar-tags').value.split(',').map(t => t.trim()).filter(t => t)
+            };
+            
+            if (editingPillarIndex >= 0) {
+                contentData.careerPage.career2.pillars[editingPillarIndex] = pillar;
+            } else {
+                contentData.careerPage.career2.pillars.push(pillar);
+            }
+            
+            renderPillars(contentData.careerPage.career2.pillars);
+            closePillarModal();
+        }
+        
+        function removePillar(index) {
+            contentData.careerPage.career2.pillars.splice(index, 1);
+            renderPillars(contentData.careerPage.career2.pillars);
+        }
+        
+        // Initialize
+        loadContent();
+    </script>
+</body>
+</html>

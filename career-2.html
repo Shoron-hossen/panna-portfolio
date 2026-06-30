@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Career &amp; Experience | Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .thread-line {
+            background: linear-gradient(to bottom, transparent, #76777d 15%, #76777d 85%, transparent);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .experience-card {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .experience-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+<!-- Tailwind Config Execution -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f7f9fb",
+                        "primary-fixed-dim": "#bec6e0",
+                        "inverse-primary": "#bec6e0",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#7c839b",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-tint": "#565e74",
+                        "primary": "#000000",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#131b2e",
+                        "tertiary": "#000000",
+                        "outline": "#76777d",
+                        "on-surface": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001d31",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-surface-variant": "#45464d",
+                        "background": "#f7f9fb",
+                        "primary-fixed": "#dae2fd",
+                        "tertiary-container": "#001d31",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-container": "#131b2e",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-container": "#188ace",
+                        "surface-variant": "#e0e3e5",
+                        "secondary": "#505f76",
+                        "surface": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#cce5ff",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed-variant": "#004b73",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "section-gap": "120px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "headline-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "body-md": ["Work Sans"],
+                        "headline-md": ["Manrope"],
+                        "headline-xl": ["Manrope"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant">
+<div class="max-w-[1280px] mx-auto flex justify-between items-center h-20 px-gutter">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Portfolio</div>
+<nav class="hidden md:flex gap-8 items-center h-full">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="homepage.html">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="homepage.html#about">About</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="career 2.html">Career</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="project show case.html">Showcase</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="homepage.html#contact">Contact</a>
+</nav>
+<button class="bg-primary text-on-primary px-6 py-2.5 font-label-md text-label-md rounded-lg active:opacity-80 transition-all">Download CV</button>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-gutter py-16 md:py-24">
+<!-- Hero Section -->
+<section class="mb-section-gap">
+<div class="flex flex-col md:flex-row gap-12 items-center">
+<div class="w-full md:w-1/2">
+<span class="font-label-md text-label-md text-secondary mb-4 block uppercase tracking-widest">Trajectory &amp; Growth</span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-6">Career in Technical Excellence</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Navigating the intersection of engineering precision and industrial leadership. My professional path is defined by a commitment to optimizing systems and driving innovation within the global textile landscape.
+                </p>
+</div>
+<div class="w-full md:w-1/2 h-[400px] bg-surface-container rounded-xl overflow-hidden relative group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A clean, minimalist macro shot of dark navy textile fibers being woven on a high-precision industrial loom." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPsD4AF_IickZWtnnosQgPFkyZeuguYJG34luto5K7J5f0wDES4y5FhAni8gHCrfk3b8Hp4Z4ZrUHu7VH_OVGdFoN5d0Y4atdOQsENXmTuBTth5MuMTFXxxoahllAYAfoIc8Q2v1sMW8MtWIyPKKJx33UZy5sWVFpuZS_cSD1d9GFZnt_Qv7C83lGe8KvPxpyxj8Wvv2pl-mtg77Mkby3ddL6TT6nmA3-2HJeX9t9XlSawvSJkY11MauGvERROTCmEaF5yul7ZwMdu')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Professional Core Pillars -->
+<section class="mb-section-gap">
+<div class="flex items-end justify-between mb-12">
+<h2 class="font-headline-lg text-headline-lg">Expertise Verticals</h2>
+<div class="hidden md:block h-[1px] flex-grow mx-8 bg-outline-variant mb-3"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Merchandising -->
+<div class="p-8 bg-surface-container-low border border-outline-variant rounded-lg experience-card">
+<span class="material-symbols-outlined text-4xl text-primary mb-6">inventory_2</span>
+<h3 class="font-headline-md text-headline-md mb-4">Strategic Merchandising</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Comprehensive supply chain management and collection planning for tier-1 global brands.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">ERP Systems</span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">Market Analysis</span>
+</div>
+</div>
+<!-- Production -->
+<div class="p-8 bg-surface-container-low border border-outline-variant rounded-lg experience-card">
+<span class="material-symbols-outlined text-4xl text-primary mb-6">factory</span>
+<h3 class="font-headline-md text-headline-md mb-4">Operations &amp; Optimization</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Implementing Lean methodology and Six Sigma principles to maximize floor efficiency.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">Lean Mfg</span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">KPI Tracking</span>
+</div>
+</div>
+<!-- R&D -->
+<div class="p-8 bg-surface-container-low border border-outline-variant rounded-lg experience-card">
+<span class="material-symbols-outlined text-4xl text-primary mb-6">biotech</span>
+<h3 class="font-headline-md text-headline-md mb-4">Innovation &amp; R&amp;D</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Pioneering sustainable fabric technologies and performance-driven textile chemistry.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">Eco-Dyeing</span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">R&amp;D Strategy</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Career Trajectory Timeline -->
+<section class="mb-section-gap">
+<h2 class="font-headline-lg text-headline-lg mb-16">Career Journey</h2>
+<div class="relative">
+<!-- Central Line -->
+<div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] thread-line transform md:-translate-x-1/2"></div>
+<!-- Most Recent Role -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-24 items-start">
+<div class="md:text-right md:pr-12">
+<div class="inline-block px-3 py-1 bg-primary text-on-primary font-label-md text-[12px] rounded-full mb-4">CURRENT</div>
+<div class="font-label-md text-label-md text-secondary mb-2">JAN 2024 — MAR 2024</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Industrial Intern</h3>
+<p class="font-body-lg text-body-lg text-secondary font-semibold uppercase tracking-wider">Crown Wears Pvt. Ltd</p>
+</div>
+<div class="hidden md:block absolute left-1/2 top-8 -translate-x-1/2 w-5 h-5 bg-primary rounded-full border-4 border-surface shadow-md z-10"></div>
+<div class="pl-8 md:pl-12 border-l-2 md:border-l-0 border-primary/20">
+<div class="p-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<h4 class="font-label-md text-label-md text-primary mb-4 uppercase">Key Accomplishments</h4>
+<ul class="space-y-4 font-body-md text-body-md text-on-surface-variant">
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Optimized merchandising workflows reducing documentation lead time.</span>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Spearheaded quality inspection protocols for international export compliance.</span>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span>Conducted cross-departmental analysis of yarn-to-garment production cycles.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Milestone: Industrial Immersion -->
+<div class="relative flex justify-center mb-16">
+<div class="bg-surface-container-low border border-outline-variant px-8 py-2 rounded-full font-label-md text-label-md text-outline uppercase tracking-[0.2em] relative z-10">Industrial Foundations</div>
+</div>
+<!-- Experience 2 -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-center">
+<div class="hidden md:block order-2"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-outline rounded-full border-2 border-surface z-10"></div>
+<div class="md:text-right md:pr-12 order-1 border-l-2 md:border-l-0 border-outline-variant pl-8 md:pl-0">
+<h4 class="font-headline-md text-headline-md text-on-surface">Square Fashions Ltd.</h4>
+<p class="font-label-md text-label-md text-secondary mb-2">VERTICAL INTEGRATION STUDY</p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md md:ml-auto">Deep dive into large-scale knit production and global supply chain logistics.</p>
+</div>
+</div>
+<!-- Experience 3 -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="hidden md:block"></div>
+<div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-outline rounded-full border-2 border-surface z-10"></div>
+<div class="pl-8 md:pl-12 border-l-2 md:border-l-0 border-outline-variant">
+<h4 class="font-headline-md text-headline-md text-on-surface">Paramount Textile Ltd.</h4>
+<p class="font-label-md text-label-md text-secondary mb-2">ADVANCED WEAVING &amp; DYEING</p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Analysis of sophisticated yarn dyeing technologies and high-speed weaving efficiency.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual Portfolio Grid -->
+<section class="mb-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[600px]">
+<div class="md:col-span-2 md:row-span-2 bg-surface-container relative rounded-lg overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Textile factory floor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBe8f04ldnHU0NqcOS8_RXIQRw84z6OfqILxgioCb1UUdxEpzfcO_601FUnkbbEGBhA6-U82RYpadUKhkDvNMWHNdROFLb86LTbXO4ULFfmu1Xv6V5hgnyu35F0BLgbIQ1BwRflgemYcoiw6mLKzSBNMeLzpV0xR_S6NfgISrxNGXM0TajoW1zA7dBB_aXiroTadLJFSX_MkYnvwf4CQ1qXDo3HIzb282DWoCOgG_fH17Hczlm5icWbv4xpor8sl0PDG6LQ5DOkgeP6')"></div>
+</div>
+<div class="md:col-span-2 bg-surface-container relative rounded-lg overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="R&amp;D lab environment" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDoVJQbHwQ51bdINVih1EgHoMX-u4LmhXrKRdhJP_aUdi99F4cu3qQnM1pSoMhRucgNTK5deGWRuuUc4B6R4YUOLyevfH0omlx41aFuHY7HVWIXQB0JigAfyKjs3GcGpLDRyfwALb3fGwZXcwgJXZ9x7GMXQJV17Ak2SlZj1VjEBcfIRctcImNyl44Ica5hObvQjmpwW7z0xF04fbsoTUNueaoqxyDMwf4_bY78iI7M37-8oakc0DxCR9L1NnWfAoGhb9pVrNOtwvZy')"></div>
+</div>
+<div class="md:col-span-1 bg-surface-container relative rounded-lg overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Yarn spools" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDgnlA8EdeuekDOd8bbQXItQukuKNYsQORlZ4B0KPjFB5wrlQr0ZrZJ9BYY8aon6b47TOxR9ZEMhokCpxit61VDLOhG-kKBeQSraSMBf5w-ELtRFnk40sGQ21TU0CnlY7bQL-M6YIeZwZr701qdc1WhH8u4FwRiYXEK-N-Fo7bScYl_iyJJMdIvCSFmE5DMsO7oa2NTvqFuVo9E0rfEbTAdBtGwbTJkAoGhrPe1p1dunpHylCr_PYq4pZgZR0BXA0oPok0t8wmBBgx9')"></div>
+</div>
+<div class="md:col-span-1 bg-surface-container relative rounded-lg overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Technical CAD drawings" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA522ut9eyyZACpqnJb480MAUjTWHVMQPGSgalU2WYadvjSO4aJfVS4KUig7OeEQ9PPIZYcDMagbxyvnbgxV1S8WPkHsZzlJKUjOl6WUe3bfxv2amTy1je0Dc376CZhUpYP3_CDmPYaNd7bFEw96l_1eyg71UxrAyvV_UT1w0VhFF4CaMcGnONvNnX38BxQx3rw_ug0-TgleboiOn_P_v-LheUa45-xmHF5MevICnYZIgaeTHRbQBCB4tB6GXRoomd-1ELpzPrfPR8f')"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant">
+<div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-gutter px-gutter">
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-inverse-on-surface mb-4">Portfolio</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-on-secondary-fixed-variant mb-6">
+                A textile engineer's journey through industrial innovation and visual storytelling.
+            </p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary dark:text-inverse-primary mb-6 uppercase">Navigation</h4>
+<nav class="flex flex-col gap-3">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="#">Home</a>
+<a class="font-body-md text-body-md text-primary font-semibold" href="#">Career &amp; Experience</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="#">Photography Portfolio</a>
+</nav>
+</div>
+<div class="flex flex-col md:items-end">
+<h4 class="font-label-md text-label-md text-primary dark:text-inverse-primary mb-6 uppercase">Socials</h4>
+<div class="flex gap-4">
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">link</span></a>
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">camera_enhance</span></a>
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+<p class="mt-auto pt-8 font-body-md text-body-md text-on-surface-variant text-sm">
+                © 2024 Textile Engineer &amp; Photographer. All rights reserved.
+            </p>
+</div>
+</div>
+</footer>
+<script>
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-10');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('section, .experience-card').forEach(el => {
+        el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+        observer.observe(el);
+    });
+</script>
+</body></html>

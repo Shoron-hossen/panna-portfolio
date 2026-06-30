@@ -1,0 +1,16 @@
+{
+  "name": "stitch_professional_creative_portfolio",
+  "version": "1.0.0",
+  "description": "MD Sakawat Hossain Panna - Textile Engineer & Photographer Portfolio",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "MD Sakawat Hossain Panna",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

@@ -1,0 +1,22 @@
+
+{
+  "rewrites": [
+    { "source": "/", "destination": "/homepage.html" },
+    { "source": "/homepage", "destination": "/homepage.html" },
+    { "source": "/career", "destination": "/career.html" },
+    { "source": "/showcase", "destination": "/showcase.html" },
+    { "source": "/career-1", "destination": "/career-1.html" },
+    { "source": "/career-2", "destination": "/career-2.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/admin.html", "destination": "/admin.html" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}

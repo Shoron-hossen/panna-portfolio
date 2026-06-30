@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Work+Sans:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .thread-line {
+            background: linear-gradient(to bottom, transparent, theme('colors.outline-variant') 10%, theme('colors.outline-variant') 90%, transparent);
+        }
+        .bento-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f7f9fb",
+                        "primary-fixed-dim": "#bec6e0",
+                        "inverse-primary": "#bec6e0",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#7c839b",
+                        "on-secondary-container": "#54647a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-tint": "#565e74",
+                        "primary": "#000000",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#93ccff",
+                        "on-primary-fixed": "#131b2e",
+                        "tertiary": "#000000",
+                        "outline": "#76777d",
+                        "on-surface": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001d31",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-surface-variant": "#45464d",
+                        "background": "#f7f9fb",
+                        "primary-fixed": "#dae2fd",
+                        "tertiary-container": "#001d31",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-container": "#131b2e",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-tertiary-container": "#188ace",
+                        "surface-variant": "#e0e3e5",
+                        "secondary": "#505f76",
+                        "surface": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#cce5ff",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed-variant": "#004b73",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "section-gap": "120px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "headline-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "body-md": ["Work Sans"],
+                        "headline-md": ["Manrope"],
+                        "headline-xl": ["Manrope"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant">
+<nav class="max-w-[1280px] mx-auto flex justify-between items-center h-20 px-6">
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim" href="homepage.html">Portfolio</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="homepage.html">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="homepage.html#about">About</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1" href="career 1.html">Engineering</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="project show case.html">Showcase</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="homepage.html#contact">Contact</a>
+</div>
+<button class="px-6 py-2 border border-primary text-primary font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all duration-300">
+                Download CV
+            </button>
+</nav>
+</header>
+<main class="max-w-[1280px] mx-auto px-6">
+<!-- Hero Title Section -->
+<section class="mt-24 mb-32 flex flex-col items-center text-center">
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Academic & Technical</span>
+<h1 class="font-headline-xl text-headline-xl text-primary max-w-4xl">The fusion of structural engineering and visual precision.</h1>
+</section>
+<!-- Education & Thread Visual -->
+<section class="mb-section-gap grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+<div class="lg:col-span-4">
+<h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary">Academic<br/>Foundations</h2>
+<p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
+</div>
+<div class="lg:col-span-8 relative pl-8">
+<!-- Thread Line -->
+<div class="absolute left-0 top-0 bottom-0 w-px thread-line"></div>
+<!-- BUTEX -->
+<div class="mb-16 relative group">
+<div class="absolute -left-[36px] top-1 w-4 h-4 bg-primary border-4 border-surface rounded-full z-10"></div>
+<div class="flex flex-col md:flex-row md:items-start gap-4">
+<div class="flex-grow">
+<span class="font-label-md text-label-md text-secondary">2019 — Present</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-2">B.Sc. in Textile Engineering</h3>
+<p class="font-body-lg text-body-lg text-primary font-semibold">Bangladesh University of Textiles (BUTEX)</p>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Specializing in apparel manufacturing and textile physics. My studies focus on sustainable fabrication techniques, structural integrity of high-performance fabrics, and industrial R&D processes.</p>
+</div>
+<div class="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A macro photograph showing the intricate, interlocking fibers of high-quality textile fabric. The image is captured in a minimalist style with sharp focus on the geometric patterns of the weave, using a clean slate and white color palette to evoke a sense of technical engineering and meticulous detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0rwnSnEvMqxlyBdCVyd9vYrZCL_hqV-Q-vCJZzYM3jQKUrriz1dHbEt4HBg-uhqIZvd3GB2_m29ACGDY8V_ZwTJ7eR_C01V2rbABELGSlGARPuyTow_EdIW__c_7Bkg9xBmF-eD3GzcmFNv95AvcKDMY5Jc4UnoIcuMLNGP22DBUxJIsHhkkfu5IBLQJ47uVp0ZfnAQ8JmWMc-98ZnQdnXHCVUYFCsv9LCQV8uI0ZEBeH-Ywg2iS7EH1sklQy9OZPWMrFzCdovOCr"/>
+</div>
+</div>
+</div>
+<!-- Govt. Edward College -->
+<div class="mb-16 relative group">
+<div class="absolute -left-[36px] top-1 w-4 h-4 bg-outline-variant border-4 border-surface rounded-full z-10 group-hover:bg-primary transition-colors duration-300"></div>
+<div class="flex flex-col md:flex-row md:items-start gap-4">
+<div class="flex-grow">
+<span class="font-label-md text-label-md text-secondary">2016 — 2018</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-2">Higher Secondary Certificate (HSC)</h3>
+<p class="font-body-lg text-body-lg text-primary font-semibold">Govt. Edward College, Pabna</p>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Science major with high-distinction in Mathematics and Physics. This period established the core analytical skills necessary for complex engineering calculations.</p>
+</div>
+</div>
+</div>
+<!-- Atghoria -->
+<div class="relative group">
+<div class="absolute -left-[36px] top-1 w-4 h-4 bg-outline-variant border-4 border-surface rounded-full z-10 group-hover:bg-primary transition-colors duration-300"></div>
+<div class="flex flex-col md:flex-row md:items-start gap-4">
+<div class="flex-grow">
+<span class="font-label-md text-label-md text-secondary">Graduated 2016</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-2">Secondary School Certificate (SSC)</h3>
+<p class="font-body-lg text-body-lg text-primary font-semibold">Atghoria Govt High School</p>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Early academic excellence with a focus on general sciences, laying the groundwork for a future in technical education.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Skills: Bento Grid -->
+<section class="mb-section-gap">
+<div class="flex flex-col items-center mb-16">
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Core Competencies</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Technical Expertise</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[200px]">
+<!-- Digital Design -->
+<div class="md:col-span-8 md:row-span-2 bg-surface-container-low p-8 border border-outline-variant flex flex-col justify-between bento-card">
+<div>
+<div class="w-12 h-12 bg-primary flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-primary">brush</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Visual Identity & Design</h3>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant max-w-lg">Advanced proficiency in Adobe Photoshop and digital imaging. I bridge the gap between textile engineering and aesthetics, ensuring product visualizations meet professional standards.</p>
+</div>
+<div class="flex flex-wrap gap-2 mt-8">
+<span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Adobe Photoshop</span>
+<span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Lightroom</span>
+<span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Digital Composition</span>
+</div>
+</div>
+<!-- Office Productivity -->
+<div class="md:col-span-4 md:row-span-1 bg-primary text-on-primary p-6 border border-primary bento-card">
+<span class="material-symbols-outlined mb-4">analytics</span>
+<h3 class="font-label-md text-label-md uppercase tracking-wider">Office Suite</h3>
+<p class="mt-2 font-body-md text-body-md opacity-80">Expert handling of MS Excel, PowerPoint, and Word for technical reporting and data visualization.</p>
+</div>
+<!-- Photography -->
+<div class="md:col-span-4 md:row-span-2 relative overflow-hidden bento-card bg-surface-container-low border border-outline-variant">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="A professional DSLR camera lens resting on a textured blueprint for a textile machine. The lighting is dramatic and moody, highlighting the glass reflection of the lens and the fine architectural lines of the technical drawing. The color palette is dark navy and cool greys, emphasizing professional artistic photography within an engineering context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1o_XSvrb9NsQbJB2f4iuHwCyyHReSjmCTUwj3oQd8Rv6DORwxZPsOLzsvDZlLmdw7rJP-ohQ-vhnB3-BedFTackMJm6q3lPl8sd2K6naM5_4aPWk0hAxCpsxJnA_MhFfy-0TeTBaoYVjUMCbZC2uPGRjRBjOZ8vHhOERNjXGdFSWkE9XyGDYyNOo3_YiSn8NjtzNosFK9FR1gMEzeVPyZ4NMGjN0nGfu5UkB4Q9sSi_Fkjnw3ILhUSGgQLFck9hQCfv5aZd-SucGM"/>
+<div class="absolute inset-0 bg-primary/40"></div>
+</div>
+<div class="relative z-10 p-6 flex flex-col h-full justify-end text-on-primary">
+<span class="material-symbols-outlined mb-4">photo_camera</span>
+<h3 class="font-headline-md text-headline-md">Visual Storytelling</h3>
+<p class="mt-2 font-body-md text-body-md opacity-90">Capturing the soul of industrial processes through professional photography.</p>
+</div>
+</div>
+<!-- Textile R&D -->
+<div class="md:col-span-4 md:row-span-1 bg-surface-container-low p-6 border border-outline-variant bento-card flex flex-col justify-center">
+<h3 class="font-label-md text-label-md text-primary mb-2">Textile R&D</h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center border-b border-outline-variant py-1">
+<span class="text-body-md">Fabric Analysis</span>
+<span class="material-symbols-outlined text-secondary scale-75">check_circle</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant py-1">
+<span class="text-body-md">Quality Control</span>
+<span class="material-symbols-outlined text-secondary scale-75">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Soft Skills & Extracurriculars -->
+<section class="mb-section-gap grid grid-cols-1 lg:grid-cols-2 gap-12">
+<!-- Soft Skills -->
+<div class="p-10 border border-outline-variant bg-surface-container-lowest">
+<h3 class="font-headline-md text-headline-md text-primary mb-8">Professional Attributes</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<div>
+<span class="material-symbols-outlined text-primary mb-2">groups</span>
+<h4 class="font-label-md text-label-md text-primary">Collaborative Leadership</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Proven ability to lead diverse teams in high-pressure technical environments.</p>
+</div>
+<div>
+<span class="material-symbols-outlined text-primary mb-2">psychology</span>
+<h4 class="font-label-md text-label-md text-primary">Analytical Problem Solving</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Applying engineering logic to solve complex textile production challenges.</p>
+</div>
+<div>
+<span class="material-symbols-outlined text-primary mb-2">chat</span>
+<h4 class="font-label-md text-label-md text-primary">Effective Communication</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Fluent in bridging technical specifications with creative visual requirements.</p>
+</div>
+<div>
+<span class="material-symbols-outlined text-primary mb-2">history_edu</span>
+<h4 class="font-label-md text-label-md text-primary">Meticulous Researcher</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Deep-dive approach to material science and market trends.</p>
+</div>
+</div>
+</div>
+<!-- Extracurricular -->
+<div class="flex flex-col justify-between">
+<div class="bg-primary p-1 flex-grow-0 mb-8 w-16"></div>
+<h3 class="font-headline-md text-headline-md text-primary mb-6">Beyond the Lab</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10">Active participation in university events and professional workshops, maintaining a pulse on both engineering innovations and artistic movements.</p>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-surface-container text-primary">
+<span class="material-symbols-outlined">event_available</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Event Coordination</h4>
+<p class="text-body-md text-on-surface-variant">Organizing technical seminars and photography exhibitions at BUTEX.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-surface-container text-primary">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Community Engagement</h4>
+<p class="text-body-md text-on-surface-variant">Contributing to local development initiatives through technical literacy programs.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant mt-section-gap">
+<div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+<div class="flex flex-col gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-inverse-on-surface">Portfolio</span>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-on-secondary-fixed-variant">Engineering excellence. Artistic precision.</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-inverse-primary underline decoration-2 underline-offset-4" href="#">LinkedIn</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-inverse-primary underline decoration-2 underline-offset-4" href="#">Instagram</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-inverse-primary underline decoration-2 underline-offset-4" href="#">Behance</a>
+</div>
+<div class="flex items-end md:justify-end">
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-on-secondary-fixed-variant">© 2024 Textile Engineer & Photographer. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Active Navigation based on scroll
+        window.addEventListener('scroll', () => {
+            // Placeholder for active state logic based on page sections
+            // For this specific page, 'Engineering' is highlighted in the TopAppBar
+        });
+        
+        // Simple reveal animation for bento cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(card);
+        });
+    </script>
+</body></html>
