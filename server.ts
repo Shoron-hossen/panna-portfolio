@@ -237,17 +237,41 @@ app.post('/api/content/reset', (_req: Request, res: Response) => {
     }
 });
 
-// Serve homepage with dynamic content
+// Clean URL routes (no .html extension needed)
 app.get('/', (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'homepage.html'));
+});
+
+app.get('/career', (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'career.html'));
+});
+
+app.get('/career-1', (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'career-1.html'));
+});
+
+app.get('/career-2', (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'career-2.html'));
+});
+
+app.get('/showcase', (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'showcase.html'));
+});
+
+app.get('/admin', (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+app.get('/homepage', (_req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 'homepage.html'));
 });
 
 // Start server
 app.listen(PORT, () => {
     console.log(`\n🎨 Portfolio Server running at http://localhost:${PORT}`);
-    console.log(`📋 Admin Panel: http://localhost:${PORT}/admin.html`);
-    console.log(`🏠 Homepage: http://localhost:${PORT}/homepage.html`);
-    console.log(`💼 Career Page: http://localhost:${PORT}/career.html`);
-    console.log(`📸 Showcase: http://localhost:${PORT}/showcase.html`);
+    console.log(`📋 Admin Panel: http://localhost:${PORT}/admin`);
+    console.log(`🏠 Homepage: http://localhost:${PORT}/`);
+    console.log(`💼 Career Page: http://localhost:${PORT}/career`);
+    console.log(`📸 Showcase: http://localhost:${PORT}/showcase`);
     console.log(`\nPress Ctrl+C to stop the server.\n`);
 });
