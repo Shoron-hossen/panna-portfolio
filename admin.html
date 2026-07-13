@@ -119,11 +119,121 @@
             .main { margin-left: 0; }
             .form-row, .form-row-3 { grid-template-columns: 1fr; }
         }
+
+        /* Login Overlay */
+        .login-overlay {
+            position: fixed; inset: 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            padding: 24px;
+        }
+        .login-overlay.hidden { display: none; }
+        
+        .login-container { width: 100%; max-width: 420px; }
+        
+        .login-card {
+            background: #fff; border-radius: 16px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
+            padding: 48px 40px; border: 1px solid #e5e7eb;
+        }
+        
+        .login-header { text-align: center; margin-bottom: 32px; }
+        .login-logo {
+            font-family: 'Manrope', sans-serif; font-size: 28px; font-weight: 800;
+            color: #1a1a1a; letter-spacing: -0.5px; margin-bottom: 16px;
+        }
+        .login-header h2 { font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+        .login-header p { font-size: 15px; color: #6b7280; }
+        
+        .login-form { display: flex; flex-direction: column; gap: 20px; }
+        
+        .password-input-wrapper {
+            position: relative;
+        }
+        .password-input-wrapper input {
+            padding-right: 52px;
+        }
+        .toggle-password {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: #9ca3af;
+            padding: 4px; display: flex; align-items: center; justify-content: center;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover { color: #374151; }
+        .toggle-password svg { width: 20px; height: 20px; }
+        .toggle-password .hidden { display: none; }
+        
+        .login-error {
+            background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;
+            padding: 12px 16px; border-radius: 8px; font-size: 14px;
+            text-align: center; animation: shake 0.4s ease;
+        }
+        .login-error.hidden { display: none; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        
+        .btn-full { width: 100%; justify-content: center; padding: 14px 24px; font-size: 15px; }
+        
+        #main-content.hidden { display: none; }
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay hidden">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <h1>Admin Panel</h1>
+                    <p>Enter password to access content manager</p>
+                </div>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group password-group">
+                        <label for="login-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="login-password" 
+                                name="password" 
+                                placeholder="Enter admin password" 
+                                autocomplete="current-password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="login-error" class="login-error hidden"></div>
+                    <button type="submit" class="btn btn-login">Sign In</button>
+                </form>
+                <div class="login-footer">
+                    <p>Panna Portfolio &copy; 2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div id="main-content" class="main-content-wrapper hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
         <div class="sidebar-header">
             <h2>Admin Panel</h2>
             <p>Portfolio Content Manager</p>
@@ -170,12 +280,41 @@
         </div>
     </aside>
 
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay hidden">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">Panna.</div>
+                <h2>Admin Login</h2>
+                <p>Enter your password to access the dashboard</p>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="login-password" placeholder="Enter admin password" autocomplete="current-password" required>
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+                            <svg class="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-closed hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="login-error" class="login-error hidden"></div>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <div class="main">
+    <div class="main" id="main-content">
         <div class="topbar">
             <h1 id="page-title">Dashboard</h1>
             <div class="topbar-actions">
                 <button class="btn btn-outline" onclick="resetContent()">Reset Defaults</button>
+                <button class="btn btn-outline" onclick="logout()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Logout
+                </button>
                 <button class="btn btn-success" onclick="saveAllContent()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
                     Save All Changes
@@ -1413,6 +1552,13 @@
             // Career Pages
             if (!contentData.careerPage) contentData.careerPage = {};
             if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
+            // Preserve modal-managed arrays before form field assignment
+            var savedCurrent = contentData.careerPage?.career2?.currentCareers;
+            var savedPrevious = contentData.careerPage?.career2?.previousCareers;
+            var savedPillars = contentData.careerPage?.career2?.pillars;
+            var savedSoftSkills = contentData.careerPage?.career1?.softSkills;
+            var savedExtras = contentData.careerPage?.career1?.extracurricular;
+            var savedEducation = contentData.careerPage?.career1?.education;
             contentData.careerPage.career1.subtitle = getVal('cp-c1-subtitle');
             contentData.careerPage.career1.heading = getVal('cp-c1-heading');
             contentData.careerPage.career1.description = getVal('cp-c1-description');
@@ -1434,6 +1580,13 @@
             contentData.careerPage.career2.sectionHeadings.pillars = getVal('cp-c2-pillars-heading');
             contentData.careerPage.career2.sectionHeadings.timeline = getVal('cp-c2-timeline-heading');
             contentData.careerPage.career2.sectionHeadings.milestone = getVal('cp-c2-milestone-label');
+            // Restore modal-managed arrays that may have been overwritten
+            if (savedCurrent) contentData.careerPage.career2.currentCareers = savedCurrent;
+            if (savedPrevious) contentData.careerPage.career2.previousCareers = savedPrevious;
+            if (savedPillars) contentData.careerPage.career2.pillars = savedPillars;
+            if (savedSoftSkills) contentData.careerPage.career1.softSkills = savedSoftSkills;
+            if (savedExtras) contentData.careerPage.career1.extracurricular = savedExtras;
+            if (savedEducation && savedEducation.length > 1) contentData.careerPage.career1.education = savedEducation;
             // Career 1 - Technical Skills
             if (!contentData.careerPage.career1.technicalSkills) contentData.careerPage.career1.technicalSkills = {};
             const ts = contentData.careerPage.career1.technicalSkills;
@@ -1816,8 +1969,65 @@
             input.value = '';
         }
 
+        // ===== Authentication =====
+        const ADMIN_PASSWORD = 'panna4545@';
+
+        function checkAuth() {
+            const isAuthed = sessionStorage.getItem('admin_authed') === 'true';
+            const overlay = document.getElementById('login-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            if (isAuthed) {
+                overlay.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                loadContent();
+            } else {
+                overlay.classList.remove('hidden');
+                mainContent.classList.add('hidden');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+            
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_authed', 'true');
+                errorEl.classList.add('hidden');
+                checkAuth();
+            } else {
+                errorEl.textContent = 'Invalid password. Please try again.';
+                errorEl.classList.remove('hidden');
+                document.getElementById('login-password').value = '';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_authed');
+            checkAuth();
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('login-password');
+            const eyeOpen = document.querySelector('.eye-open');
+            const eyeClosed = document.querySelector('.eye-closed');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.classList.add('hidden');
+                eyeClosed.classList.remove('hidden');
+            } else {
+                input.type = 'password';
+                eyeOpen.classList.remove('hidden');
+                eyeClosed.classList.add('hidden');
+            }
+        }
+
         // Initialize
-        loadContent();
+        checkAuth();
     </script>
+</div>
+<!-- /main-content-wrapper -->
 </body>
 </html>
