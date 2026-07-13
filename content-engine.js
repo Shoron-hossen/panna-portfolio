@@ -108,10 +108,48 @@ function fireEvent() {
     document.dispatchEvent(new CustomEvent('contentLoaded', { detail: window.appContent }));
 }
 
+function populateEducationEntries() {
+    var container = document.getElementById('education-entries-list');
+    if (!container) return;
+    var items = getNested(window.appContent, 'careerPage.career1.education');
+    if (!items || !Array.isArray(items) || !items.length) {
+        container.innerHTML = '';
+        return;
+    }
+    container.innerHTML = items.map(function(item, i) {
+        var dotClass = i === 0 ? 'bg-primary' : 'bg-outline-variant group-hover:bg-primary transition-colors duration-300';
+        var mbClass = i < items.length - 1 ? 'mb-16' : '';
+        var logoHtml = item.logo
+            ? '<img src="' + item.logo + '" alt="' + (item.institution || '') + '" class="w-8 h-8 object-contain rounded-full flex-shrink-0 border border-outline-variant" onerror="this.style.display=\'none\'">'
+            : '';
+        var imgHtml = item.image
+            ? '<div class="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden border border-outline-variant"><img class="w-full h-full object-cover" src="' + item.image + '" onload="this.style.opacity=1" style="opacity:0;transition:opacity 0.5s;"></div>'
+            : '';
+        return '<div class="' + mbClass + ' relative group">'
+            + '<div class="absolute -left-[36px] top-1 w-4 h-4 ' + dotClass + ' border-4 border-surface rounded-full z-10"></div>'
+            + '<div class="flex flex-col md:flex-row md:items-start gap-4">'
+            + '<div class="flex-grow">'
+            + '<div class="flex items-center gap-3">'
+            + logoHtml
+            + '<div>'
+            + '<span class="font-label-md text-label-md text-secondary">' + (item.period || '') + '</span>'
+            + '<h3 class="font-headline-md text-headline-md text-primary mt-1">' + (item.title || '') + '</h3>'
+            + '<p class="font-body-lg text-body-lg text-primary font-semibold">' + (item.institution || '') + '</p>'
+            + '</div>'
+            + '</div>'
+            + (item.description ? '<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">' + item.description + '</p>' : '')
+            + '</div>'
+            + imgHtml
+            + '</div>'
+            + '</div>';
+    }).join('');
+}
+
 function populateEverything() {
     populateSimple();
     populateLists();
     populateSocialLinks();
+    populateEducationEntries();
     fireEvent();
 }
 
