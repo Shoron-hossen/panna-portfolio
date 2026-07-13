@@ -18,7 +18,10 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         .thread-line {
-            background: linear-gradient(to bottom, transparent, theme('colors.outline-variant') 10%, theme('colors.outline-variant') 90%, transparent);
+            background: linear-gradient(to bottom, transparent, #76777d 10%, #76777d 90%, transparent);
+        }
+        .thread-line-bold {
+            background: linear-gradient(to bottom, transparent, #76777d 10%, #76777d 90%, transparent);
         }
         .bento-card {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -144,8 +147,8 @@
 <h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary" data-content="careerPage.career1.subtitle">Academic<br/>Foundations</h2>
 <p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8" data-content="careerPage.career1.description">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
 </div>
-<div class="lg:col-span-8 relative pl-8">
-<div class="absolute left-0 top-0 bottom-0 w-px thread-line"></div>
+<div class="lg:col-span-8 relative pl-8 pt-2">
+<div class="absolute left-0 -top-2 bottom-0 w-px thread-line"></div>
 <div id="education-entries-list"></div>
 </div>
 </section>

@@ -18,7 +18,10 @@
         body:not(.content-loaded) [data-content-links] { opacity: 0; }
         body.content-loaded [data-content-links] { opacity: 1; transition: opacity 0.3s; }
         .thread-line {
-            background: linear-gradient(to bottom, transparent, theme('colors.outline-variant') 10%, theme('colors.outline-variant') 90%, transparent);
+            background: linear-gradient(to bottom, transparent, #76777d 10%, #76777d 90%, transparent);
+        }
+        .thread-line-bold {
+            background: linear-gradient(to bottom, transparent, #76777d 10%, #76777d 90%, transparent);
         }
         .bento-card {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -207,11 +210,11 @@
                     <h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary" data-content="careerPage.career1.subtitle">Academic<br/>Foundations</h2>
                     <p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8" data-content="careerPage.career1.description">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
                 </div>
-                <div class="lg:col-span-8 relative pl-8">
-                    <!-- Thread Line -->
-                    <div class="absolute left-0 top-0 bottom-0 w-px thread-line"></div>
-                    <div id="education-entries-list"></div>
-                </div>
+                    <div class="lg:col-span-8 relative pl-8 pt-2">
+                        <!-- Thread Line -->
+                        <div class="absolute left-0 -top-2 bottom-0 w-px thread-line"></div>
+                        <div id="education-entries-list"></div>
+                    </div>
             </section>
 
             <!-- Technical Skills: Bento Grid -->
@@ -321,23 +324,6 @@
 
         <!-- Career 2 Content: Professional Trajectory -->
         <div id="career2" class="career-content">
-            <!-- Hero Section -->
-            <section class="mb-section-gap">
-                <div class="flex flex-col md:flex-row gap-12 items-center">
-                    <div class="w-full md:w-1/2">
-                        <span class="font-label-md text-label-md text-secondary mb-4 block uppercase tracking-widest" data-content="careerPage.career2.subtitle">Trajectory & Growth</span>
-                        <h2 class="font-headline-xl text-headline-xl text-on-surface mb-6" data-content="careerPage.career2.heading">Career in Technical Excellence</h2>
-                        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl" data-content="careerPage.career2.heroDescription">
-                            Navigating the intersection of engineering precision and industrial leadership. My professional path is defined by a commitment to optimizing systems and driving innovation within the global textile landscape.
-                        </p>
-                    </div>
-                    <div class="w-full md:w-1/2 h-[400px] bg-surface-container rounded-xl overflow-hidden relative group">
-                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPsD4AF_IickZWtnnosQgPFkyZeuguYJG34luto5K7J5f0wDES4y5FhAni8gHCrfk3b8Hp4Z4ZrUHu7VH_OVGdFoN5d0Y4atdOQsENXmTuBTth5MuMTFXxxoahllAYAfoIc8Q2v1sMW8MtWIyPKKJx33UZy5sWVFpuZS_cSD1d9GFZnt_Qv7C83lGe8KvPxpyxj8Wvv2pl-mtg77Mkby3ddL6TT6nmA3-2HJeX9t9XlSawvSJkY11MauGvERROTCmEaF5yul7ZwMdu')"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Professional Core Pillars -->
             <section class="mb-section-gap">
                 <div class="flex flex-col items-center mb-16">
@@ -388,7 +374,7 @@
                 </div>
                 <div class="relative">
                     <!-- Central Line -->
-                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] thread-line transform md:-translate-x-1/2"></div>
+                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] thread-line-bold transform md:-translate-x-1/2"></div>
                     <div id="career2-timeline"></div>
                 </div>
             </section>
