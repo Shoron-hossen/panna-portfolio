@@ -122,6 +122,10 @@
             transform: translateY(20px);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        /* Mobile bottom nav spacing */
+        @media (max-width: 768px) {
+            body { padding-bottom: 80px; }
+        }
         .group:hover .hover-reveal-ui {
             transform: translateY(0);
         }
@@ -165,6 +169,33 @@
 <button class="bg-primary text-on-primary px-8 py-3 rounded-none font-label-md text-label-md transition-all hover:bg-secondary active:opacity-90 tracking-widest uppercase" onclick="downloadCV()">Download CV</button>
 </div>
 </header>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-md border-t border-outline-variant">
+    <div class="flex justify-around items-center h-16 px-4">
+        <a href="/" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" aria-label="Home">
+            <span class="material-symbols-outlined text-lg">home</span>
+            <span class="text-[10px] font-medium">Home</span>
+        </a>
+        <a href="/#about" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" aria-label="About">
+            <span class="material-symbols-outlined text-lg">person</span>
+            <span class="text-[10px] font-medium">About</span>
+        </a>
+        <a href="/career" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" aria-label="Career">
+            <span class="material-symbols-outlined text-lg">work</span>
+            <span class="text-[10px] font-medium">Career</span>
+        </a>
+        <a href="/showcase" class="flex flex-col items-center gap-1 text-primary transition-colors" aria-label="Showcase">
+            <span class="material-symbols-outlined text-lg">photo_library</span>
+            <span class="text-[10px] font-medium">Showcase</span>
+        </a>
+        <a href="/#contact" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" aria-label="Contact">
+            <span class="material-symbols-outlined text-lg">contact_mail</span>
+            <span class="text-[10px] font-medium">Contact</span>
+        </a>
+    </div>
+</nav>
+
 <main class="min-h-screen">
 <!-- Hero Section -->
 <section class="max-w-[1280px] mx-auto px-6 pt-24 pb-16">
