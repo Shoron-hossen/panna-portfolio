@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #1a1a1a; }
@@ -286,18 +287,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Portrait Image URL</label>
-                        <input type="text" id="hero-portraitUrl" placeholder="https://..." style="margin-bottom: 8px;">
+                        <label>Portrait Image URL (Cloudinary)</label>
+                        <input type="text" id="hero-portraitUrl" placeholder="https://res.cloudinary.com/..." style="margin-bottom: 8px;">
                     </div>
                     <div class="form-group">
-                        <label>Or Upload Profile Photo</label>
-                        <input type="file" id="hero-portraitFile" accept="image/*" style="margin-bottom: 8px;">
-                        <small style="color: #888;">Upload directly or paste a Google Drive link below</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Google Drive Link (for high resolution)</label>
-                        <input type="text" id="hero-portraitDrive" placeholder="https://drive.google.com/file/d/...">
-                        <small style="color: #888;">Paste Google Drive sharing link for high-res image</small>
+                        <button type="button" class="btn" onclick="openPortraitUpload()" style="background: #7c3aed; color: white; margin-bottom: 8px;">
+                            Upload Photo to Cloudinary
+                        </button>
                     </div>
                     <div id="hero-portraitPreview" style="margin-top: 10px;"></div>
                     <div class="form-row">
@@ -464,6 +460,14 @@
                         <label>Description</label>
                         <textarea id="showcase-description" rows="3"></textarea>
                     </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Gallery Images</h3></div>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 12px;">Upload images to Cloudinary. They will appear on the Showcase page.</p>
+                    <button type="button" class="btn" onclick="openGalleryUpload()" style="background: #7c3aed; color: white; margin-bottom: 16px;">
+                        Upload Image to Gallery
+                    </button>
+                    <div id="gallery-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
                 </div>
             </div>
 
@@ -821,7 +825,7 @@
                 hero: { subtitle: "Precision in Textiles & Light", heading: "MD Sakawat<br/>Hossain Panna", description: "A specialized Textile Engineer and visual storyteller.", focus: "Sustainable R&D", expertise: "Fabric Engineering", portraitUrl: "", degreeTitle: "B.Sc. Textile Engineering", degreeCollege: "Pabna Textile Engineering College" },
                 about: { subtitle: "Mission", heading: "Career Objective", description: "", quote: "", corePrinciples: ["Technical Integrity", "Creative Discipline", "Continuous Learning"], primaryDomains: ["Fiber & Yarn Analysis", "Industrial Photography", "Supply Chain Management"] },
                 career: { subtitle: "The Track Record", heading: "Professional Highlights", mainExperience: { badge: "Professional Internship", company: "Crown Wears Pvt. Ltd", role: "Merchandising, Production & IE", period: "Feb — March, 2024", tasks: [] }, keySkills: [{name: "Adobe Photoshop", logo: ""}, {name: "Illustrator", logo: ""}, {name: "MS Office", logo: ""}], softSkills: [{name: "Leadership", logo: ""}, {name: "Time Management", logo: ""}], academics: { ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate" }, bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering" } } },
-                showcase: { subtitle: "Creative Gallery", heading: "Visual Narrative", description: "" },
+                showcase: { subtitle: "Creative Gallery", heading: "Visual Narrative", description: "", gallery: [] },
                 contact: { subtitle: "Available for projects", heading: "Let's Create<br/>Something Exceptional", email: "sakawatpanna77@gmail.com" },
                 links: { linkedin: "https://linkedin.com/in/sakawatpanna", instagram: "#", behance: "#" },
                 careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [] } }
@@ -835,81 +839,101 @@
             toast.className = 'toast toast-' + type + ' show';
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
-        
-        // Convert Google Drive link to direct image URL
-        function convertDriveLink(url) {
-            if (!url) return url;
-            let match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (!match) match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-            if (match) {
-                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-            }
-            return url;
+
+        // Cloudinary config
+        const CLOUDINARY_CLOUD_NAME = 'c7zelcwg';
+        const CLOUDINARY_UPLOAD_PRESET = 'portfolio_unsigned';
+
+        // Cloudinary Upload Widget - Profile Photo
+        function openPortraitUpload() {
+            cloudinary.openUploadWidget({
+                cloudName: CLOUDINARY_CLOUD_NAME,
+                uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+                folder: 'portfolio/profile',
+                maxImageWidth: 1200,
+                maxImageHeight: 1600,
+                cropping: true,
+                croppingAspectRatio: 0.75,
+                sources: ['local', 'url', 'camera'],
+                styles: {
+                    palette: { window: '#1a1a1a', sourceBg: '#222', windowBorder: '#444', tabIcon: '#7c3aed', menuIcons: '#ccc', textDark: '#fff', textLight: '#999', activeTab: '#7c3aed' }
+                }
+            }, function(error, result) {
+                if (!error && result && result.event === 'success') {
+                    const url = result.info.secure_url;
+                    document.getElementById('hero-portraitUrl').value = url;
+                    document.getElementById('hero-portraitPreview').innerHTML = 
+                        `<img src="${url}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;">`;
+                    showToast('Photo uploaded to Cloudinary', 'success');
+                }
+            });
         }
-        
-        // Handle file upload for profile photo
-        document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.getElementById('hero-portraitFile');
-            if (fileInput) {
-                fileInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            const img = new Image();
-                            img.onload = function() {
-                                const canvas = document.createElement('canvas');
-                                const MAX_WIDTH = 600;
-                                const MAX_HEIGHT = 800;
-                                let w = img.width, h = img.height;
-                                if (w > MAX_WIDTH) { h = h * MAX_WIDTH / w; w = MAX_WIDTH; }
-                                if (h > MAX_HEIGHT) { w = w * MAX_HEIGHT / h; h = MAX_HEIGHT; }
-                                canvas.width = w;
-                                canvas.height = h;
-                                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                                const compressed = canvas.toDataURL('image/jpeg', 0.7);
-                                document.getElementById('hero-portraitUrl').value = compressed;
-                                document.getElementById('hero-portraitPreview').innerHTML = 
-                                    `<img src="${compressed}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;">`;
-                                showToast('Image uploaded & compressed (' + Math.round(compressed.length / 1024) + 'KB)', 'success');
-                            };
-                            img.src = event.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
+
+        // Cloudinary Upload Widget - Gallery
+        let galleryCounter = 0;
+        function openGalleryUpload() {
+            cloudinary.openUploadWidget({
+                cloudName: CLOUDINARY_CLOUD_NAME,
+                uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+                folder: 'portfolio/gallery',
+                maxImageWidth: 2000,
+                maxImageHeight: 2000,
+                sources: ['local', 'url', 'camera'],
+                styles: {
+                    palette: { window: '#1a1a1a', sourceBg: '#222', windowBorder: '#444', tabIcon: '#7c3aed', menuIcons: '#ccc', textDark: '#fff', textLight: '#999', activeTab: '#7c3aed' }
+                }
+            }, function(error, result) {
+                if (!error && result && result.event === 'success') {
+                    const url = result.info.secure_url;
+                    const w = result.info.width || 0;
+                    const h = result.info.height || 0;
+                    addGalleryItem(url, '', w, h);
+                    showToast('Image added to gallery', 'success');
+                }
+            });
+        }
+
+        function addGalleryItem(url, title, w, h) {
+            if (!contentData.showcase) contentData.showcase = {};
+            if (!contentData.showcase.gallery) contentData.showcase.gallery = [];
+            contentData.showcase.gallery.push({ url, title: title || '', width: w, height: h });
+            renderGalleryList();
+        }
+
+        function removeGalleryItem(index) {
+            if (contentData.showcase?.gallery) {
+                contentData.showcase.gallery.splice(index, 1);
+                renderGalleryList();
             }
-            
-            // Handle Drive link conversion
-            const driveInput = document.getElementById('hero-portraitDrive');
-            if (driveInput) {
-                driveInput.addEventListener('blur', function() {
-                    const driveUrl = this.value.trim();
-                    if (driveUrl && driveUrl.includes('drive.google.com')) {
-                        const directUrl = convertDriveLink(driveUrl);
-                        document.getElementById('hero-portraitUrl').value = directUrl;
-                        document.getElementById('hero-portraitPreview').innerHTML = 
-                            `<img src="${directUrl}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;" onerror="this.style.display='none'">`;
-                        showToast('Drive link converted to direct URL', 'success');
-                    }
-                });
+        }
+
+        function updateGalleryItem(index, field, value) {
+            if (contentData.showcase?.gallery?.[index]) {
+                contentData.showcase.gallery[index][field] = value;
             }
-            
-            // Handle portrait URL input preview
-            const portraitUrlInput = document.getElementById('hero-portraitUrl');
-            if (portraitUrlInput) {
-                portraitUrlInput.addEventListener('blur', function() {
-                    const url = this.value.trim();
-                    if (url && !url.startsWith('data:') && (url.startsWith('http://') || url.startsWith('https://'))) {
-                        document.getElementById('hero-portraitPreview').innerHTML = 
-                            `<img src="${url}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;" onerror="this.style.display='none'">`;
-                    } else if (url && url.startsWith('data:')) {
-                        document.getElementById('hero-portraitPreview').innerHTML = 
-                            `<img src="${url}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;">`;
-                    }
-                });
+        }
+
+        function renderGalleryList() {
+            const list = document.getElementById('gallery-list');
+            if (!list) return;
+            const items = contentData.showcase?.gallery || [];
+            if (items.length === 0) {
+                list.innerHTML = '<p style="color: #888; font-size: 13px;">No images yet. Click the upload button above.</p>';
+                return;
             }
-        });
+            list.innerHTML = items.map((item, i) => `
+                <div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; background: #fafafa;">
+                    <img src="${item.url}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px; flex-shrink: 0;">
+                    <div style="flex: 1;">
+                        <input type="text" value="${item.title || ''}" placeholder="Image title..." 
+                            onchange="updateGalleryItem(${i}, 'title', this.value)"
+                            style="width: 100%; padding: 6px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; margin-bottom: 4px;">
+                        <small style="color: #aaa; font-size: 11px; word-break: break-all;">${item.url.substring(0, 60)}...</small>
+                    </div>
+                    <button onclick="removeGalleryItem(${i})" style="background: #ef4444; color: white; border: none; border-radius: 4px; padding: 6px 10px; cursor: pointer; font-size: 12px; flex-shrink: 0;">Remove</button>
+                </div>
+            `).join('');
+        }
         
         // Navigation
         function showSection(sectionId, navItem) {
@@ -972,6 +996,7 @@
             setVal('showcase-subtitle', contentData.showcase?.subtitle);
             setVal('showcase-heading', contentData.showcase?.heading);
             setVal('showcase-description', contentData.showcase?.description);
+            renderGalleryList();
             
             // Contact
             setVal('contact-subtitle', contentData.contact?.subtitle);
@@ -1091,7 +1116,8 @@
             contentData.showcase = {
                 subtitle: getVal('showcase-subtitle'),
                 heading: getVal('showcase-heading'),
-                description: getVal('showcase-description')
+                description: getVal('showcase-description'),
+                gallery: contentData.showcase?.gallery || []
             };
             
             // Contact

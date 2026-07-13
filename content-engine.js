@@ -16,6 +16,16 @@ function getNested(obj, path) {
     }, obj);
 }
 
+function cld(url, w, h) {
+    if (!url || !url.includes('cloudinary.com')) return url;
+    const parts = url.split('/upload/');
+    if (parts.length !== 2) return url;
+    const transforms = ['f_auto', 'q_auto'];
+    if (w) transforms.push('w_' + w);
+    if (h) transforms.push('h_' + h);
+    return parts[0] + '/upload/' + transforms.join(',') + '/' + parts[1];
+}
+
 function populateSimple() {
     document.querySelectorAll('[data-content]').forEach(el => {
         const path = el.getAttribute('data-content');
@@ -24,9 +34,11 @@ function populateSimple() {
     });
     document.querySelectorAll('[data-content-src]').forEach(el => {
         const path = el.getAttribute('data-content-src');
+        const w = el.getAttribute('data-cld-w');
+        const h = el.getAttribute('data-cld-h');
         const val = getNested(window.appContent, path);
         if (val && typeof val === 'string' && val.trim() !== '') {
-            el.src = val;
+            el.src = cld(val, w, h);
         }
     });
 }
