@@ -57,71 +57,144 @@
             color: #000000;
             background-color: #f2f4f6;
         }
-        /* Mobile bottom nav spacing */
+        /* Desktop body padding only */
+        @media (min-width: 769px) {
+            body { padding-left: 40px; padding-right: 40px; }
+        }
+
+        /* ==============================================
+           CAREER PAGE — MOBILE RESPONSIVE OVERHAUL
+           ============================================== */
         @media (max-width: 768px) {
-            body { padding-bottom: 80px; }
-        }
-        body {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        @media (min-width: 768px) {
             body {
-                padding-left: 40px;
-                padding-right: 40px;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-bottom: 72px !important;
+                overflow-x: hidden;
             }
-        }
-        
-        /* Mobile responsive fixes for career page */
-        @media (max-width: 768px) {
-            /* Reduce horizontal padding */
-            .px-6 { padding-left: 16px !important; padding-right: 16px !important; }
+            /* ---- HEADER ---- */
+            header nav {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                height: 56px !important;
+            }
+            header nav a.font-headline-md { font-size: 17px !important; }
+            header nav button {
+                font-size: 10px !important;
+                padding: 8px 10px !important;
+                white-space: nowrap;
+                letter-spacing: 0.04em !important;
+            }
+            /* ---- MAIN CONTAINER ---- */
+            main {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
             .px-gutter { padding-left: 16px !important; padding-right: 16px !important; }
-            
-            /* Hero title */
-            .text-headline-xl { font-size: 32px !important; line-height: 1.2 !important; }
-            .text-headline-lg { font-size: 24px !important; }
-            
-            /* Toggle buttons */
-            .toggle-btn { padding: 12px 20px !important; font-size: 13px !important; }
-            .inline-flex.p-1.5 > button { flex: 1; text-align: center; }
-            
-            /* Education thread */
-            .lg\\:col-span-4, .lg\\:col-span-8 { grid-column: span 1 !important; }
-            .grid.grid-cols-1.lg\\:grid-cols-12 { grid-template-columns: 1fr !important; }
-            .sticky.top-32 { position: static !important; margin-bottom: 16px; }
-            .relative.pl-8.pt-2 { padding-left: 0 !important; padding-top: 0 !important; }
-            .absolute.left-0 { left: 8px !important; }
-            
-            /* Bento grid */
-            .grid.grid-cols-1.md\\:grid-cols-12.auto-rows-\\[200px\\] { grid-template-columns: 1fr !important; grid-auto-rows: auto !important; }
-            .md\\:col-span-8, .md\\:col-span-4, .md\\:col-span-6, .md\\:row-span-2 { grid-column: span 1 !important; grid-row: span 1 !important; }
-            
-            /* Pillars/Expertise grid */
-            .grid.grid-cols-1.md\\:grid-cols-3.gap-gutter { grid-template-columns: 1fr !important; gap: 16px !important; }
-            
-            /* Timeline */
-            .md\\:left-1\\/2 { left: 12px !important; }
-            .md\\:-translate-x-1\\/2 { transform: none !important; }
-            .md\\:w-1\\/2 { width: 100% !important; }
-            .md\\:pl-16, .md\\:pr-16 { padding-left: 0 !important; padding-right: 0 !important; padding-bottom: 24px !important; }
-            .md\\:text-right { text-align: left !important; }
-            .absolute.left-1\\/2 { left: 8px !important; }
-            
-            /* Portfolio grid */
-            .grid.grid-cols-1.md\\:grid-cols-4.grid-rows-2.h-\\[600px\\] { grid-template-columns: 1fr !important; grid-template-rows: auto !important; height: auto !important; gap: 12px !important; }
-            .md\\:col-span-2, .md\\:row-span-2 { grid-column: span 1 !important; grid-row: span 1 !important; }
-            
-            /* Cards */
-            .experience-card, .bento-card { padding: 16px !important; }
-            
-            /* Section spacing */
-            .mb-section-gap { margin-bottom: 48px !important; }
-            
-            /* Footer */
-            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; gap: 24px !important; text-align: center !important; }
-            .flex.flex-col.md\\:flex-row.justify-between { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
+            .px-6 { padding-left: 16px !important; padding-right: 16px !important; }
+            /* ---- HERO TITLE ---- */
+            section.mt-24 { margin-top: 20px !important; margin-bottom: 14px !important; }
+            section h1 {
+                font-size: 24px !important;
+                line-height: 1.2 !important;
+                word-break: break-word;
+            }
+            section p.font-body-lg {
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+                margin-top: 8px !important;
+            }
+            /* ---- TOGGLE BUTTONS — fill full width ---- */
+            section.flex.justify-center { margin-bottom: 16px !important; }
+            .inline-flex.p-1\.5 {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .toggle-btn {
+                flex: 1 !important;
+                padding: 10px 4px !important;
+                font-size: 10px !important;
+                letter-spacing: 0.04em !important;
+                text-align: center !important;
+                white-space: nowrap;
+            }
+            /* ---- SECTION SPACING ---- */
+            .mb-section-gap { margin-bottom: 32px !important; }
+            .mb-16 { margin-bottom: 14px !important; }
+            .mb-20 { margin-bottom: 14px !important; }
+            .gap-12 { gap: 14px !important; }
+            .gap-8  { gap: 10px !important; }
+            /* ---- EDUCATION THREAD ---- */
+            .grid.grid-cols-1.lg\:grid-cols-12 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            .lg\:col-span-4, .lg\:col-span-8 { grid-column: span 1 !important; }
+            .sticky.top-32 { position: static !important; margin-bottom: 6px !important; }
+            .relative.pl-8.pt-2 { padding-left: 18px !important; padding-top: 0 !important; }
+            .pr-8 { padding-right: 0 !important; }
+            /* ---- SECTION HEADINGS ---- */
+            .font-headline-xl { font-size: 22px !important; line-height: 1.2 !important; }
+            .font-headline-lg { font-size: 19px !important; line-height: 1.25 !important; }
+            .font-headline-md { font-size: 16px !important; }
+            .font-body-lg { font-size: 14px !important; line-height: 1.5 !important; }
+            .font-body-md { font-size: 13px !important; }
+            /* ---- BENTO GRID (Skills) ---- */
+            .grid.grid-cols-1.md\:grid-cols-12 {
+                grid-template-columns: 1fr !important;
+                grid-auto-rows: auto !important;
+                gap: 12px !important;
+            }
+            .md\:col-span-8, .md\:col-span-4, .md\:col-span-6 { grid-column: span 1 !important; }
+            .md\:row-span-2 { grid-row: span 1 !important; }
+            .bento-card { padding: 14px !important; min-height: unset !important; }
+            /* ---- PILLARS GRID ---- */
+            .grid.grid-cols-1.md\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            .experience-card { padding: 14px !important; }
+            /* ---- SOFT SKILLS + EXTRACURRICULAR ---- */
+            .grid.grid-cols-1.lg\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            .p-10 { padding: 14px !important; }
+            .grid.grid-cols-1.sm\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            /* ---- TIMELINE — single col left-rail ---- */
+            .absolute.left-0.md\:left-1\/2 { left: 0 !important; transform: none !important; }
+            #career2-timeline .grid {
+                grid-template-columns: 1fr !important;
+                gap: 0 !important;
+            }
+            #career2-timeline .hidden.md\:block { display: none !important; }
+            #career2-timeline .pl-8, #career2-timeline .md\:pl-12 { padding-left: 18px !important; }
+            #career2-timeline .md\:text-right { text-align: left !important; }
+            #career2-timeline .md\:pr-12 { padding-right: 0 !important; }
+            #career2-timeline .p-8 { padding: 12px !important; }
+            #career2-timeline .mb-24 { margin-bottom: 16px !important; }
+            /* ---- PORTFOLIO GRID ---- */
+            .grid.grid-cols-1.md\:grid-cols-4.grid-rows-2 {
+                grid-template-columns: 1fr !important;
+                grid-template-rows: auto !important;
+                height: auto !important;
+                gap: 10px !important;
+            }
+            .md\:col-span-2 { grid-column: span 1 !important; }
+            .grid.grid-cols-1.md\:grid-cols-4.grid-rows-2 > div { min-height: 180px !important; }
+            /* ---- FOOTER ---- */
+            footer { padding-top: 24px !important; padding-bottom: 24px !important; }
+            footer .grid { grid-template-columns: 1fr !important; gap: 16px !important; text-align: left !important; }
+            footer .flex.flex-col.md\:flex-row { flex-direction: column !important; gap: 6px !important; text-align: center !important; }
+            footer .mt-20 { margin-top: 16px !important; }
+            /* ---- GLOBAL ---- */
+            * { word-break: break-word; overflow-wrap: break-word; }
+            img { max-width: 100% !important; }
         }
+
         .fade-in {
             animation: fadeIn 0.5s ease-out forwards;
         }

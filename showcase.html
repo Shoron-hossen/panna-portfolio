@@ -122,28 +122,123 @@
             transform: translateY(20px);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        /* Mobile bottom nav spacing */
+        /* Desktop body padding only */
+        @media (min-width: 769px) {
+            body { padding-left: 40px; padding-right: 40px; }
+        }
+
+        /* ==============================================
+           SHOWCASE PAGE — MOBILE RESPONSIVE OVERHAUL
+           ============================================== */
         @media (max-width: 768px) {
-            body { padding-bottom: 80px; }
+            body {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-bottom: 72px !important;
+                overflow-x: hidden;
+            }
+            /* ---- HEADER ---- */
+            header > div {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                height: 56px !important;
+            }
+            header a.font-headline-md { font-size: 17px !important; }
+            header button {
+                font-size: 10px !important;
+                padding: 8px 10px !important;
+                white-space: nowrap;
+                letter-spacing: 0.04em !important;
+            }
+            /* ---- ALL INNER SECTIONS ---- */
+            .max-w-\[1280px\] {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+            .px-6 { padding-left: 16px !important; padding-right: 16px !important; }
+            /* ---- HERO SECTION ---- */
+            section.pt-24 { padding-top: 24px !important; padding-bottom: 16px !important; }
+            section .flex.flex-col.md\:flex-row {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+            section h1 {
+                font-size: 26px !important;
+                line-height: 1.15 !important;
+                word-break: break-word;
+            }
+            section p.font-body-lg {
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+            }
+            /* ---- FILTER TABS — scrollable row ---- */
+            #category-filters {
+                display: flex !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                gap: 16px !important;
+                padding-bottom: 8px !important;
+                margin-bottom: 16px !important;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            #category-filters::-webkit-scrollbar { display: none; }
+            #category-filters button { flex-shrink: 0 !important; }
+            /* ---- GALLERY GRID ---- */
+            #gallery-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+            /* ---- CTA SECTION ---- */
+            section.bg-primary.py-40 {
+                padding-top: 40px !important;
+                padding-bottom: 40px !important;
+            }
+            section.bg-primary h2 {
+                font-size: 22px !important;
+                line-height: 1.25 !important;
+                margin-bottom: 24px !important;
+                word-break: break-word;
+            }
+            .flex.flex-col.sm\:flex-row.items-center.justify-center {
+                flex-direction: column !important;
+                gap: 10px !important;
+                width: 100%;
+            }
+            .flex.flex-col.sm\:flex-row > a {
+                width: 100% !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding: 14px 20px !important;
+                font-size: 12px !important;
+                box-sizing: border-box;
+            }
+            /* ---- FOOTER ---- */
+            footer { padding-top: 24px !important; padding-bottom: 24px !important; }
+            footer .grid { grid-template-columns: 1fr !important; gap: 16px !important; text-align: left !important; }
+            footer .flex.flex-col.md\:flex-row { flex-direction: column !important; gap: 6px !important; text-align: center !important; }
+            footer .mt-20 { margin-top: 16px !important; }
+            /* ---- LIGHTBOX MOBILE FIX ---- */
+            #lightbox > div[style*="inset:60px"] {
+                inset: 50px 10px 120px !important;
+            }
+            #lightbox-info {
+                padding: 12px 16px !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                align-items: flex-start !important;
+            }
+            #lightbox-title { font-size: 15px !important; }
+            #lightbox-desc { font-size: 12px !important; }
+            /* ---- GLOBAL ---- */
+            * { word-break: break-word; overflow-wrap: break-word; }
+            img { max-width: 100% !important; }
         }
-        /* Mobile layout fixes */
-        @media (max-width: 768px) {
-            .flex.flex-col.md\\:flex-row { flex-direction: column !important; gap: 24px !important; }
-            .max-w-2xl { max-width: 100% !important; }
-            .flex.items-center.space-x-6 { flex-wrap: wrap !important; justify-content: center !important; gap: 16px !important; }
-            .overflow-x-auto.no-scrollbar.whitespace-nowrap { justify-content: center !important; padding-bottom: 8px !important; }
-            .grid.grid-cols-1.md\\:grid-cols-2 { grid-template-columns: 1fr !important; }
-            .grid-item-wide { grid-column: span 1 !important; }
-            .flex.justify-between.items-center { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
-            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; text-align: center !important; }
-        }
-        .group:hover .hover-reveal-ui {
-            transform: translateY(0);
-        }
+
+        /* Restore utility classes */
+        .group:hover .hover-reveal-ui { transform: translateY(0); }
         .grid-item-wide { grid-column: span 2; }
-        @media (max-width: 768px) {
-            .grid-item-wide { grid-column: span 1; }
-        }
+        @media (max-width: 768px) { .grid-item-wide { grid-column: span 1; } }
         @keyframes shimmer {
             0% { background-position: -400px 0; }
             100% { background-position: 400px 0; }
@@ -152,16 +247,6 @@
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 800px 100%;
             animation: shimmer 1.5s infinite;
-        }
-        body {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        @media (min-width: 768px) {
-            body {
-                padding-left: 40px;
-                padding-right: 40px;
-            }
         }
     </style>
 </head>
