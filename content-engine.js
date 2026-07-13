@@ -93,15 +93,14 @@ function fireEvent() {
 }
 
 async function loadContent() {
-    // Wait for Firebase SDK and db to be ready (max 10 seconds)
     let attempts = 0;
-    while ((!window.firebase || !db) && attempts < 100) {
-        await new Promise(r => setTimeout(r, 100));
+    while ((!window.firebase || !db) && attempts < 30) {
+        await new Promise(r => setTimeout(r, 50));
         attempts++;
     }
 
     if (!window.firebase || !db) {
-        console.error('Firebase SDK or db not available after waiting');
+        console.error('Firebase SDK or db not available');
         populateSimple();
         populateLists();
         fireEvent();

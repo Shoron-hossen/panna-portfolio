@@ -14,6 +14,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="/firebase-init.js"></script>
 <script src="/content-engine.js"></script>
+<link rel="preconnect" href="https://res.cloudinary.com">
+<link rel="dns-prefetch" href="https://res.cloudinary.com">
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -121,12 +123,18 @@
         .group:hover .hover-reveal-ui {
             transform: translateY(0);
         }
-        /* Custom Masonry-like spacing for standard grid */
-        .grid-item-tall { grid-row: span 2; }
         .grid-item-wide { grid-column: span 2; }
-        
         @media (max-width: 768px) {
             .grid-item-wide { grid-column: span 1; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -400px 0; }
+            100% { background-position: 400px 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 800px 100%;
+            animation: shimmer 1.5s infinite;
         }
         body {
             padding-left: 20px;
@@ -188,10 +196,10 @@
     <div style="position:absolute; inset:60px 70px; display:flex; align-items:center; justify-content:center;">
         <img id="lightbox-img" src="" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:4px; transition:opacity 0.3s;">
     </div>
-    <div id="lightbox-info" style="position:absolute; bottom:0; left:0; right:0; padding:24px 32px; background:linear-gradient(transparent, rgba(0,0,0,0.8)); display:flex; justify-content:space-between; align-items:flex-end;">
-        <div>
-            <h3 id="lightbox-title" style="color:white; font-size:20px; font-weight:600; margin-bottom:4px;"></h3>
-            <p id="lightbox-desc" style="color:rgba(255,255,255,0.6); font-size:14px;"></p>
+    <div id="lightbox-info" style="position:absolute; bottom:0; left:0; right:0; padding:24px 32px; background:linear-gradient(transparent, rgba(0,0,0,0.8)); display:flex; justify-content:space-between; align-items:flex-end; gap:20px;">
+        <div style="min-width:0; flex:1;">
+            <h3 id="lightbox-title" style="color:white; font-size:20px; font-weight:600; margin-bottom:4px; word-wrap:break-word;"></h3>
+            <p id="lightbox-desc" style="color:rgba(255,255,255,0.6); font-size:14px; word-wrap:break-word; overflow-wrap:anywhere; max-width:600px;"></p>
             <span id="lightbox-cat" style="display:inline-block; margin-top:8px; padding:3px 12px; background:rgba(255,255,255,0.15); border-radius:20px; color:rgba(255,255,255,0.7); font-size:12px;"></span>
         </div>
         <div style="display:flex; gap:12px;">
@@ -314,8 +322,8 @@
 
         grid.innerHTML = filteredGallery.map((item, i) => `
             <div class="group relative overflow-hidden bg-surface-container-lowest border border-outline-variant/30" style="cursor:pointer;" onclick="openLightbox(${i})">
-                <div class="w-full overflow-hidden bg-gray-100">
-                    <img alt="${item.title || 'Gallery image'}" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" style="aspect-ratio:4/3;" src="${cld(item.url, 1600, 1200)}" loading="lazy">
+                <div class="w-full overflow-hidden bg-gray-100 skeleton" style="aspect-ratio:4/3; position:relative;">
+                    <img alt="${item.title || 'Gallery image'}" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" style="aspect-ratio:4/3; position:absolute; inset:0;" src="${cld(item.url, 1600, 1200)}" onload="this.parentElement.classList.remove('skeleton')">
                     <div class="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300" style="z-index:5;">
                         <button onclick="event.stopPropagation(); openLightbox(${i})" style="width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); color:white; border:none; border-radius:8px; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.6)'">
                             <span class="material-symbols-outlined" style="font-size:20px;">fullscreen</span>
@@ -328,7 +336,7 @@
                         <div style="transform:translateY(10px); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);" class="group-hover:translate-y-0">
                             ${item.category ? `<span style="display:inline-block; padding:2px 8px; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); border-radius:12px; color:white; font-size:10px; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:6px;">${item.category}</span>` : ''}
                             <h3 style="color:white; font-size:15px; font-weight:600;">${item.title || ''}</h3>
-                            ${item.description ? `<p style="color:rgba(255,255,255,0.7); font-size:12px; margin-top:2px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;">${item.description}</p>` : ''}
+                            ${item.description ? `<p style="color:rgba(255,255,255,0.7); font-size:12px; margin-top:2px; word-wrap:break-word; overflow-wrap:anywhere;">${item.description}</p>` : ''}
                         </div>
                     </div>
                 </div>
@@ -347,8 +355,8 @@
             }, {threshold: 0.05});
             grid.querySelectorAll(':scope > div').forEach(el => {
                 el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
                 obs.observe(el);
             });
         }, 50);
