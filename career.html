@@ -5,7 +5,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Career & Experience | MD Sakawat Hossain Panna</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="/firebase-init.js"></script>
+    <script src="/content-engine.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Work+Sans:wght@100..900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
         .material-symbols-outlined {
@@ -38,16 +42,15 @@
         .toggle-btn.active {
             background-color: #000000;
             color: #ffffff;
-            border-color: #000000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
         .toggle-btn:not(.active) {
             background-color: transparent;
             color: #45464d;
-            border-color: #c6c6cd;
         }
         .toggle-btn:not(.active):hover {
-            border-color: #000000;
             color: #000000;
+            background-color: #f2f4f6;
         }
         body {
             padding-left: 20px;
@@ -169,7 +172,7 @@
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/showcase" >Showcase</a>
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/#contact" >Contact</a>
             </div>
-            <button class="px-6 py-2 border border-primary text-primary font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all duration-300">
+            <button class="px-6 py-2 border border-primary text-primary font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all duration-300" onclick="downloadCV()">
                 Download CV
             </button>
         </nav>
@@ -177,19 +180,20 @@
 
     <main class="max-w-[1280px] mx-auto px-6">
         <!-- Hero Title Section -->
-        <section class="mt-24 mb-16 flex flex-col items-center text-center">
+        <section class="mt-24 mb-20 flex flex-col items-center text-center">
             <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Career Paths</span>
             <h1 class="font-headline-xl text-headline-xl text-primary max-w-4xl">Professional Journey & Expertise</h1>
             <p class="mt-6 font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Explore both the academic/engineering foundation and the professional career trajectory.</p>
+            <div class="w-16 h-0.5 bg-primary mt-8"></div>
         </section>
 
         <!-- Toggle Buttons -->
         <section class="mb-16 flex justify-center">
-            <div class="inline-flex p-1 bg-surface-container border border-outline-variant rounded-lg">
-                <button id="btn-career1" onclick="switchCareer('career1')" class="toggle-btn active px-8 py-3 font-label-md text-label-md uppercase tracking-widest border-2 rounded-md">
+            <div class="inline-flex p-1.5 bg-white border border-outline-variant rounded-full shadow-sm">
+                <button id="btn-career1" onclick="switchCareer('career1')" class="toggle-btn active px-10 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300">
                     Engineering Path
                 </button>
-                <button id="btn-career2" onclick="switchCareer('career2')" class="toggle-btn px-8 py-3 font-label-md text-label-md uppercase tracking-widest border-2 rounded-md">
+                <button id="btn-career2" onclick="switchCareer('career2')" class="toggle-btn px-10 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300">
                     Career Trajectory
                 </button>
             </div>
@@ -200,21 +204,21 @@
             <!-- Education & Thread Visual -->
             <section class="mb-section-gap grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
                 <div class="lg:col-span-4">
-                    <h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary">Academic<br/>Foundations</h2>
-                    <p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
+                    <h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary" data-content="careerPage.career1.subtitle">Academic<br/>Foundations</h2>
+                    <p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8" data-content="careerPage.career1.description">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
                 </div>
                 <div class="lg:col-span-8 relative pl-8">
                     <!-- Thread Line -->
                     <div class="absolute left-0 top-0 bottom-0 w-px thread-line"></div>
                     <!-- BUTEX -->
-                    <div class="mb-16 relative group">
+                    <div class="mb-16 relative group" data-container="edu-0">
                         <div class="absolute -left-[36px] top-1 w-4 h-4 bg-primary border-4 border-surface rounded-full z-10"></div>
                         <div class="flex flex-col md:flex-row md:items-start gap-4">
                             <div class="flex-grow">
-                                <span class="font-label-md text-label-md text-secondary">2019 — Present</span>
-                                <h3 class="font-headline-md text-headline-md text-primary mt-2">B.Sc. in Textile Engineering</h3>
-                                <p class="font-body-lg text-body-lg text-primary font-semibold">Bangladesh University of Textiles (BUTEX)</p>
-                                <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Specializing in apparel manufacturing and textile physics. My studies focus on sustainable fabrication techniques, structural integrity of high-performance fabrics, and industrial R&D processes.</p>
+                                <span class="font-label-md text-label-md text-secondary" data-content="careerPage.career1.education[0].period">2019 — Present</span>
+                                <h3 class="font-headline-md text-headline-md text-primary mt-2" data-content="careerPage.career1.education[0].title">B.Sc. in Textile Engineering</h3>
+                                <p class="font-body-lg text-body-lg text-primary font-semibold" data-content="careerPage.career1.education[0].institution">Bangladesh University of Textiles (BUTEX)</p>
+                                <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[0].description">Specializing in apparel manufacturing and textile physics. My studies focus on sustainable fabrication techniques, structural integrity of high-performance fabrics, and industrial R&D processes.</p>
                             </div>
                             <div class="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
                                 <img class="w-full h-full object-cover" alt="Textile fibers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0rwnSnEvMqxlyBdCVyd9vYrZCL_hqV-Q-vCJZzYM3jQKUrriz1dHbEt4HBg-uhqIZvd3GB2_m29ACGDY8V_ZwTJ7eR_C01V2rbABELGSlGARPuyTow_EdIW__c_7Bkg9xBmF-eD3GzcmFNv95AvcKDMY5Jc4UnoIcuMLNGP22DBUxJIsHhkkfu5IBLQJ47uVp0ZfnAQ8JmWMc-98ZnQdnXHCVUYFCsv9LCQV8uI0ZEBeH-Ywg2iS7EH1sklQy9OZPWMrFzCdovOCr"/>
@@ -222,26 +226,26 @@
                         </div>
                     </div>
                     <!-- Govt. Edward College -->
-                    <div class="mb-16 relative group">
+                    <div class="mb-16 relative group" data-container="edu-1">
                         <div class="absolute -left-[36px] top-1 w-4 h-4 bg-outline-variant border-4 border-surface rounded-full z-10 group-hover:bg-primary transition-colors duration-300"></div>
                         <div class="flex flex-col md:flex-row md:items-start gap-4">
                             <div class="flex-grow">
-                                <span class="font-label-md text-label-md text-secondary">2016 — 2018</span>
-                                <h3 class="font-headline-md text-headline-md text-primary mt-2">Higher Secondary Certificate (HSC)</h3>
-                                <p class="font-body-lg text-body-lg text-primary font-semibold">Govt. Edward College, Pabna</p>
-                                <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Science major with high-distinction in Mathematics and Physics. This period established the core analytical skills necessary for complex engineering calculations.</p>
+                                <span class="font-label-md text-label-md text-secondary" data-content="careerPage.career1.education[1].period">2016 — 2018</span>
+                                <h3 class="font-headline-md text-headline-md text-primary mt-2" data-content="careerPage.career1.education[1].title">Higher Secondary Certificate (HSC)</h3>
+                                <p class="font-body-lg text-body-lg text-primary font-semibold" data-content="careerPage.career1.education[1].institution">Govt. Edward College, Pabna</p>
+                                <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[1].description">Science major with high-distinction in Mathematics and Physics. This period established the core analytical skills necessary for complex engineering calculations.</p>
                             </div>
                         </div>
                     </div>
                     <!-- Atghoria -->
-                    <div class="relative group">
+                    <div class="relative group" data-container="edu-2">
                         <div class="absolute -left-[36px] top-1 w-4 h-4 bg-outline-variant border-4 border-surface rounded-full z-10 group-hover:bg-primary transition-colors duration-300"></div>
                         <div class="flex flex-col md:flex-row md:items-start gap-4">
                             <div class="flex-grow">
-                                <span class="font-label-md text-label-md text-secondary">Graduated 2016</span>
-                                <h3 class="font-headline-md text-headline-md text-primary mt-2">Secondary School Certificate (SSC)</h3>
-                                <p class="font-body-lg text-body-lg text-primary font-semibold">Atghoria Govt High School</p>
-                                <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Early academic excellence with a focus on general sciences, laying the groundwork for a future in technical education.</p>
+                                <span class="font-label-md text-label-md text-secondary" data-content="careerPage.career1.education[2].period">Graduated 2016</span>
+                                <h3 class="font-headline-md text-headline-md text-primary mt-2" data-content="careerPage.career1.education[2].title">Secondary School Certificate (SSC)</h3>
+                                <p class="font-body-lg text-body-lg text-primary font-semibold" data-content="careerPage.career1.education[2].institution">Atghoria Govt High School</p>
+                                <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[2].description">Early academic excellence with a focus on general sciences, laying the groundwork for a future in technical education.</p>
                             </div>
                         </div>
                     </div>
@@ -252,7 +256,8 @@
             <section class="mb-section-gap">
                 <div class="flex flex-col items-center mb-16">
                     <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Core Competencies</span>
-                    <h2 class="font-headline-lg text-headline-lg text-primary">Technical Expertise</h2>
+                    <h2 class="font-headline-lg text-headline-lg text-primary" data-content="careerPage.career1.sectionHeadings.technicalSkills">Technical Expertise</h2>
+                    <div class="w-12 h-0.5 bg-primary mt-6"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[200px]">
                     <!-- Digital Design -->
@@ -261,10 +266,10 @@
                             <div class="w-12 h-12 bg-primary flex items-center justify-center mb-6">
                                 <span class="material-symbols-outlined text-on-primary">brush</span>
                             </div>
-                            <h3 class="font-headline-md text-headline-md text-primary">Visual Identity & Design</h3>
-                            <p class="mt-4 font-body-md text-body-md text-on-surface-variant max-w-lg">Advanced proficiency in Adobe Photoshop and digital imaging. I bridge the gap between textile engineering and aesthetics, ensuring product visualizations meet professional standards.</p>
+                            <h3 class="font-headline-md text-headline-md text-primary" data-content="careerPage.career1.technicalSkills.visualDesign.title">Visual Identity & Design</h3>
+                            <p class="mt-4 font-body-md text-body-md text-on-surface-variant max-w-lg" data-content="careerPage.career1.technicalSkills.visualDesign.description">Advanced proficiency in Adobe Photoshop and digital imaging. I bridge the gap between textile engineering and aesthetics, ensuring product visualizations meet professional standards.</p>
                         </div>
-                        <div class="flex flex-wrap gap-2 mt-8">
+                        <div class="flex flex-wrap gap-2 mt-8" id="skill-visual-tags">
                             <span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Adobe Photoshop</span>
                             <span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Lightroom</span>
                             <span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Digital Composition</span>
@@ -273,8 +278,8 @@
                     <!-- Office Productivity -->
                     <div class="md:col-span-4 md:row-span-1 bg-primary text-on-primary p-6 border border-primary bento-card">
                         <span class="material-symbols-outlined mb-4">analytics</span>
-                        <h3 class="font-label-md text-label-md uppercase tracking-wider">Office Suite</h3>
-                        <p class="mt-2 font-body-md text-body-md opacity-80">Expert handling of MS Excel, PowerPoint, and Word for technical reporting and data visualization.</p>
+                        <h3 class="font-label-md text-label-md uppercase tracking-wider" data-content="careerPage.career1.technicalSkills.office.title">Office Suite</h3>
+                        <p class="mt-2 font-body-md text-body-md opacity-80" data-content="careerPage.career1.technicalSkills.office.description">Expert handling of MS Excel, PowerPoint, and Word for technical reporting and data visualization.</p>
                     </div>
                     <!-- Photography -->
                     <div class="md:col-span-4 md:row-span-2 relative overflow-hidden bento-card bg-surface-container-low border border-outline-variant">
@@ -284,77 +289,67 @@
                         </div>
                         <div class="relative z-10 p-6 flex flex-col h-full justify-end text-on-primary">
                             <span class="material-symbols-outlined mb-4">photo_camera</span>
-                            <h3 class="font-headline-md text-headline-md">Visual Storytelling</h3>
-                            <p class="mt-2 font-body-md text-body-md opacity-90">Capturing the soul of industrial processes through professional photography.</p>
+                            <h3 class="font-headline-md text-headline-md" data-content="careerPage.career1.technicalSkills.photography.title">Visual Storytelling</h3>
+                            <p class="mt-2 font-body-md text-body-md opacity-90" data-content="careerPage.career1.technicalSkills.photography.description">Capturing the soul of industrial processes through professional photography.</p>
                         </div>
                     </div>
                     <!-- Textile R&D -->
                     <div class="md:col-span-4 md:row-span-1 bg-surface-container-low p-6 border border-outline-variant bento-card flex flex-col justify-center">
-                        <h3 class="font-label-md text-label-md text-primary mb-2">Textile R&D</h3>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center border-b border-outline-variant py-1">
-                                <span class="text-body-md">Fabric Analysis</span>
-                                <span class="material-symbols-outlined text-secondary scale-75">check_circle</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-outline-variant py-1">
-                                <span class="text-body-md">Quality Control</span>
-                                <span class="material-symbols-outlined text-secondary scale-75">check_circle</span>
-                            </div>
-                        </div>
+                        <h3 class="font-label-md text-label-md text-primary mb-2" data-content="careerPage.career1.technicalSkills.textileRD.title">Textile R&D</h3>
+                        <div class="space-y-2" id="skill-rd-items"></div>
                     </div>
                 </div>
             </section>
 
             <!-- Soft Skills & Extracurriculars -->
-            <section class="mb-section-gap grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <section class="mb-section-gap grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Soft Skills -->
-                <div class="p-10 border border-outline-variant bg-surface-container-lowest">
-                    <h3 class="font-headline-md text-headline-md text-primary mb-8">Professional Attributes</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div>
-                            <span class="material-symbols-outlined text-primary mb-2">groups</span>
-                            <h4 class="font-label-md text-label-md text-primary">Collaborative Leadership</h4>
-                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant">Proven ability to lead diverse teams in high-pressure technical environments.</p>
+                <div class="p-10 bg-white border border-outline-variant rounded-lg hover:shadow-lg transition-shadow duration-300">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-8 pb-4 border-b border-outline-variant" data-content="careerPage.career1.sectionHeadings.softSkills">Professional Attributes</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8" id="career1-softskills">
+                        <div data-container="ss-0">
+                            <span class="material-symbols-outlined text-primary mb-2" data-content="careerPage.career1.softSkills[0].icon">groups</span>
+                            <h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[0].title">Collaborative Leadership</h4>
+                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[0].description">Proven ability to lead diverse teams in high-pressure technical environments.</p>
                         </div>
-                        <div>
-                            <span class="material-symbols-outlined text-primary mb-2">psychology</span>
-                            <h4 class="font-label-md text-label-md text-primary">Analytical Problem Solving</h4>
-                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant">Applying engineering logic to solve complex textile production challenges.</p>
+                        <div data-container="ss-1">
+                            <span class="material-symbols-outlined text-primary mb-2" data-content="careerPage.career1.softSkills[1].icon">psychology</span>
+                            <h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[1].title">Analytical Problem Solving</h4>
+                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[1].description">Applying engineering logic to solve complex textile production challenges.</p>
                         </div>
-                        <div>
-                            <span class="material-symbols-outlined text-primary mb-2">chat</span>
-                            <h4 class="font-label-md text-label-md text-primary">Effective Communication</h4>
-                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant">Fluent in bridging technical specifications with creative visual requirements.</p>
+                        <div data-container="ss-2">
+                            <span class="material-symbols-outlined text-primary mb-2" data-content="careerPage.career1.softSkills[2].icon">chat</span>
+                            <h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[2].title">Effective Communication</h4>
+                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[2].description">Fluent in bridging technical specifications with creative visual requirements.</p>
                         </div>
-                        <div>
-                            <span class="material-symbols-outlined text-primary mb-2">history_edu</span>
-                            <h4 class="font-label-md text-label-md text-primary">Meticulous Researcher</h4>
-                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant">Deep-dive approach to material science and market trends.</p>
+                        <div data-container="ss-3">
+                            <span class="material-symbols-outlined text-primary mb-2" data-content="careerPage.career1.softSkills[3].icon">history_edu</span>
+                            <h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[3].title">Meticulous Researcher</h4>
+                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[3].description">Deep-dive approach to material science and market trends.</p>
                         </div>
                     </div>
                 </div>
                 <!-- Extracurricular -->
-                <div class="flex flex-col justify-between">
-                    <div class="bg-primary p-1 flex-grow-0 mb-8 w-16"></div>
-                    <h3 class="font-headline-md text-headline-md text-primary mb-6">Beyond the Lab</h3>
-                    <p class="font-body-lg text-body-lg text-on-surface-variant mb-10">Active participation in university events and professional workshops, maintaining a pulse on both engineering innovations and artistic movements.</p>
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
+                <div class="p-10 bg-white border border-outline-variant rounded-lg hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-6 pb-4 border-b border-outline-variant" data-content="careerPage.career1.sectionHeadings.extracurricular">Beyond the Lab</h3>
+                    <p class="font-body-md text-on-surface-variant mb-8">Active participation in university events and professional workshops, maintaining a pulse on both engineering innovations and artistic movements.</p>
+                    <div class="space-y-6" id="career1-extra">
+                        <div class="flex items-start gap-4" data-container="extra-0">
                             <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-surface-container text-primary">
-                                <span class="material-symbols-outlined">event_available</span>
+                                <span class="material-symbols-outlined" data-content="careerPage.career1.extracurricular[0].icon">event_available</span>
                             </div>
                             <div>
-                                <h4 class="font-label-md text-label-md text-primary">Event Coordination</h4>
-                                <p class="text-body-md text-on-surface-variant">Organizing technical seminars and photography exhibitions at BUTEX.</p>
+                                <h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.extracurricular[0].title">Event Coordination</h4>
+                                <p class="text-body-md text-on-surface-variant" data-content="careerPage.career1.extracurricular[0].description">Organizing technical seminars and photography exhibitions at BUTEX.</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-4">
+                        <div class="flex items-start gap-4" data-container="extra-1">
                             <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-surface-container text-primary">
-                                <span class="material-symbols-outlined">volunteer_activism</span>
+                                <span class="material-symbols-outlined" data-content="careerPage.career1.extracurricular[1].icon">volunteer_activism</span>
                             </div>
                             <div>
-                                <h4 class="font-label-md text-label-md text-primary">Community Engagement</h4>
-                                <p class="text-body-md text-on-surface-variant">Contributing to local development initiatives through technical literacy programs.</p>
+                                <h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.extracurricular[1].title">Community Engagement</h4>
+                                <p class="text-body-md text-on-surface-variant" data-content="careerPage.career1.extracurricular[1].description">Contributing to local development initiatives through technical literacy programs.</p>
                             </div>
                         </div>
                     </div>
@@ -368,9 +363,9 @@
             <section class="mb-section-gap">
                 <div class="flex flex-col md:flex-row gap-12 items-center">
                     <div class="w-full md:w-1/2">
-                        <span class="font-label-md text-label-md text-secondary mb-4 block uppercase tracking-widest">Trajectory & Growth</span>
-                        <h2 class="font-headline-xl text-headline-xl text-on-surface mb-6">Career in Technical Excellence</h2>
-                        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        <span class="font-label-md text-label-md text-secondary mb-4 block uppercase tracking-widest" data-content="careerPage.career2.subtitle">Trajectory & Growth</span>
+                        <h2 class="font-headline-xl text-headline-xl text-on-surface mb-6" data-content="careerPage.career2.heading">Career in Technical Excellence</h2>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl" data-content="careerPage.career2.heroDescription">
                             Navigating the intersection of engineering precision and industrial leadership. My professional path is defined by a commitment to optimizing systems and driving innovation within the global textile landscape.
                         </p>
                     </div>
@@ -383,11 +378,12 @@
 
             <!-- Professional Core Pillars -->
             <section class="mb-section-gap">
-                <div class="flex items-end justify-between mb-12">
-                    <h2 class="font-headline-lg text-headline-lg">Expertise Verticals</h2>
-                    <div class="hidden md:block h-[1px] flex-grow mx-8 bg-outline-variant mb-3"></div>
+                <div class="flex flex-col items-center mb-16">
+                    <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Expertise</span>
+                    <h2 class="font-headline-lg text-headline-lg text-primary" data-content="careerPage.career2.sectionHeadings.pillars">Core Verticals</h2>
+                    <div class="w-12 h-0.5 bg-primary mt-6"></div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="career2-pillars">
                     <!-- Merchandising -->
                     <div class="p-8 bg-surface-container-low border border-outline-variant rounded-lg experience-card">
                         <span class="material-symbols-outlined text-4xl text-primary mb-6">inventory_2</span>
@@ -423,8 +419,12 @@
 
             <!-- Career Trajectory Timeline -->
             <section class="mb-section-gap">
-                <h2 class="font-headline-lg text-headline-lg mb-16">Career Journey</h2>
-                <div class="relative">
+                <div class="flex flex-col items-center mb-16">
+                    <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Experience</span>
+                    <h2 class="font-headline-lg text-headline-lg text-primary" data-content="careerPage.career2.sectionHeadings.timeline">Career Journey</h2>
+                    <div class="w-12 h-0.5 bg-primary mt-6"></div>
+                </div>
+                <div class="relative" id="career2-timeline">
                     <!-- Central Line -->
                     <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] thread-line transform md:-translate-x-1/2"></div>
                     <!-- Most Recent Role -->
@@ -458,7 +458,7 @@
                     </div>
                     <!-- Milestone: Industrial Immersion -->
                     <div class="relative flex justify-center mb-16">
-                        <div class="bg-surface-container-low border border-outline-variant px-8 py-2 rounded-full font-label-md text-label-md text-outline uppercase tracking-[0.2em] relative z-10">Industrial Foundations</div>
+                        <div class="bg-surface-container-low border border-outline-variant px-8 py-2 rounded-full font-label-md text-label-md text-outline uppercase tracking-[0.2em] relative z-10" data-content="careerPage.career2.sectionHeadings.milestone">Industrial Foundations</div>
                     </div>
                     <!-- Experience 2 -->
                     <div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-center">
@@ -504,19 +504,20 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full py-16 bg-surface-container-lowest border-t border-outline-variant">
-        <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+    <footer class="w-full py-16 bg-white border-t border-outline-variant mt-20">
+        <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
             <div class="flex flex-col gap-4">
-                <span class="font-headline-md text-headline-md font-bold text-on-surface">Portfolio</span>
+                <span class="font-headline-md text-headline-md font-bold text-primary">Portfolio</span>
                 <p class="font-body-md text-body-md text-on-surface-variant">Engineering excellence. Artistic precision.</p>
             </div>
-            <div class="flex flex-col gap-2">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4" href="https://linkedin.com/in/sakawatpanna">LinkedIn</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4" href="#">Instagram</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary underline decoration-2 underline-offset-4" href="#">Behance</a>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-2">Connect</h4>
+                <a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="https://linkedin.com/in/sakawatpanna">LinkedIn</a>
+                <a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Instagram</a>
+                <a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Behance</a>
             </div>
             <div class="flex items-end md:justify-end">
-                <p class="font-body-md text-body-md text-on-surface-variant">© 2024 Textile Engineer & Photographer. All rights reserved.</p>
+                <p class="font-body-md text-sm text-on-surface-variant">© 2024 Textile Engineer & Photographer. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -572,6 +573,167 @@
         window.addEventListener('DOMContentLoaded', () => {
             setupObservers();
         });
+
+        // Firebase content overrides for dynamic containers
+        document.addEventListener('contentLoaded', (e) => {
+            const data = e.detail;
+            const c1 = data.careerPage?.career1;
+            const c2 = data.careerPage?.career2;
+
+            // --- Textile R&D items ---
+            const rdItems = c1?.technicalSkills?.textileRD?.items;
+            if (rdItems && Array.isArray(rdItems) && rdItems.length) {
+                const rdContainer = document.getElementById('skill-rd-items');
+                if (rdContainer) {
+                    rdContainer.innerHTML = rdItems.map(item =>
+                        `<div class="flex justify-between items-center border-b border-outline-variant py-1">
+                            <span class="text-body-md">${item}</span>
+                            <span class="material-symbols-outlined text-secondary scale-75">check_circle</span>
+                        </div>`
+                    ).join('');
+                }
+            }
+
+            // --- Visual Design tags ---
+            const vdTags = c1?.technicalSkills?.visualDesign?.tags;
+            if (vdTags && Array.isArray(vdTags) && vdTags.length) {
+                const tagsContainer = document.getElementById('skill-visual-tags');
+                if (tagsContainer) {
+                    tagsContainer.innerHTML = vdTags.map(t =>
+                        `<span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">${t}</span>`
+                    ).join('');
+                }
+            }
+
+            // --- Career 2 Pillars ---
+            const pillars = c2?.pillars;
+            if (pillars && Array.isArray(pillars) && pillars.length) {
+                const pillarsContainer = document.getElementById('career2-pillars');
+                if (pillarsContainer) {
+                    pillarsContainer.innerHTML = pillars.map(p =>
+                        `<div class="p-8 bg-surface-container-low border border-outline-variant rounded-lg experience-card">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-6">${p.icon || 'inventory_2'}</span>
+                            <h3 class="font-headline-md text-headline-md mb-4">${p.title}</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-6">${p.description}</p>
+                            <div class="flex flex-wrap gap-2">${
+                                (p.tags || []).map(t =>
+                                    `<span class="px-3 py-1 bg-surface-variant text-on-surface-variant font-label-md text-[12px] rounded-sm">${t}</span>`
+                                ).join('')
+                            }</div>
+                        </div>`
+                    ).join('');
+                }
+            }
+
+            // --- Career 1 Soft Skills ---
+            const softSkills = c1?.softSkills;
+            if (softSkills && Array.isArray(softSkills) && softSkills.length) {
+                const ssContainer = document.getElementById('career1-softskills');
+                if (ssContainer) {
+                    ssContainer.innerHTML = softSkills.map((s, i) =>
+                        `<div data-container="ss-${i}">
+                            <span class="material-symbols-outlined text-primary mb-2">${s.icon || 'groups'}</span>
+                            <h4 class="font-label-md text-label-md text-primary">${s.title}</h4>
+                            <p class="mt-2 font-body-md text-body-md text-on-surface-variant">${s.description}</p>
+                        </div>`
+                    ).join('');
+                }
+            }
+
+            // --- Career 1 Extracurricular ---
+            const extra = c1?.extracurricular;
+            if (extra && Array.isArray(extra) && extra.length) {
+                const extraContainer = document.getElementById('career1-extra');
+                if (extraContainer) {
+                    extraContainer.innerHTML = extra.map((e, i) =>
+                        `<div class="flex items-start gap-4" data-container="extra-${i}">
+                            <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-surface-container text-primary">
+                                <span class="material-symbols-outlined">${e.icon || 'event_available'}</span>
+                            </div>
+                            <div>
+                                <h4 class="font-label-md text-label-md text-primary">${e.title}</h4>
+                                <p class="text-body-md text-on-surface-variant">${e.description}</p>
+                            </div>
+                        </div>`
+                    ).join('');
+                }
+            }
+
+            // --- Career 2 Timeline ---
+            const timeline = c2?.timeline;
+            if (timeline && Array.isArray(timeline) && timeline.length) {
+                const timelineContainer = document.getElementById('career2-timeline');
+                if (timelineContainer) {
+                    timelineContainer.innerHTML = timeline.map((entry, idx) => {
+                        const isLeft = idx % 2 === 0;
+                        const isFirst = idx === 0;
+                        const dot = `<div class="hidden md:block absolute left-1/2 top-8 -translate-x-1/2 w-5 h-5 bg-primary rounded-full border-4 border-surface shadow-md z-10"></div>`;
+                        const badge = isFirst ? `<div class="inline-block px-3 py-1 bg-primary text-on-primary font-label-md text-[12px] rounded-full mb-4">${entry.badge || 'CURRENT'}</div>` : '';
+                        const accomplishments = (entry.accomplishments || []).map(a =>
+                            `<li class="flex gap-4">
+                                <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                <span>${a}</span>
+                            </li>`
+                        ).join('');
+                        const leftContent = `<div class="md:text-right md:pr-12">
+                            ${badge}
+                            <div class="font-label-md text-label-md text-secondary mb-2">${entry.period}</div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface">${entry.role}</h3>
+                            <p class="font-body-lg text-body-lg text-secondary font-semibold uppercase tracking-wider">${entry.company}</p>
+                        </div>`;
+                        const rightContent = `<div class="pl-8 md:pl-12 border-l-2 md:border-l-0 border-primary/20">
+                            <div class="p-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <h4 class="font-label-md text-label-md text-primary mb-4 uppercase">Key Accomplishments</h4>
+                                <ul class="space-y-4 font-body-md text-body-md text-on-surface-variant">${accomplishments}</ul>
+                            </div>
+                        </div>`;
+
+                        if (isFirst) {
+                            return `<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-24 items-start">
+                                ${leftContent}
+                                ${dot}
+                                ${rightContent}
+                            </div>`;
+                        } else {
+                            const milestone = (entry.milestone && idx > 0) ?
+                                `<div class="relative flex justify-center mb-16">
+                                    <div class="bg-surface-container-low border border-outline-variant px-8 py-2 rounded-full font-label-md text-label-md text-outline uppercase tracking-[0.2em] relative z-10">${entry.milestone}</div>
+                                </div>` : '';
+                            if (isLeft) {
+                                return milestone + `<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-center">
+                                    <div class="hidden md:block order-2"></div>
+                                    <div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-outline rounded-full border-2 border-surface z-10"></div>
+                                    <div class="md:text-right md:pr-12 order-1 border-l-2 md:border-l-0 border-outline-variant pl-8 md:pl-0">
+                                        <h4 class="font-headline-md text-headline-md text-on-surface">${entry.company}</h4>
+                                        <p class="font-label-md text-label-md text-secondary mb-2">${entry.subtitle || ''}</p>
+                                        <p class="font-body-md text-body-md text-on-surface-variant max-w-md md:ml-auto">${entry.description}</p>
+                                    </div>
+                                </div>`;
+                            } else {
+                                return milestone + `<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                                    <div class="hidden md:block"></div>
+                                    <div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-outline rounded-full border-2 border-surface z-10"></div>
+                                    <div class="pl-8 md:pl-12 border-l-2 md:border-l-0 border-outline-variant">
+                                        <h4 class="font-headline-md text-headline-md text-on-surface">${entry.company}</h4>
+                                        <p class="font-label-md text-label-md text-secondary mb-2">${entry.subtitle || ''}</p>
+                                        <p class="font-body-md text-body-md text-on-surface-variant max-w-md">${entry.description}</p>
+                                    </div>
+                                </div>`;
+                            }
+                        }
+                    }).join('');
+                }
+            }
+        });
+    </script>
+    <script>
+    function downloadCV() {
+        if (window.appContent?.site?.cvUrl) {
+            window.open(window.appContent.site.cvUrl, '_blank');
+        } else {
+            alert('No CV link configured. Please update in admin panel.');
+        }
+    }
     </script>
 </body>
 </html>

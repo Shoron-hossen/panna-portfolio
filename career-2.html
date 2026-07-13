@@ -5,6 +5,10 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Career &amp; Experience | Portfolio</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="/firebase-init.js"></script>
+<script src="/content-engine.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -129,7 +133,7 @@
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="project show case.html">Showcase</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/#contact">Contact</a>
 </nav>
-<button class="bg-primary text-on-primary px-6 py-2.5 font-label-md text-label-md rounded-lg active:opacity-80 transition-all">Download CV</button>
+<button class="bg-primary text-on-primary px-6 py-2.5 font-label-md text-label-md rounded-lg active:opacity-80 transition-all" onclick="downloadCV()">Download CV</button>
 </div>
 </header>
 <main class="max-w-[1280px] mx-auto px-gutter py-16 md:py-24">
@@ -137,9 +141,9 @@
 <section class="mb-section-gap">
 <div class="flex flex-col md:flex-row gap-12 items-center">
 <div class="w-full md:w-1/2">
-<span class="font-label-md text-label-md text-secondary mb-4 block uppercase tracking-widest">Trajectory &amp; Growth</span>
-<h1 class="font-headline-xl text-headline-xl text-on-surface mb-6">Career in Technical Excellence</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+<span class="font-label-md text-label-md text-secondary mb-4 block uppercase tracking-widest" data-content="careerPage.career2.subtitle">Trajectory &amp; Growth</span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-6" data-content="careerPage.career2.heading">Career in Technical Excellence</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl" data-content="careerPage.career2.heroDescription">
                     Navigating the intersection of engineering precision and industrial leadership. My professional path is defined by a commitment to optimizing systems and driving innovation within the global textile landscape.
                 </p>
 </div>
@@ -152,7 +156,7 @@
 <!-- Professional Core Pillars -->
 <section class="mb-section-gap">
 <div class="flex items-end justify-between mb-12">
-<h2 class="font-headline-lg text-headline-lg">Expertise Verticals</h2>
+<h2 class="font-headline-lg text-headline-lg" data-content="careerPage.career2.sectionHeadings.pillars">Expertise Verticals</h2>
 <div class="hidden md:block h-[1px] flex-grow mx-8 bg-outline-variant mb-3"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
@@ -190,7 +194,7 @@
 </section>
 <!-- Career Trajectory Timeline -->
 <section class="mb-section-gap">
-<h2 class="font-headline-lg text-headline-lg mb-16">Career Journey</h2>
+<h2 class="font-headline-lg text-headline-lg mb-16" data-content="careerPage.career2.sectionHeadings.timeline">Career Journey</h2>
 <div class="relative">
 <!-- Central Line -->
 <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] thread-line transform md:-translate-x-1/2"></div>
@@ -225,7 +229,7 @@
 </div>
 <!-- Milestone: Industrial Immersion -->
 <div class="relative flex justify-center mb-16">
-<div class="bg-surface-container-low border border-outline-variant px-8 py-2 rounded-full font-label-md text-label-md text-outline uppercase tracking-[0.2em] relative z-10">Industrial Foundations</div>
+<div class="bg-surface-container-low border border-outline-variant px-8 py-2 rounded-full font-label-md text-label-md text-outline uppercase tracking-[0.2em] relative z-10" data-content="careerPage.career2.sectionHeadings.milestone">Industrial Foundations</div>
 </div>
 <!-- Experience 2 -->
 <div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-center">
@@ -312,5 +316,14 @@
         el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
         observer.observe(el);
     });
+</script>
+<script>
+function downloadCV() {
+    if (window.appContent?.site?.cvUrl) {
+        window.open(window.appContent.site.cvUrl, '_blank');
+    } else {
+        alert('No CV link configured. Please update in admin panel.');
+    }
+}
 </script>
 </body></html>

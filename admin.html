@@ -5,6 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Admin Panel | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #1a1a1a; }
@@ -247,6 +249,11 @@
                         <label>Footer Text</label>
                         <input type="text" id="site-footerText" placeholder="Designed for Excellence">
                     </div>
+                    <div class="form-group">
+                        <label>Download CV Link URL</label>
+                        <input type="url" id="site-cvUrl" placeholder="https://drive.google.com/file/d/...">
+                        <small style="color: #888;">Paste your CV file link (Google Drive or direct URL)</small>
+                    </div>
                 </div>
             </div>
 
@@ -280,8 +287,19 @@
                     </div>
                     <div class="form-group">
                         <label>Portrait Image URL</label>
-                        <input type="text" id="hero-portraitUrl" placeholder="https://...">
+                        <input type="text" id="hero-portraitUrl" placeholder="https://..." style="margin-bottom: 8px;">
                     </div>
+                    <div class="form-group">
+                        <label>Or Upload Profile Photo</label>
+                        <input type="file" id="hero-portraitFile" accept="image/*" style="margin-bottom: 8px;">
+                        <small style="color: #888;">Upload directly or paste a Google Drive link below</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Google Drive Link (for high resolution)</label>
+                        <input type="text" id="hero-portraitDrive" placeholder="https://drive.google.com/file/d/...">
+                        <small style="color: #888;">Paste Google Drive sharing link for high-res image</small>
+                    </div>
+                    <div id="hero-portraitPreview" style="margin-top: 10px;"></div>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Degree Title</label>
@@ -381,10 +399,16 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header"><h3>Industrial Visits</h3></div>
+                    <div id="industrialVisits-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openVisitModal()">+ Add Visit</button>
+                </div>
+                <div class="card">
                     <div class="card-header"><h3>Key Skills</h3></div>
                     <div class="tag-container" id="keySkills-tags"></div>
                     <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <input type="text" id="keySkills-input" placeholder="Add new skill..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <input type="text" id="keySkills-input" placeholder="Skill name..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <input type="text" id="keySkills-logo" placeholder="Logo URL (optional)" style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
                         <button class="btn btn-primary" onclick="addTag('keySkills')">Add</button>
                     </div>
                 </div>
@@ -392,7 +416,8 @@
                     <div class="card-header"><h3>Soft Skills</h3></div>
                     <div class="tag-container" id="softSkills-tags"></div>
                     <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <input type="text" id="softSkills-input" placeholder="Add new soft skill..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <input type="text" id="softSkills-input" placeholder="Skill name..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <input type="text" id="softSkills-logo" placeholder="Logo URL (optional)" style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
                         <button class="btn btn-primary" onclick="addTag('softSkills')">Add</button>
                     </div>
                 </div>
@@ -492,6 +517,25 @@
                             <input type="text" id="cp-c1-heading">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="cp-c1-description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Career 1 - Section Headings</h3></div>
+                    <div class="form-group">
+                        <label>Technical Skills Section Title</label>
+                        <input type="text" id="cp-c1-tech-heading" placeholder="Technical Expertise">
+                    </div>
+                    <div class="form-group">
+                        <label>Soft Skills Section Title</label>
+                        <input type="text" id="cp-c1-ss-heading" placeholder="Professional Attributes">
+                    </div>
+                    <div class="form-group">
+                        <label>Extracurricular Section Title</label>
+                        <input type="text" id="cp-c1-extra-heading" placeholder="Beyond the Lab">
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header"><h3>Career 2 - Trajectory</h3></div>
@@ -511,9 +555,62 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header"><h3>Career 2 - Section Headings</h3></div>
+                    <div class="form-group">
+                        <label>Pillars Section Title</label>
+                        <input type="text" id="cp-c2-pillars-heading" placeholder="Core Verticals">
+                    </div>
+                    <div class="form-group">
+                        <label>Timeline Section Title</label>
+                        <input type="text" id="cp-c2-timeline-heading" placeholder="Career Journey">
+                    </div>
+                    <div class="form-group">
+                        <label>Milestone Label (e.g., Industrial Foundations)</label>
+                        <input type="text" id="cp-c2-milestone-label" placeholder="Industrial Foundations">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Technical Skills (Career 1)</h3></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Visual Design - Title</label><input type="text" id="cp-c1-ts-vd-title"></div>
+                        <div class="form-group"><label>Visual Design - Description</label><input type="text" id="cp-c1-ts-vd-desc"></div>
+                    </div>
+                    <div class="form-group"><label>Visual Design - Tags (comma separated)</label><input type="text" id="cp-c1-ts-vd-tags" placeholder="Adobe Photoshop, Lightroom, Digital Composition"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Office Suite - Title</label><input type="text" id="cp-c1-ts-office-title"></div>
+                        <div class="form-group"><label>Office Suite - Description</label><input type="text" id="cp-c1-ts-office-desc"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Photography - Title</label><input type="text" id="cp-c1-ts-photo-title"></div>
+                        <div class="form-group"><label>Photography - Description</label><input type="text" id="cp-c1-ts-photo-desc"></div>
+                    </div>
+                    <div class="form-group"><label>Textile R&D - Title</label><input type="text" id="cp-c1-ts-rd-title"></div>
+                    <div class="form-group"><label>Textile R&D Items (one per line)</label><textarea id="cp-c1-ts-rd-items" rows="3" placeholder="Fabric Analysis&#10;Quality Control"></textarea></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Education Entries</h3></div>
+                    <div id="cp-c1-education-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openEducationModal()">+ Add Education</button>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Soft Skills (Career 1)</h3></div>
+                    <div id="cp-c1-softskills-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openSoftSkillModal()">+ Add Soft Skill</button>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Extracurricular (Career 1)</h3></div>
+                    <div id="cp-c1-extra-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openExtraModal()">+ Add Extracurricular</button>
+                </div>
+                <div class="card">
                     <div class="card-header"><h3>Expertise Pillars</h3></div>
                     <div id="cp-c2-pillars-list"></div>
                     <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPillarModal()">+ Add Pillar</button>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Career Timeline</h3></div>
+                    <div id="cp-c2-timeline-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openTimelineModal()">+ Add Timeline Entry</button>
                 </div>
             </div>
         </div>
@@ -522,81 +619,213 @@
     <!-- Toast -->
     <div id="toast" class="toast"></div>
 
+    <!-- Reset Modal -->
+    <div id="resetModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Reset Content</h3>
+            <p style="color: #666; margin-bottom: 20px;">Select which section to reset to defaults:</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn btn-outline" onclick="confirmReset('all')" style="width: 100%; justify-content: center;">Reset All Content</button>
+                <button class="btn btn-outline" onclick="confirmReset('site')" style="width: 100%; justify-content: center;">Reset Site Settings</button>
+                <button class="btn btn-outline" onclick="confirmReset('hero')" style="width: 100%; justify-content: center;">Reset Hero Section</button>
+                <button class="btn btn-outline" onclick="confirmReset('about')" style="width: 100%; justify-content: center;">Reset About Section</button>
+                <button class="btn btn-outline" onclick="confirmReset('career')" style="width: 100%; justify-content: center;">Reset Career Highlights</button>
+                <button class="btn btn-outline" onclick="confirmReset('showcase')" style="width: 100%; justify-content: center;">Reset Showcase</button>
+                <button class="btn btn-outline" onclick="confirmReset('contact')" style="width: 100%; justify-content: center;">Reset Contact & Links</button>
+                <button class="btn btn-outline" onclick="confirmReset('careerpage')" style="width: 100%; justify-content: center;">Reset Career Pages</button>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeResetModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Pillar Modal -->
     <div id="pillarModal" class="modal-overlay">
         <div class="modal">
             <h3>Add/Edit Pillar</h3>
-            <div class="form-group">
-                <label>Icon (Material Symbol name)</label>
-                <input type="text" id="pillar-icon" placeholder="inventory_2">
-            </div>
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" id="pillar-title">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="pillar-description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Tags (comma separated)</label>
-                <input type="text" id="pillar-tags" placeholder="ERP Systems, Market Analysis">
-            </div>
+            <div class="form-group"><label>Icon (Material Symbol name)</label><input type="text" id="pillar-icon" placeholder="inventory_2"></div>
+            <div class="form-group"><label>Title</label><input type="text" id="pillar-title"></div>
+            <div class="form-group"><label>Description</label><textarea id="pillar-description" rows="3"></textarea></div>
+            <div class="form-group"><label>Tags (comma separated)</label><input type="text" id="pillar-tags" placeholder="ERP Systems, Market Analysis"></div>
             <div class="modal-actions">
-                <button class="btn btn-outline" onclick="closePillarModal()">Cancel</button>
+                <button class="btn btn-outline" onclick="closeModal('pillarModal')">Cancel</button>
                 <button class="btn btn-primary" onclick="savePillar()">Save</button>
             </div>
         </div>
     </div>
 
+    <!-- Industrial Visit Modal -->
+    <div id="visitModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Industrial Visit</h3>
+            <div class="form-group"><label>Type</label><input type="text" id="visit-type" placeholder="Spinning & Cotton"></div>
+            <div class="form-group"><label>Name</label><input type="text" id="visit-name" placeholder="Company Name"></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('visitModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveVisit()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Education Modal -->
+    <div id="educationModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Education</h3>
+            <div class="form-group"><label>Period</label><input type="text" id="edu-period" placeholder="2019 — Present"></div>
+            <div class="form-group"><label>Title</label><input type="text" id="edu-title" placeholder="B.Sc. in Textile Engineering"></div>
+            <div class="form-group"><label>Institution</label><input type="text" id="edu-institution" placeholder="University Name"></div>
+            <div class="form-group"><label>Description</label><textarea id="edu-description" rows="3"></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('educationModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEducation()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Soft Skill Modal -->
+    <div id="softskillModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Soft Skill</h3>
+            <div class="form-group"><label>Icon (Material Symbol name)</label><input type="text" id="ss-icon" placeholder="groups"></div>
+            <div class="form-group"><label>Title</label><input type="text" id="ss-title" placeholder="Collaborative Leadership"></div>
+            <div class="form-group"><label>Description</label><textarea id="ss-description" rows="3"></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('softskillModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSoftSkill()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extracurricular Modal -->
+    <div id="extraModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Extracurricular</h3>
+            <div class="form-group"><label>Icon (Material Symbol name)</label><input type="text" id="extra-icon" placeholder="event_available"></div>
+            <div class="form-group"><label>Title</label><input type="text" id="extra-title" placeholder="Event Coordination"></div>
+            <div class="form-group"><label>Description</label><textarea id="extra-description" rows="3"></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('extraModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveExtra()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Modal -->
+    <div id="timelineModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Timeline Entry</h3>
+            <div class="form-row">
+                <div class="form-group"><label>Badge (optional)</label><input type="text" id="tl-badge" placeholder="CURRENT"></div>
+                <div class="form-group"><label>Period</label><input type="text" id="tl-period" placeholder="JAN 2024 — MAR 2024"></div>
+            </div>
+            <div class="form-group"><label>Title</label><input type="text" id="tl-title" placeholder="Industrial Intern"></div>
+            <div class="form-group"><label>Company</label><input type="text" id="tl-company" placeholder="Company Name"></div>
+            <div class="form-group"><label>Type (for milestones)</label><input type="text" id="tl-type" placeholder="VERTICAL INTEGRATION STUDY"></div>
+            <div class="form-group"><label>Description / Accomplishments (one per line)</label><textarea id="tl-description" rows="4" placeholder="Optimized workflows..."></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('timelineModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveTimeline()">Save</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Initialize Firebase
+        firebase.initializeApp({
+            apiKey: "AIzaSyAIW6CwGaaigOoLlULKdUjCs9Wg_-am6EU",
+            authDomain: "panna-portfolio.firebaseapp.com",
+            projectId: "panna-portfolio",
+            storageBucket: "panna-portfolio.firebasestorage.app",
+            messagingSenderId: "908822152646",
+            appId: "1:908822152646:web:898e68333dfe8557a49ec7",
+            measurementId: "G-YKXF5L2LL3"
+        });
+        const db = firebase.firestore();
+        
         let contentData = {};
         
-        // Load content from API
+        // Load content from Firebase Firestore
         async function loadContent() {
             try {
-                const res = await fetch('/api/content');
-                contentData = await res.json();
+                const doc = await db.collection('portfolio').doc('content').get();
+                if (doc.exists) {
+                    contentData = doc.data();
+                } else {
+                    // Initialize with defaults if no data exists
+                    contentData = getDefaultContent();
+                    await db.collection('portfolio').doc('content').set(contentData);
+                }
                 populateForm();
                 showToast('Content loaded successfully', 'success');
             } catch (e) {
-                showToast('Failed to load content', 'error');
+                showToast('Failed to load content: ' + e.message, 'error');
             }
         }
         
-        // Save content to API
+        // Save content to Firebase Firestore
         async function saveAllContent() {
             collectFormData();
             try {
-                const res = await fetch('/api/content', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(contentData)
-                });
-                const result = await res.json();
-                if (result.success) {
-                    showToast('All changes saved successfully!', 'success');
-                } else {
-                    showToast('Failed to save changes', 'error');
-                }
+                await db.collection('portfolio').doc('content').set(contentData);
+                showToast('All changes saved successfully!', 'success');
             } catch (e) {
                 showToast('Failed to save: ' + e.message, 'error');
             }
         }
         
-        // Reset content
-        async function resetContent() {
-            if (!confirm('Are you sure you want to reset all content to defaults?')) return;
+        // Reset content to defaults
+        function resetContent() {
+            document.getElementById('resetModal').classList.add('show');
+        }
+        
+        function closeResetModal() {
+            document.getElementById('resetModal').classList.remove('show');
+        }
+        
+        async function confirmReset(section) {
+            if (!confirm(`Are you sure you want to reset ${section} to defaults?`)) return;
             try {
-                const res = await fetch('/api/content/reset', { method: 'POST' });
-                const result = await res.json();
-                if (result.success) {
-                    await loadContent();
-                    showToast('Content reset to defaults', 'success');
+                const defaults = getDefaultContent();
+                if (section === 'all') {
+                    contentData = defaults;
+                } else if (section === 'site') {
+                    contentData.site = defaults.site;
+                } else if (section === 'hero') {
+                    contentData.hero = defaults.hero;
+                } else if (section === 'about') {
+                    contentData.about = defaults.about;
+                } else if (section === 'career') {
+                    contentData.career = defaults.career;
+                } else if (section === 'showcase') {
+                    contentData.showcase = defaults.showcase;
+                } else if (section === 'contact') {
+                    contentData.contact = defaults.contact;
+                    contentData.links = defaults.links;
+                } else if (section === 'careerpage') {
+                    contentData.careerPage = defaults.careerPage;
                 }
+                await db.collection('portfolio').doc('content').set(contentData);
+                populateForm();
+                closeResetModal();
+                showToast(`${section === 'all' ? 'All content' : section.charAt(0).toUpperCase() + section.slice(1)} reset to defaults`, 'success');
             } catch (e) {
-                showToast('Failed to reset content', 'error');
+                showToast('Failed to reset: ' + e.message, 'error');
             }
+        }
+        
+        // Default content
+        function getDefaultContent() {
+            return {
+                site: { name: "Panna.", fullName: "MD Sakawat Hossain Panna", tagline: "Textile Engineer & Photographer", copyright: "© 2024 MD SAKAWAT HOSSAIN PANNA", footerText: "Designed for Excellence", cvUrl: "" },
+                hero: { subtitle: "Precision in Textiles & Light", heading: "MD Sakawat<br/>Hossain Panna", description: "A specialized Textile Engineer and visual storyteller.", focus: "Sustainable R&D", expertise: "Fabric Engineering", portraitUrl: "", degreeTitle: "B.Sc. Textile Engineering", degreeCollege: "Pabna Textile Engineering College" },
+                about: { subtitle: "Mission", heading: "Career Objective", description: "", quote: "", corePrinciples: ["Technical Integrity", "Creative Discipline", "Continuous Learning"], primaryDomains: ["Fiber & Yarn Analysis", "Industrial Photography", "Supply Chain Management"] },
+                career: { subtitle: "The Track Record", heading: "Professional Highlights", mainExperience: { badge: "Professional Internship", company: "Crown Wears Pvt. Ltd", role: "Merchandising, Production & IE", period: "Feb — March, 2024", tasks: [] }, keySkills: [{name: "Adobe Photoshop", logo: ""}, {name: "Illustrator", logo: ""}, {name: "MS Office", logo: ""}], softSkills: [{name: "Leadership", logo: ""}, {name: "Time Management", logo: ""}], academics: { ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate" }, bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering" } } },
+                showcase: { subtitle: "Creative Gallery", heading: "Visual Narrative", description: "" },
+                contact: { subtitle: "Available for projects", heading: "Let's Create<br/>Something Exceptional", email: "sakawatpanna77@gmail.com" },
+                links: { linkedin: "https://linkedin.com/in/sakawatpanna", instagram: "#", behance: "#" },
+                careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [] } }
+            };
         }
         
         // Show toast notification
@@ -606,6 +835,81 @@
             toast.className = 'toast toast-' + type + ' show';
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
+        
+        // Convert Google Drive link to direct image URL
+        function convertDriveLink(url) {
+            if (!url) return url;
+            let match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (!match) match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (match) {
+                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+            }
+            return url;
+        }
+        
+        // Handle file upload for profile photo
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('hero-portraitFile');
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                const MAX_WIDTH = 600;
+                                const MAX_HEIGHT = 800;
+                                let w = img.width, h = img.height;
+                                if (w > MAX_WIDTH) { h = h * MAX_WIDTH / w; w = MAX_WIDTH; }
+                                if (h > MAX_HEIGHT) { w = w * MAX_HEIGHT / h; h = MAX_HEIGHT; }
+                                canvas.width = w;
+                                canvas.height = h;
+                                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                                const compressed = canvas.toDataURL('image/jpeg', 0.7);
+                                document.getElementById('hero-portraitUrl').value = compressed;
+                                document.getElementById('hero-portraitPreview').innerHTML = 
+                                    `<img src="${compressed}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;">`;
+                                showToast('Image uploaded & compressed (' + Math.round(compressed.length / 1024) + 'KB)', 'success');
+                            };
+                            img.src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            // Handle Drive link conversion
+            const driveInput = document.getElementById('hero-portraitDrive');
+            if (driveInput) {
+                driveInput.addEventListener('blur', function() {
+                    const driveUrl = this.value.trim();
+                    if (driveUrl && driveUrl.includes('drive.google.com')) {
+                        const directUrl = convertDriveLink(driveUrl);
+                        document.getElementById('hero-portraitUrl').value = directUrl;
+                        document.getElementById('hero-portraitPreview').innerHTML = 
+                            `<img src="${directUrl}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;" onerror="this.style.display='none'">`;
+                        showToast('Drive link converted to direct URL', 'success');
+                    }
+                });
+            }
+            
+            // Handle portrait URL input preview
+            const portraitUrlInput = document.getElementById('hero-portraitUrl');
+            if (portraitUrlInput) {
+                portraitUrlInput.addEventListener('blur', function() {
+                    const url = this.value.trim();
+                    if (url && !url.startsWith('data:') && (url.startsWith('http://') || url.startsWith('https://'))) {
+                        document.getElementById('hero-portraitPreview').innerHTML = 
+                            `<img src="${url}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;" onerror="this.style.display='none'">`;
+                    } else if (url && url.startsWith('data:')) {
+                        document.getElementById('hero-portraitPreview').innerHTML = 
+                            `<img src="${url}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;">`;
+                    }
+                });
+            }
+        });
         
         // Navigation
         function showSection(sectionId, navItem) {
@@ -625,6 +929,7 @@
             setVal('site-tagline', contentData.site?.tagline);
             setVal('site-copyright', contentData.site?.copyright);
             setVal('site-footerText', contentData.site?.footerText);
+            setVal('site-cvUrl', contentData.site?.cvUrl);
             
             // Hero
             setVal('hero-subtitle', contentData.hero?.subtitle);
@@ -633,6 +938,10 @@
             setVal('hero-focus', contentData.hero?.focus);
             setVal('hero-expertise', contentData.hero?.expertise);
             setVal('hero-portraitUrl', contentData.hero?.portraitUrl);
+            if (contentData.hero?.portraitUrl) {
+                document.getElementById('hero-portraitPreview').innerHTML = 
+                    `<img src="${contentData.hero.portraitUrl}" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e5e5;" onerror="this.style.display='none'">`;
+            }
             setVal('hero-degreeTitle', contentData.hero?.degreeTitle);
             setVal('hero-degreeCollege', contentData.hero?.degreeCollege);
             
@@ -677,10 +986,35 @@
             // Career Pages
             setVal('cp-c1-subtitle', contentData.careerPage?.career1?.subtitle);
             setVal('cp-c1-heading', contentData.careerPage?.career1?.heading);
+            setVal('cp-c1-description', contentData.careerPage?.career1?.description);
+            // Career 1 - Section Headings
+            setVal('cp-c1-tech-heading', contentData.careerPage?.career1?.sectionHeadings?.technicalSkills);
+            setVal('cp-c1-ss-heading', contentData.careerPage?.career1?.sectionHeadings?.softSkills);
+            setVal('cp-c1-extra-heading', contentData.careerPage?.career1?.sectionHeadings?.extracurricular);
             setVal('cp-c2-subtitle', contentData.careerPage?.career2?.subtitle);
             setVal('cp-c2-heading', contentData.careerPage?.career2?.heading);
             setVal('cp-c2-heroDescription', contentData.careerPage?.career2?.heroDescription);
+            // Career 2 - Section Headings
+            setVal('cp-c2-pillars-heading', contentData.careerPage?.career2?.sectionHeadings?.pillars);
+            setVal('cp-c2-timeline-heading', contentData.careerPage?.career2?.sectionHeadings?.timeline);
+            setVal('cp-c2-milestone-label', contentData.careerPage?.career2?.sectionHeadings?.milestone);
+            // Career 1 - Technical Skills
+            const ts = contentData.careerPage?.career1?.technicalSkills || {};
+            setVal('cp-c1-ts-vd-title', ts.visualDesign?.title);
+            setVal('cp-c1-ts-vd-desc', ts.visualDesign?.description);
+            setVal('cp-c1-ts-vd-tags', (ts.visualDesign?.tags || []).join(', '));
+            setVal('cp-c1-ts-office-title', ts.office?.title);
+            setVal('cp-c1-ts-office-desc', ts.office?.description);
+            setVal('cp-c1-ts-photo-title', ts.photography?.title);
+            setVal('cp-c1-ts-photo-desc', ts.photography?.description);
+            setVal('cp-c1-ts-rd-title', ts.textileRD?.title);
+            setVal('cp-c1-ts-rd-items', (ts.textileRD?.items || []).join('\n'));
             renderPillars(contentData.careerPage?.career2?.pillars || []);
+            renderEducation(contentData.careerPage?.career1?.education || []);
+            renderSoftSkills(contentData.careerPage?.career1?.softSkills || []);
+            renderExtras(contentData.careerPage?.career1?.extracurricular || []);
+            renderTimeline(contentData.careerPage?.career2?.timeline || []);
+            renderListItems('industrialVisits', contentData.career?.industrialVisits || []);
             
             // Dashboard
             document.getElementById('dash-site-name').textContent = contentData.site?.name || '-';
@@ -704,7 +1038,8 @@
                 fullName: getVal('site-fullName'),
                 tagline: getVal('site-tagline'),
                 copyright: getVal('site-copyright'),
-                footerText: getVal('site-footerText')
+                footerText: getVal('site-footerText'),
+                cvUrl: getVal('site-cvUrl')
             };
             
             // Hero
@@ -778,18 +1113,53 @@
             if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
             contentData.careerPage.career1.subtitle = getVal('cp-c1-subtitle');
             contentData.careerPage.career1.heading = getVal('cp-c1-heading');
+            contentData.careerPage.career1.description = getVal('cp-c1-description');
+            // Career 1 - Section Headings
+            if (!contentData.careerPage.career1.sectionHeadings) contentData.careerPage.career1.sectionHeadings = {};
+            contentData.careerPage.career1.sectionHeadings.technicalSkills = getVal('cp-c1-tech-heading');
+            contentData.careerPage.career1.sectionHeadings.softSkills = getVal('cp-c1-ss-heading');
+            contentData.careerPage.career1.sectionHeadings.extracurricular = getVal('cp-c1-extra-heading');
             if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
             contentData.careerPage.career2.subtitle = getVal('cp-c2-subtitle');
             contentData.careerPage.career2.heading = getVal('cp-c2-heading');
             contentData.careerPage.career2.heroDescription = getVal('cp-c2-heroDescription');
+            // Career 2 - Section Headings
+            if (!contentData.careerPage.career2.sectionHeadings) contentData.careerPage.career2.sectionHeadings = {};
+            contentData.careerPage.career2.sectionHeadings.pillars = getVal('cp-c2-pillars-heading');
+            contentData.careerPage.career2.sectionHeadings.timeline = getVal('cp-c2-timeline-heading');
+            contentData.careerPage.career2.sectionHeadings.milestone = getVal('cp-c2-milestone-label');
+            // Career 1 - Technical Skills
+            if (!contentData.careerPage.career1.technicalSkills) contentData.careerPage.career1.technicalSkills = {};
+            const ts = contentData.careerPage.career1.technicalSkills;
+            ts.visualDesign = {
+                title: getVal('cp-c1-ts-vd-title'),
+                description: getVal('cp-c1-ts-vd-desc'),
+                tags: getVal('cp-c1-ts-vd-tags').split(',').map(t => t.trim()).filter(t => t)
+            };
+            ts.office = {
+                title: getVal('cp-c1-ts-office-title'),
+                description: getVal('cp-c1-ts-office-desc')
+            };
+            ts.photography = {
+                title: getVal('cp-c1-ts-photo-title'),
+                description: getVal('cp-c1-ts-photo-desc')
+            };
+            ts.textileRD = {
+                title: getVal('cp-c1-ts-rd-title'),
+                items: getVal('cp-c1-ts-rd-items').split('\n').map(t => t.trim()).filter(t => t)
+            };
         }
         
         // Tag management
         function renderTags(key, items) {
             const container = document.getElementById(key + '-tags');
-            container.innerHTML = items.map((item, i) => 
-                `<span class="tag">${item} <button onclick="removeTag('${key}', ${i})">&times;</button></span>`
-            ).join('');
+            container.innerHTML = items.map((item, i) => {
+                if (typeof item === 'object' && item !== null) {
+                    const logo = item.logo ? `<img src="${item.logo}" style="width:16px;height:16px;border-radius:3px;object-fit:cover;margin-right:6px;" onerror="this.style.display='none'">` : '';
+                    return `<span class="tag">${logo}${item.name || ''} <button onclick="removeTag('${key}', ${i})">&times;</button></span>`;
+                }
+                return `<span class="tag">${item} <button onclick="removeTag('${key}', ${i})">&times;</button></span>`;
+            }).join('');
         }
         
         function addTag(key) {
@@ -807,7 +1177,17 @@
             };
             
             const arr = tagMap[key]();
-            arr.push(value);
+            
+            // Check if this skill type supports logo URLs
+            if (key === 'keySkills' || key === 'softSkills') {
+                const logoInput = document.getElementById(key + '-logo');
+                const logoUrl = logoInput ? logoInput.value.trim() : '';
+                arr.push({ name: value, logo: logoUrl });
+                if (logoInput) logoInput.value = '';
+            } else {
+                arr.push(value);
+            }
+            
             renderTags(key, arr);
             input.value = '';
         }
@@ -826,34 +1206,7 @@
             }
         }
         
-        // List item management
-        function renderListItems(key, items) {
-            const container = document.getElementById(key + '-list');
-            container.innerHTML = items.map((item, i) => 
-                `<div class="list-item"><span>${item}</span><div class="list-item-actions"><button onclick="removeListItem('${key}', ${i})" title="Remove">✕</button></div></div>`
-            ).join('');
-        }
-        
-        function addListItem(key) {
-            const input = document.getElementById(key + '-input');
-            const value = input.value.trim();
-            if (!value) return;
-            
-            if (key === 'careerTasks') {
-                if (!contentData.career.mainExperience) contentData.career.mainExperience = {};
-                if (!contentData.career.mainExperience.tasks) contentData.career.mainExperience.tasks = [];
-                contentData.career.mainExperience.tasks.push(value);
-                renderListItems(key, contentData.career.mainExperience.tasks);
-            }
-            input.value = '';
-        }
-        
-        function removeListItem(key, index) {
-            if (key === 'careerTasks' && contentData.career?.mainExperience?.tasks) {
-                contentData.career.mainExperience.tasks.splice(index, 1);
-                renderListItems(key, contentData.career.mainExperience.tasks);
-            }
-        }
+        // List item management (enhanced version below)
         
         // Pillar management
         function renderPillars(pillars) {
@@ -889,10 +1242,6 @@
             document.getElementById('pillarModal').classList.add('show');
         }
         
-        function closePillarModal() {
-            document.getElementById('pillarModal').classList.remove('show');
-        }
-        
         function editPillar(index) {
             openPillarModal(index);
         }
@@ -901,29 +1250,200 @@
             if (!contentData.careerPage) contentData.careerPage = {};
             if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
             if (!contentData.careerPage.career2.pillars) contentData.careerPage.career2.pillars = [];
-            
             const pillar = {
-                icon: document.getElementById('pillar-icon').value,
-                title: document.getElementById('pillar-title').value,
+                icon: document.getElementById('pillar-icon').value, title: document.getElementById('pillar-title').value,
                 description: document.getElementById('pillar-description').value,
                 tags: document.getElementById('pillar-tags').value.split(',').map(t => t.trim()).filter(t => t)
             };
-            
-            if (editingPillarIndex >= 0) {
-                contentData.careerPage.career2.pillars[editingPillarIndex] = pillar;
-            } else {
-                contentData.careerPage.career2.pillars.push(pillar);
-            }
-            
+            if (editingPillarIndex >= 0) contentData.careerPage.career2.pillars[editingPillarIndex] = pillar;
+            else contentData.careerPage.career2.pillars.push(pillar);
             renderPillars(contentData.careerPage.career2.pillars);
-            closePillarModal();
+            closeModal('pillarModal');
         }
         
         function removePillar(index) {
             contentData.careerPage.career2.pillars.splice(index, 1);
             renderPillars(contentData.careerPage.career2.pillars);
         }
-        
+
+        // === Industrial Visits ===
+        let editingVisitIndex = -1;
+        function openVisitModal(index) {
+            editingVisitIndex = index !== undefined ? index : -1;
+            if (!contentData.career) contentData.career = {};
+            if (!contentData.career.industrialVisits) contentData.career.industrialVisits = [];
+            if (editingVisitIndex >= 0) { const v = contentData.career.industrialVisits[editingVisitIndex]; document.getElementById('visit-type').value = v.type || ''; document.getElementById('visit-name').value = v.name || ''; }
+            else { document.getElementById('visit-type').value = ''; document.getElementById('visit-name').value = ''; }
+            document.getElementById('visitModal').classList.add('show');
+        }
+        function editVisit(i) { openVisitModal(i); }
+        function saveVisit() {
+            const visit = { type: document.getElementById('visit-type').value, name: document.getElementById('visit-name').value };
+            if (editingVisitIndex >= 0) contentData.career.industrialVisits[editingVisitIndex] = visit;
+            else contentData.career.industrialVisits.push(visit);
+            renderListItems('industrialVisits', contentData.career.industrialVisits);
+            closeModal('visitModal');
+        }
+
+        // === Education ===
+        let editingEducationIndex = -1;
+        function renderEducation(items) {
+            const c = document.getElementById('cp-c1-education-list');
+            if (!c) return;
+            c.innerHTML = (items || []).map((item, i) =>
+                `<div class="list-item"><div><strong>${item.title}</strong><br><small style="color:#888;">${item.period} — ${item.institution}</small></div><div class="list-item-actions"><button onclick="editEducation(${i})" title="Edit">✎</button><button onclick="removeEducation(${i})" title="Remove">✕</button></div></div>`
+            ).join('');
+        }
+        function openEducationModal(index) {
+            editingEducationIndex = index !== undefined ? index : -1;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
+            if (!contentData.careerPage.career1.education) contentData.careerPage.career1.education = [];
+            if (editingEducationIndex >= 0) { const e = contentData.careerPage.career1.education[editingEducationIndex]; document.getElementById('edu-period').value = e.period || ''; document.getElementById('edu-title').value = e.title || ''; document.getElementById('edu-institution').value = e.institution || ''; document.getElementById('edu-description').value = e.description || ''; }
+            else { ['edu-period','edu-title','edu-institution','edu-description'].forEach(id => document.getElementById(id).value = ''); }
+            document.getElementById('educationModal').classList.add('show');
+        }
+        function editEducation(i) { openEducationModal(i); }
+        function saveEducation() {
+            const edu = { period: document.getElementById('edu-period').value, title: document.getElementById('edu-title').value, institution: document.getElementById('edu-institution').value, description: document.getElementById('edu-description').value };
+            if (editingEducationIndex >= 0) contentData.careerPage.career1.education[editingEducationIndex] = edu;
+            else contentData.careerPage.career1.education.push(edu);
+            renderEducation(contentData.careerPage.career1.education);
+            closeModal('educationModal');
+        }
+        function removeEducation(i) { contentData.careerPage.career1.education.splice(i, 1); renderEducation(contentData.careerPage.career1.education); }
+
+        // === Soft Skills (Career 1) ===
+        let editingSSIndex = -1;
+        function renderSoftSkills(items) {
+            const c = document.getElementById('cp-c1-softskills-list');
+            if (!c) return;
+            c.innerHTML = (items || []).map((item, i) =>
+                `<div class="list-item"><div><strong>${item.title}</strong><br><small style="color:#888;">${(item.description||'').substring(0,60)}...</small></div><div class="list-item-actions"><button onclick="editSoftSkill(${i})" title="Edit">✎</button><button onclick="removeSoftSkill(${i})" title="Remove">✕</button></div></div>`
+            ).join('');
+        }
+        function openSoftSkillModal(index) {
+            editingSSIndex = index !== undefined ? index : -1;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
+            if (!contentData.careerPage.career1.softSkills) contentData.careerPage.career1.softSkills = [];
+            if (editingSSIndex >= 0) { const s = contentData.careerPage.career1.softSkills[editingSSIndex]; document.getElementById('ss-icon').value = s.icon || ''; document.getElementById('ss-title').value = s.title || ''; document.getElementById('ss-description').value = s.description || ''; }
+            else { document.getElementById('ss-icon').value = ''; document.getElementById('ss-title').value = ''; document.getElementById('ss-description').value = ''; }
+            document.getElementById('softskillModal').classList.add('show');
+        }
+        function editSoftSkill(i) { openSoftSkillModal(i); }
+        function saveSoftSkill() {
+            const ss = { icon: document.getElementById('ss-icon').value, title: document.getElementById('ss-title').value, description: document.getElementById('ss-description').value };
+            if (editingSSIndex >= 0) contentData.careerPage.career1.softSkills[editingSSIndex] = ss;
+            else contentData.careerPage.career1.softSkills.push(ss);
+            renderSoftSkills(contentData.careerPage.career1.softSkills);
+            closeModal('softskillModal');
+        }
+        function removeSoftSkill(i) { contentData.careerPage.career1.softSkills.splice(i, 1); renderSoftSkills(contentData.careerPage.career1.softSkills); }
+
+        // === Extracurricular ===
+        let editingExtraIndex = -1;
+        function renderExtras(items) {
+            const c = document.getElementById('cp-c1-extra-list');
+            if (!c) return;
+            c.innerHTML = (items || []).map((item, i) =>
+                `<div class="list-item"><div><strong>${item.title}</strong><br><small style="color:#888;">${(item.description||'').substring(0,60)}...</small></div><div class="list-item-actions"><button onclick="editExtra(${i})" title="Edit">✎</button><button onclick="removeExtra(${i})" title="Remove">✕</button></div></div>`
+            ).join('');
+        }
+        function openExtraModal(index) {
+            editingExtraIndex = index !== undefined ? index : -1;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
+            if (!contentData.careerPage.career1.extracurricular) contentData.careerPage.career1.extracurricular = [];
+            if (editingExtraIndex >= 0) { const e = contentData.careerPage.career1.extracurricular[editingExtraIndex]; document.getElementById('extra-icon').value = e.icon || ''; document.getElementById('extra-title').value = e.title || ''; document.getElementById('extra-description').value = e.description || ''; }
+            else { document.getElementById('extra-icon').value = ''; document.getElementById('extra-title').value = ''; document.getElementById('extra-description').value = ''; }
+            document.getElementById('extraModal').classList.add('show');
+        }
+        function editExtra(i) { openExtraModal(i); }
+        function saveExtra() {
+            const extra = { icon: document.getElementById('extra-icon').value, title: document.getElementById('extra-title').value, description: document.getElementById('extra-description').value };
+            if (editingExtraIndex >= 0) contentData.careerPage.career1.extracurricular[editingExtraIndex] = extra;
+            else contentData.careerPage.career1.extracurricular.push(extra);
+            renderExtras(contentData.careerPage.career1.extracurricular);
+            closeModal('extraModal');
+        }
+        function removeExtra(i) { contentData.careerPage.career1.extracurricular.splice(i, 1); renderExtras(contentData.careerPage.career1.extracurricular); }
+
+        // === Timeline ===
+        let editingTimelineIndex = -1;
+        function renderTimeline(items) {
+            const c = document.getElementById('cp-c2-timeline-list');
+            if (!c) return;
+            c.innerHTML = (items || []).map((item, i) =>
+                `<div class="list-item"><div><strong>${item.title}</strong>${item.company ? ' — ' + item.company : ''}<br><small style="color:#888;">${item.period || item.type || ''}${item.accomplishments ? ' (' + item.accomplishments.length + ' accomplishements)' : ''}</small></div><div class="list-item-actions"><button onclick="editTimeline(${i})" title="Edit">✎</button><button onclick="removeTimeline(${i})" title="Remove">✕</button></div></div>`
+            ).join('');
+        }
+        function openTimelineModal(index) {
+            editingTimelineIndex = index !== undefined ? index : -1;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
+            if (!contentData.careerPage.career2.timeline) contentData.careerPage.career2.timeline = [];
+            if (editingTimelineIndex >= 0) { const t = contentData.careerPage.career2.timeline[editingTimelineIndex]; document.getElementById('tl-badge').value = t.badge || ''; document.getElementById('tl-period').value = t.period || ''; document.getElementById('tl-title').value = t.title || ''; document.getElementById('tl-company').value = t.company || ''; document.getElementById('tl-type').value = t.type || ''; document.getElementById('tl-description').value = (t.accomplishments || []).join('\n') || t.description || ''; }
+            else { ['tl-badge','tl-period','tl-title','tl-company','tl-type','tl-description'].forEach(id => document.getElementById(id).value = ''); }
+            document.getElementById('timelineModal').classList.add('show');
+        }
+        function editTimeline(i) { openTimelineModal(i); }
+        function saveTimeline() {
+            const badge = document.getElementById('tl-badge').value, period = document.getElementById('tl-period').value, title = document.getElementById('tl-title').value, company = document.getElementById('tl-company').value, type = document.getElementById('tl-type').value, descLines = document.getElementById('tl-description').value.split('\n').filter(l => l.trim());
+            const entry = (badge || period || company) ? { badge, period, title, company, accomplishments: descLines } : { title, type, description: descLines.join('\n') };
+            if (editingTimelineIndex >= 0) contentData.careerPage.career2.timeline[editingTimelineIndex] = entry;
+            else contentData.careerPage.career2.timeline.push(entry);
+            renderTimeline(contentData.careerPage.career2.timeline);
+            closeModal('timelineModal');
+        }
+        function removeTimeline(i) { contentData.careerPage.career2.timeline.splice(i, 1); renderTimeline(contentData.careerPage.career2.timeline); }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        function renderListItems(key, items) {
+            const container = document.getElementById(key + '-list');
+            if (!container) return;
+            if (!items || !items.length) { container.innerHTML = ''; return; }
+            if (typeof items[0] === 'string') {
+                container.innerHTML = items.map((item, i) =>
+                    `<div class="list-item"><span>${item}</span><div class="list-item-actions"><button onclick="removeListItem('${key}', ${i})" title="Remove">✕</button></div></div>`
+                ).join('');
+            } else if (typeof items[0] === 'object') {
+                container.innerHTML = items.map((item, i) =>
+                    `<div class="list-item"><span><strong>${item.type || item.name || ''}</strong>${item.type && item.name ? ' — ' : ''}${item.name || ''}</span><div class="list-item-actions"><button onclick="editVisit(${i})" title="Edit">✎</button><button onclick="removeListItem('${key}', ${i})" title="Remove">✕</button></div></div>`
+                ).join('');
+            }
+        }
+
+        function removeListItem(key, index) {
+            if (key === 'careerTasks' && contentData.career?.mainExperience?.tasks) {
+                contentData.career.mainExperience.tasks.splice(index, 1);
+                renderListItems(key, contentData.career.mainExperience.tasks);
+            }
+            if (key === 'industrialVisits' && contentData.career?.industrialVisits) {
+                contentData.career.industrialVisits.splice(index, 1);
+                renderListItems(key, contentData.career.industrialVisits);
+            }
+        }
+
+        function addListItem(key) {
+            const input = document.getElementById(key + '-input');
+            const value = input.value.trim();
+            if (!value) return;
+            if (!contentData.career) contentData.career = {};
+            if (key === 'careerTasks') {
+                if (!contentData.career.mainExperience) contentData.career.mainExperience = {};
+                if (!contentData.career.mainExperience.tasks) contentData.career.mainExperience.tasks = [];
+                contentData.career.mainExperience.tasks.push(value);
+                renderListItems(key, contentData.career.mainExperience.tasks);
+            } else if (key === 'industrialVisits') {
+                if (!contentData.career.industrialVisits) contentData.career.industrialVisits = [];
+                contentData.career.industrialVisits.push(value);
+                renderListItems(key, contentData.career.industrialVisits);
+            }
+            input.value = '';
+        }
+
         // Initialize
         loadContent();
     </script>

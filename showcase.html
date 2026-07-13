@@ -10,6 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="/firebase-init.js"></script>
+<script src="/content-engine.js"></script>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -152,7 +156,7 @@
 <a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="/showcase">Showcase</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/#contact">Contact</a>
 </nav>
-<button class="bg-primary text-on-primary px-6 py-2 font-label-md text-label-md transition-all active:scale-95">
+<button class="bg-primary text-on-primary px-6 py-2 font-label-md text-label-md transition-all active:scale-95" onclick="downloadCV()">
                 Download CV
             </button>
 </div>
@@ -162,9 +166,9 @@
 <section class="max-w-[1280px] mx-auto px-6 pt-24 pb-16">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-12">
 <div class="max-w-2xl">
-<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-[0.2em] mb-4 block">Archive 2020-2024</span>
-<h1 class="font-headline-xl text-headline-xl mb-6">Structural Precision &amp; Visual Narratives.</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed opacity-80">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-[0.2em] mb-4 block" data-content="showcase.subtitle">Archive 2020-2024</span>
+<h1 class="font-headline-xl text-headline-xl mb-6" data-content="showcase.heading">Structural Precision &amp; Visual Narratives.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed opacity-80" data-content="showcase.description">
                         A curated selection of works exploring the tactile intelligence of materials and the evocative power of light. From technical textile R&amp;D to architectural photography.
                     </p>
 </div>
@@ -264,8 +268,8 @@
 <!-- CTA Section: High-End Agency Style -->
 <section class="bg-primary text-on-primary py-40">
 <div class="max-w-[1280px] mx-auto px-6 text-center">
-<span class="font-label-md text-label-md opacity-60 uppercase tracking-[0.3em] mb-8 block">Collaborations</span>
-<h2 class="font-headline-xl text-headline-xl mb-12 max-w-4xl mx-auto leading-tight">Elevating technical complexity with refined visual clarity.</h2>
+<span class="font-label-md text-label-md opacity-60 uppercase tracking-[0.3em] mb-8 block" data-content="contact.subtitle">Collaborations</span>
+                    <h2 class="font-headline-xl text-headline-xl mb-12 max-w-4xl mx-auto leading-tight" data-content="contact.heading">Elevating technical complexity with refined visual clarity.</h2>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
 <a class="group flex items-center space-x-4 bg-white text-primary px-12 py-5 font-label-md text-label-md transition-all hover:pr-14" href="#">
 <span>Start a Conversation</span>
@@ -385,5 +389,14 @@
             
             document.querySelectorAll('#gallery-grid > div').forEach(el => observer.observe(el));
         });
+    </script>
+    <script>
+    function downloadCV() {
+        if (window.appContent?.site?.cvUrl) {
+            window.open(window.appContent.site.cvUrl, '_blank');
+        } else {
+            alert('No CV link configured. Please update in admin panel.');
+        }
+    }
     </script>
 </body></html>

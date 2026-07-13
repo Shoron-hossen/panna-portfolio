@@ -4,6 +4,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="/firebase-init.js"></script>
+<script src="/content-engine.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Work+Sans:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/>
@@ -123,7 +127,7 @@
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="project show case.html">Showcase</a>
 <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="/#contact">Contact</a>
 </div>
-<button class="px-6 py-2 border border-primary text-primary font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all duration-300">
+<button class="px-6 py-2 border border-primary text-primary font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all duration-300" onclick="downloadCV()">
                 Download CV
             </button>
 </nav>
@@ -131,14 +135,14 @@
 <main class="max-w-[1280px] mx-auto px-6">
 <!-- Hero Title Section -->
 <section class="mt-24 mb-32 flex flex-col items-center text-center">
-<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Academic & Technical</span>
-<h1 class="font-headline-xl text-headline-xl text-primary max-w-4xl">The fusion of structural engineering and visual precision.</h1>
+<span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4" data-content="careerPage.career1.subtitle">Academic & Technical</span>
+<h1 class="font-headline-xl text-headline-xl text-primary max-w-4xl" data-content="careerPage.career1.heading">The fusion of structural engineering and visual precision.</h1>
 </section>
 <!-- Education & Thread Visual -->
 <section class="mb-section-gap grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
 <div class="lg:col-span-4">
-<h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary">Academic<br/>Foundations</h2>
-<p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
+<h2 class="font-headline-lg text-headline-lg sticky top-32 text-primary" data-content="careerPage.career1.subtitle">Academic<br/>Foundations</h2>
+<p class="mt-6 font-body-lg text-body-lg text-on-surface-variant pr-8" data-content="careerPage.career1.description">A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.</p>
 </div>
 <div class="lg:col-span-8 relative pl-8">
 <!-- Thread Line -->
@@ -148,10 +152,10 @@
 <div class="absolute -left-[36px] top-1 w-4 h-4 bg-primary border-4 border-surface rounded-full z-10"></div>
 <div class="flex flex-col md:flex-row md:items-start gap-4">
 <div class="flex-grow">
-<span class="font-label-md text-label-md text-secondary">2019 — Present</span>
-<h3 class="font-headline-md text-headline-md text-primary mt-2">B.Sc. in Textile Engineering</h3>
-<p class="font-body-lg text-body-lg text-primary font-semibold">Bangladesh University of Textiles (BUTEX)</p>
-<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Specializing in apparel manufacturing and textile physics. My studies focus on sustainable fabrication techniques, structural integrity of high-performance fabrics, and industrial R&D processes.</p>
+<span class="font-label-md text-label-md text-secondary" data-content="careerPage.career1.education[0].period">2019 — Present</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-2" data-content="careerPage.career1.education[0].title">B.Sc. in Textile Engineering</h3>
+<p class="font-body-lg text-body-lg text-primary font-semibold" data-content="careerPage.career1.education[0].institution">Bangladesh University of Textiles (BUTEX)</p>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[0].description">Specializing in apparel manufacturing and textile physics. My studies focus on sustainable fabrication techniques, structural integrity of high-performance fabrics, and industrial R&D processes.</p>
 </div>
 <div class="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
 <img class="w-full h-full object-cover" data-alt="A macro photograph showing the intricate, interlocking fibers of high-quality textile fabric. The image is captured in a minimalist style with sharp focus on the geometric patterns of the weave, using a clean slate and white color palette to evoke a sense of technical engineering and meticulous detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0rwnSnEvMqxlyBdCVyd9vYrZCL_hqV-Q-vCJZzYM3jQKUrriz1dHbEt4HBg-uhqIZvd3GB2_m29ACGDY8V_ZwTJ7eR_C01V2rbABELGSlGARPuyTow_EdIW__c_7Bkg9xBmF-eD3GzcmFNv95AvcKDMY5Jc4UnoIcuMLNGP22DBUxJIsHhkkfu5IBLQJ47uVp0ZfnAQ8JmWMc-98ZnQdnXHCVUYFCsv9LCQV8uI0ZEBeH-Ywg2iS7EH1sklQy9OZPWMrFzCdovOCr"/>
@@ -163,10 +167,10 @@
 <div class="absolute -left-[36px] top-1 w-4 h-4 bg-outline-variant border-4 border-surface rounded-full z-10 group-hover:bg-primary transition-colors duration-300"></div>
 <div class="flex flex-col md:flex-row md:items-start gap-4">
 <div class="flex-grow">
-<span class="font-label-md text-label-md text-secondary">2016 — 2018</span>
-<h3 class="font-headline-md text-headline-md text-primary mt-2">Higher Secondary Certificate (HSC)</h3>
-<p class="font-body-lg text-body-lg text-primary font-semibold">Govt. Edward College, Pabna</p>
-<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Science major with high-distinction in Mathematics and Physics. This period established the core analytical skills necessary for complex engineering calculations.</p>
+<span class="font-label-md text-label-md text-secondary" data-content="careerPage.career1.education[1].period">2016 — 2018</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-2" data-content="careerPage.career1.education[1].title">Higher Secondary Certificate (HSC)</h3>
+<p class="font-body-lg text-body-lg text-primary font-semibold" data-content="careerPage.career1.education[1].institution">Govt. Edward College, Pabna</p>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[1].description">Science major with high-distinction in Mathematics and Physics. This period established the core analytical skills necessary for complex engineering calculations.</p>
 </div>
 </div>
 </div>
@@ -175,10 +179,10 @@
 <div class="absolute -left-[36px] top-1 w-4 h-4 bg-outline-variant border-4 border-surface rounded-full z-10 group-hover:bg-primary transition-colors duration-300"></div>
 <div class="flex flex-col md:flex-row md:items-start gap-4">
 <div class="flex-grow">
-<span class="font-label-md text-label-md text-secondary">Graduated 2016</span>
-<h3 class="font-headline-md text-headline-md text-primary mt-2">Secondary School Certificate (SSC)</h3>
-<p class="font-body-lg text-body-lg text-primary font-semibold">Atghoria Govt High School</p>
-<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">Early academic excellence with a focus on general sciences, laying the groundwork for a future in technical education.</p>
+<span class="font-label-md text-label-md text-secondary" data-content="careerPage.career1.education[2].period">Graduated 2016</span>
+<h3 class="font-headline-md text-headline-md text-primary mt-2" data-content="careerPage.career1.education[2].title">Secondary School Certificate (SSC)</h3>
+<p class="font-body-lg text-body-lg text-primary font-semibold" data-content="careerPage.career1.education[2].institution">Atghoria Govt High School</p>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[2].description">Early academic excellence with a focus on general sciences, laying the groundwork for a future in technical education.</p>
 </div>
 </div>
 </div>
@@ -188,7 +192,7 @@
 <section class="mb-section-gap">
 <div class="flex flex-col items-center mb-16">
 <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Core Competencies</span>
-<h2 class="font-headline-lg text-headline-lg text-primary">Technical Expertise</h2>
+<h2 class="font-headline-lg text-headline-lg text-primary" data-content="careerPage.career1.sectionHeadings.technicalSkills">Technical Expertise</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[200px]">
 <!-- Digital Design -->
@@ -197,8 +201,8 @@
 <div class="w-12 h-12 bg-primary flex items-center justify-center mb-6">
 <span class="material-symbols-outlined text-on-primary">brush</span>
 </div>
-<h3 class="font-headline-md text-headline-md text-primary">Visual Identity & Design</h3>
-<p class="mt-4 font-body-md text-body-md text-on-surface-variant max-w-lg">Advanced proficiency in Adobe Photoshop and digital imaging. I bridge the gap between textile engineering and aesthetics, ensuring product visualizations meet professional standards.</p>
+<h3 class="font-headline-md text-headline-md text-primary" data-content="careerPage.career1.technicalSkills.visualDesign.title">Visual Identity & Design</h3>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant max-w-lg" data-content="careerPage.career1.technicalSkills.visualDesign.description">Advanced proficiency in Adobe Photoshop and digital imaging. I bridge the gap between textile engineering and aesthetics, ensuring product visualizations meet professional standards.</p>
 </div>
 <div class="flex flex-wrap gap-2 mt-8">
 <span class="px-4 py-1.5 bg-surface-container-highest text-on-surface font-label-md text-label-md rounded">Adobe Photoshop</span>
@@ -209,8 +213,8 @@
 <!-- Office Productivity -->
 <div class="md:col-span-4 md:row-span-1 bg-primary text-on-primary p-6 border border-primary bento-card">
 <span class="material-symbols-outlined mb-4">analytics</span>
-<h3 class="font-label-md text-label-md uppercase tracking-wider">Office Suite</h3>
-<p class="mt-2 font-body-md text-body-md opacity-80">Expert handling of MS Excel, PowerPoint, and Word for technical reporting and data visualization.</p>
+<h3 class="font-label-md text-label-md uppercase tracking-wider" data-content="careerPage.career1.technicalSkills.office.title">Office Suite</h3>
+<p class="mt-2 font-body-md text-body-md opacity-80" data-content="careerPage.career1.technicalSkills.office.description">Expert handling of MS Excel, PowerPoint, and Word for technical reporting and data visualization.</p>
 </div>
 <!-- Photography -->
 <div class="md:col-span-4 md:row-span-2 relative overflow-hidden bento-card bg-surface-container-low border border-outline-variant">
@@ -220,13 +224,13 @@
 </div>
 <div class="relative z-10 p-6 flex flex-col h-full justify-end text-on-primary">
 <span class="material-symbols-outlined mb-4">photo_camera</span>
-<h3 class="font-headline-md text-headline-md">Visual Storytelling</h3>
-<p class="mt-2 font-body-md text-body-md opacity-90">Capturing the soul of industrial processes through professional photography.</p>
+<h3 class="font-headline-md text-headline-md" data-content="careerPage.career1.technicalSkills.photography.title">Visual Storytelling</h3>
+<p class="mt-2 font-body-md text-body-md opacity-90" data-content="careerPage.career1.technicalSkills.photography.description">Capturing the soul of industrial processes through professional photography.</p>
 </div>
 </div>
 <!-- Textile R&D -->
 <div class="md:col-span-4 md:row-span-1 bg-surface-container-low p-6 border border-outline-variant bento-card flex flex-col justify-center">
-<h3 class="font-label-md text-label-md text-primary mb-2">Textile R&D</h3>
+<h3 class="font-label-md text-label-md text-primary mb-2" data-content="careerPage.career1.technicalSkills.textileRD.title">Textile R&D</h3>
 <div class="space-y-2">
 <div class="flex justify-between items-center border-b border-outline-variant py-1">
 <span class="text-body-md">Fabric Analysis</span>
@@ -244,34 +248,34 @@
 <section class="mb-section-gap grid grid-cols-1 lg:grid-cols-2 gap-12">
 <!-- Soft Skills -->
 <div class="p-10 border border-outline-variant bg-surface-container-lowest">
-<h3 class="font-headline-md text-headline-md text-primary mb-8">Professional Attributes</h3>
+<h3 class="font-headline-md text-headline-md text-primary mb-8" data-content="careerPage.career1.sectionHeadings.softSkills">Professional Attributes</h3>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
 <div>
 <span class="material-symbols-outlined text-primary mb-2">groups</span>
-<h4 class="font-label-md text-label-md text-primary">Collaborative Leadership</h4>
-<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Proven ability to lead diverse teams in high-pressure technical environments.</p>
+<h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[0].title">Collaborative Leadership</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[0].description">Proven ability to lead diverse teams in high-pressure technical environments.</p>
 </div>
 <div>
 <span class="material-symbols-outlined text-primary mb-2">psychology</span>
-<h4 class="font-label-md text-label-md text-primary">Analytical Problem Solving</h4>
-<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Applying engineering logic to solve complex textile production challenges.</p>
+<h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[1].title">Analytical Problem Solving</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[1].description">Applying engineering logic to solve complex textile production challenges.</p>
 </div>
 <div>
 <span class="material-symbols-outlined text-primary mb-2">chat</span>
-<h4 class="font-label-md text-label-md text-primary">Effective Communication</h4>
-<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Fluent in bridging technical specifications with creative visual requirements.</p>
+<h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[2].title">Effective Communication</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[2].description">Fluent in bridging technical specifications with creative visual requirements.</p>
 </div>
 <div>
 <span class="material-symbols-outlined text-primary mb-2">history_edu</span>
-<h4 class="font-label-md text-label-md text-primary">Meticulous Researcher</h4>
-<p class="mt-2 font-body-md text-body-md text-on-surface-variant">Deep-dive approach to material science and market trends.</p>
+<h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.softSkills[3].title">Meticulous Researcher</h4>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant" data-content="careerPage.career1.softSkills[3].description">Deep-dive approach to material science and market trends.</p>
 </div>
 </div>
 </div>
 <!-- Extracurricular -->
 <div class="flex flex-col justify-between">
 <div class="bg-primary p-1 flex-grow-0 mb-8 w-16"></div>
-<h3 class="font-headline-md text-headline-md text-primary mb-6">Beyond the Lab</h3>
+<h3 class="font-headline-md text-headline-md text-primary mb-6" data-content="careerPage.career1.sectionHeadings.extracurricular">Beyond the Lab</h3>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-10">Active participation in university events and professional workshops, maintaining a pulse on both engineering innovations and artistic movements.</p>
 <div class="space-y-6">
 <div class="flex items-start gap-4">
@@ -279,8 +283,8 @@
 <span class="material-symbols-outlined">event_available</span>
 </div>
 <div>
-<h4 class="font-label-md text-label-md text-primary">Event Coordination</h4>
-<p class="text-body-md text-on-surface-variant">Organizing technical seminars and photography exhibitions at BUTEX.</p>
+<h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.extracurricular[0].title">Event Coordination</h4>
+<p class="text-body-md text-on-surface-variant" data-content="careerPage.career1.extracurricular[0].description">Organizing technical seminars and photography exhibitions at BUTEX.</p>
 </div>
 </div>
 <div class="flex items-start gap-4">
@@ -288,8 +292,8 @@
 <span class="material-symbols-outlined">volunteer_activism</span>
 </div>
 <div>
-<h4 class="font-label-md text-label-md text-primary">Community Engagement</h4>
-<p class="text-body-md text-on-surface-variant">Contributing to local development initiatives through technical literacy programs.</p>
+<h4 class="font-label-md text-label-md text-primary" data-content="careerPage.career1.extracurricular[1].title">Community Engagement</h4>
+<p class="text-body-md text-on-surface-variant" data-content="careerPage.career1.extracurricular[1].description">Contributing to local development initiatives through technical literacy programs.</p>
 </div>
 </div>
 </div>
@@ -334,5 +338,14 @@
             card.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
             observer.observe(card);
         });
+    </script>
+    <script>
+    function downloadCV() {
+        if (window.appContent?.site?.cvUrl) {
+            window.open(window.appContent.site.cvUrl, '_blank');
+        } else {
+            alert('No CV link configured. Please update in admin panel.');
+        }
+    }
     </script>
 </body></html>
