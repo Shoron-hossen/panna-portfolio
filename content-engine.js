@@ -38,7 +38,12 @@ function populateSimple() {
         const h = el.getAttribute('data-cld-h');
         const val = getNested(window.appContent, path);
         if (val && typeof val === 'string' && val.trim() !== '') {
-            el.src = cld(val, w, h);
+            const optimizedUrl = cld(val, w, h);
+            const preloader = new Image();
+            preloader.onload = function() {
+                el.src = optimizedUrl;
+            };
+            preloader.src = optimizedUrl;
         }
     });
 }
@@ -90,16 +95,24 @@ function populateLists() {
 
 async function loadContent() {
     try {
+        if (typeof db === 'undefined') {
+            console.warn('Firestore not initialized');
+            return;
+        }
         const doc = await db.collection('portfolio').doc('content').get();
         if (doc.exists) {
             window.appContent = doc.data();
         }
     } catch (e) {
-        console.warn('Firestore load failed, using defaults:', e);
+        console.warn('Firestore load failed:', e.message);
     }
     populateSimple();
     populateLists();
     document.dispatchEvent(new CustomEvent('contentLoaded', { detail: window.appContent }));
 }
 
-document.addEventListener('DOMContentLoaded', loadContent);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadContent);
+} else {
+    loadContent();
+}
