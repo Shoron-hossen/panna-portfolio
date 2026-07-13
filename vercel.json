@@ -1,20 +1,15 @@
 {
-  "cleanUrls": true,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "framework": null,
+  "installCommand": "",
   "rewrites": [
-    { "source": "/", "destination": "/homepage.html" },
     { "source": "/career", "destination": "/career.html" },
     { "source": "/career-1", "destination": "/career-1.html" },
     { "source": "/career-2", "destination": "/career-2.html" },
     { "source": "/showcase", "destination": "/showcase.html" },
     { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/homepage", "destination": "/homepage.html" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    }
+    { "source": "/homepage", "destination": "/homepage.html" },
+    { "source": "/", "destination": "/homepage.html" }
   ]
 }
