@@ -752,6 +752,12 @@
             <div class="form-group"><label>Period</label><input type="text" id="edu-period" placeholder="2019 — Present"></div>
             <div class="form-group"><label>Title</label><input type="text" id="edu-title" placeholder="B.Sc. in Textile Engineering"></div>
             <div class="form-group"><label>Institution</label><input type="text" id="edu-institution" placeholder="University Name"></div>
+            <div class="form-group"><label>Logo Image URL</label>
+                <div style="display:flex;gap:6px;">
+                    <input type="url" id="edu-logo" placeholder="https://...logo.png" style="flex:1;">
+                    <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('edu-logo').value = url; })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                </div>
+            </div>
             <div class="form-group"><label>Description</label><textarea id="edu-description" rows="3"></textarea></div>
             <div class="modal-actions">
                 <button class="btn btn-outline" onclick="closeModal('educationModal')">Cancel</button>
@@ -1572,22 +1578,23 @@
         function renderEducation(items) {
             const c = document.getElementById('cp-c1-education-list');
             if (!c) return;
-            c.innerHTML = (items || []).map((item, i) =>
-                `<div class="list-item"><div><strong>${item.title}</strong><br><small style="color:#888;">${item.period} — ${item.institution}</small></div><div class="list-item-actions"><button onclick="editEducation(${i})" title="Edit">✎</button><button onclick="removeEducation(${i})" title="Remove">✕</button></div></div>`
-            ).join('');
+            c.innerHTML = (items || []).map((item, i) => {
+                const logoHtml = item.logo ? `<img src="${item.logo}" style="width:24px;height:24px;object-fit:contain;border-radius:4px;flex-shrink:0;" onerror="this.style.display='none'">` : '';
+                return `<div class="list-item" style="display:flex;align-items:center;gap:10px;">${logoHtml}<div style="flex:1;min-width:0;"><strong>${item.title}</strong><br><small style="color:#888;">${item.period} — ${item.institution}</small></div><div class="list-item-actions"><button onclick="editEducation(${i})" title="Edit">✎</button><button onclick="removeEducation(${i})" title="Remove">✕</button></div></div>`;
+            }).join('');
         }
         function openEducationModal(index) {
             editingEducationIndex = index !== undefined ? index : -1;
             if (!contentData.careerPage) contentData.careerPage = {};
             if (!contentData.careerPage.career1) contentData.careerPage.career1 = {};
             if (!contentData.careerPage.career1.education) contentData.careerPage.career1.education = [];
-            if (editingEducationIndex >= 0) { const e = contentData.careerPage.career1.education[editingEducationIndex]; document.getElementById('edu-period').value = e.period || ''; document.getElementById('edu-title').value = e.title || ''; document.getElementById('edu-institution').value = e.institution || ''; document.getElementById('edu-description').value = e.description || ''; }
-            else { ['edu-period','edu-title','edu-institution','edu-description'].forEach(id => document.getElementById(id).value = ''); }
+            if (editingEducationIndex >= 0) { const e = contentData.careerPage.career1.education[editingEducationIndex]; document.getElementById('edu-period').value = e.period || ''; document.getElementById('edu-title').value = e.title || ''; document.getElementById('edu-institution').value = e.institution || ''; document.getElementById('edu-logo').value = e.logo || ''; document.getElementById('edu-description').value = e.description || ''; }
+            else { ['edu-period','edu-title','edu-institution','edu-logo','edu-description'].forEach(id => document.getElementById(id).value = ''); }
             document.getElementById('educationModal').classList.add('show');
         }
         function editEducation(i) { openEducationModal(i); }
         function saveEducation() {
-            const edu = { period: document.getElementById('edu-period').value, title: document.getElementById('edu-title').value, institution: document.getElementById('edu-institution').value, description: document.getElementById('edu-description').value };
+            const edu = { period: document.getElementById('edu-period').value, title: document.getElementById('edu-title').value, institution: document.getElementById('edu-institution').value, logo: document.getElementById('edu-logo').value, description: document.getElementById('edu-description').value };
             if (editingEducationIndex >= 0) contentData.careerPage.career1.education[editingEducationIndex] = edu;
             else contentData.careerPage.career1.education.push(edu);
             renderEducation(contentData.careerPage.career1.education);
