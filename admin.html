@@ -121,38 +121,43 @@
         }
 
         /* Login Overlay */
-        .login-overlay {
+.login-overlay {
             position: fixed; inset: 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             display: flex; justify-content: center; align-items: center; z-index: 1000;
-            padding: 24px;
+            padding: 16px;
         }
         .login-overlay.hidden { display: none; }
         
-        .login-container { width: 100%; max-width: 380px; }
+        .login-container { width: 100%; max-width: 360px; }
         
         .login-card {
-            background: #fff; border-radius: 14px; box-shadow: 0 16px 32px -12px rgba(0,0,0,0.08);
-            padding: 40px 32px; border: 1px solid #e5e7eb;
+            background: #fff; border-radius: 14px; box-shadow: 0 12px 28px -10px rgba(0,0,0,0.08);
+            padding: 36px 32px; border: 1px solid #e5e7eb;
         }
         
-        .login-header { text-align: center; margin-bottom: 32px; }
+        .login-header { text-align: center; margin-bottom: 28px; }
         .login-logo {
-            font-family: 'Manrope', sans-serif; font-size: 28px; font-weight: 800;
-            color: #1a1a1a; letter-spacing: -0.5px; margin-bottom: 16px;
+            font-family: 'Manrope', sans-serif; font-size: 26px; font-weight: 800;
+            color: #1a1a1a; letter-spacing: -0.5px; margin-bottom: 12px;
         }
-        .login-header h2 { font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 8px; }
-        .login-header p { font-size: 15px; color: #6b7280; }
+        .login-header h2 { font-size: 22px; font-weight: 700; color: #111827; margin-bottom: 6px; }
+        .login-header p { font-size: 14px; color: #6b7280; }
         
-        .login-form { display: flex; flex-direction: column; gap: 20px; }
+        .login-form { display: flex; flex-direction: column; gap: 18px; }
         
-        .password-input-wrapper {
-            position: relative;
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 13px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input {
+            width: 100%; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px;
+            font-size: 14px; font-family: 'Inter', sans-serif; transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff;
         }
-        .password-input-wrapper input {
-            padding-right: 52px;
-        }
+        .form-group input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.12); }
+        
+        .password-input-wrapper { position: relative; }
+        .password-input-wrapper input { padding-right: 46px; }
         .toggle-password {
-            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
             background: none; border: none; cursor: pointer; color: #9ca3af;
             padding: 4px; display: flex; align-items: center; justify-content: center;
             transition: color 0.2s;
@@ -163,18 +168,18 @@
         
         .login-error {
             background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;
-            padding: 12px 16px; border-radius: 8px; font-size: 14px;
+            padding: 10px 14px; border-radius: 8px; font-size: 13px;
             text-align: center; animation: shake 0.4s ease;
         }
         .login-error.hidden { display: none; }
         
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
         
-        .btn-full { width: 100%; justify-content: center; padding: 14px 24px; font-size: 15px; }
+        .btn-full { width: 100%; justify-content: center; padding: 13px 20px; font-size: 14px; }
         
         #main-content.hidden { display: none; }
     </style>
