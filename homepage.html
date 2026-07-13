@@ -64,6 +64,65 @@
         @media (max-width: 768px) {
             body { padding-bottom: 80px; }
         }
+        
+        /* Mobile responsive fixes */
+        @media (max-width: 768px) {
+            /* Reduce horizontal padding */
+            .px-gutter { padding-left: 16px !important; padding-right: 16px !important; }
+            .px-6 { padding-left: 16px !important; padding-right: 16px !important; }
+            
+            /* Hero section fixes */
+            .text-\[64px\] { font-size: 40px !important; line-height: 1.15 !important; }
+            .text-\[48px\] { font-size: 32px !important; }
+            
+            /* Button fixes - stack and reduce padding */
+            .flex.flex-wrap.gap-6 > a,
+            .flex.flex-col.md\\:flex-row.gap-12 > div > .flex.flex-wrap.gap-6 > a {
+                width: 100%;
+                text-align: center;
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+                padding-top: 14px !important;
+                padding-bottom: 14px !important;
+            }
+            
+            /* Grid stack on mobile */
+            .grid.grid-cols-1.lg\\:grid-cols-12 { grid-template-columns: 1fr !important; }
+            .lg\\:col-span-8, .lg\\:col-span-4 { grid-column: span 1 !important; }
+            
+            /* Hide vertical divider on mobile */
+            .hidden.md\\:block.w-px { display: none !important; }
+            
+            /* Portrait image container */
+            .aspect-\\[3/4\\] { aspect-ratio: 3/4 !important; max-width: 100% !important; }
+            
+            /* Floating cards */
+            .absolute.-bottom-10.-left-10 { position: static !important; margin-top: 24px; max-width: 100% !important; }
+            .hidden.xl\\:block { display: block !important; }
+            
+            /* Section gaps */
+            .mb-32 { margin-bottom: 48px !important; }
+            .mb-24 { margin-bottom: 32px !important; }
+            .mb-16 { margin-bottom: 24px !important; }
+            .mt-24 { margin-top: 32px !important; }
+            
+            /* Stats grid */
+            .grid.grid-cols-2.md\\:grid-cols-4 { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+            
+            /* About section */
+            .grid.grid-cols-1.md\\:grid-cols-2.gap-16 { grid-template-columns: 1fr !important; gap: 24px !important; }
+            
+            /* Showcase grid */
+            .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-6 { grid-template-columns: 1fr !important; gap: 16px !important; }
+            
+            /* Contact form */
+            .max-w-2xl { max-width: 100% !important; }
+            
+            /* Footer */
+            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; gap: 24px !important; text-align: center !important; }
+            .flex.flex-col.md\\:flex-row.justify-between { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
+        }
+        
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 <script id="tailwind-config">

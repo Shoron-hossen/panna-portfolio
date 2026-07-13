@@ -71,6 +71,57 @@
                 padding-right: 40px;
             }
         }
+        
+        /* Mobile responsive fixes for career page */
+        @media (max-width: 768px) {
+            /* Reduce horizontal padding */
+            .px-6 { padding-left: 16px !important; padding-right: 16px !important; }
+            .px-gutter { padding-left: 16px !important; padding-right: 16px !important; }
+            
+            /* Hero title */
+            .text-headline-xl { font-size: 32px !important; line-height: 1.2 !important; }
+            .text-headline-lg { font-size: 24px !important; }
+            
+            /* Toggle buttons */
+            .toggle-btn { padding: 12px 20px !important; font-size: 13px !important; }
+            .inline-flex.p-1.5 > button { flex: 1; text-align: center; }
+            
+            /* Education thread */
+            .lg\\:col-span-4, .lg\\:col-span-8 { grid-column: span 1 !important; }
+            .grid.grid-cols-1.lg\\:grid-cols-12 { grid-template-columns: 1fr !important; }
+            .sticky.top-32 { position: static !important; margin-bottom: 16px; }
+            .relative.pl-8.pt-2 { padding-left: 0 !important; padding-top: 0 !important; }
+            .absolute.left-0 { left: 8px !important; }
+            
+            /* Bento grid */
+            .grid.grid-cols-1.md\\:grid-cols-12.auto-rows-\\[200px\\] { grid-template-columns: 1fr !important; grid-auto-rows: auto !important; }
+            .md\\:col-span-8, .md\\:col-span-4, .md\\:col-span-6, .md\\:row-span-2 { grid-column: span 1 !important; grid-row: span 1 !important; }
+            
+            /* Pillars/Expertise grid */
+            .grid.grid-cols-1.md\\:grid-cols-3.gap-gutter { grid-template-columns: 1fr !important; gap: 16px !important; }
+            
+            /* Timeline */
+            .md\\:left-1\\/2 { left: 12px !important; }
+            .md\\:-translate-x-1\\/2 { transform: none !important; }
+            .md\\:w-1\\/2 { width: 100% !important; }
+            .md\\:pl-16, .md\\:pr-16 { padding-left: 0 !important; padding-right: 0 !important; padding-bottom: 24px !important; }
+            .md\\:text-right { text-align: left !important; }
+            .absolute.left-1\\/2 { left: 8px !important; }
+            
+            /* Portfolio grid */
+            .grid.grid-cols-1.md\\:grid-cols-4.grid-rows-2.h-\\[600px\\] { grid-template-columns: 1fr !important; grid-template-rows: auto !important; height: auto !important; gap: 12px !important; }
+            .md\\:col-span-2, .md\\:row-span-2 { grid-column: span 1 !important; grid-row: span 1 !important; }
+            
+            /* Cards */
+            .experience-card, .bento-card { padding: 16px !important; }
+            
+            /* Section spacing */
+            .mb-section-gap { margin-bottom: 48px !important; }
+            
+            /* Footer */
+            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; gap: 24px !important; text-align: center !important; }
+            .flex.flex-col.md\\:flex-row.justify-between { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
+        }
         .fade-in {
             animation: fadeIn 0.5s ease-out forwards;
         }

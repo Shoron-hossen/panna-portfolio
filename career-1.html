@@ -33,6 +33,29 @@
         @media (max-width: 768px) {
             body { padding-bottom: 80px; }
         }
+        /* Mobile layout fixes */
+        @media (max-width: 768px) {
+            .grid.grid-cols-1.lg\\:grid-cols-12 { grid-template-columns: 1fr !important; }
+            .lg\\:col-span-4, .lg\\:col-span-8 { grid-column: auto !important; }
+            .sticky.top-32 { position: static !important; }
+            .absolute.left-0.-top-2.bottom-0.w-px { display: none !important; }
+            .pl-8.pt-2 { padding-left: 0 !important; padding-top: 0 !important; }
+            .md\\:grid-cols-12 { grid-template-columns: 1fr !important; }
+            .md\\:col-span-8, .md\\:col-span-4, .md\\:row-span-2 { grid-column: auto !important; grid-row: auto !important; }
+            .auto-rows-\\[200px\\] { grid-auto-rows: auto !important; }
+            .bento-card { margin-bottom: 16px; }
+            .flex.flex-col.md\\:flex-row { flex-direction: column !important; gap: 16px !important; }
+            .hidden.md\\:block.w-px { display: none !important; }
+            .mb-section-gap { margin-bottom: 48px !important; }
+            .flex.justify-center.gap-6 { flex-wrap: wrap !important; justify-content: center !important; }
+            .grid.grid-cols-1.md\\:grid-cols-3 { grid-template-columns: 1fr !important; }
+            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; }
+            .flex.flex-col.md\\:flex-row { flex-direction: column !important; }
+            .justify-between { justify-content: center !important; text-align: center !important; }
+            .md\\:col-span-2.md\\:row-span-2, .md\\:col-span-2, .md\\:col-span-1 { grid-column: auto !important; grid-row: auto !important; }
+            .h-\\[600px\\] { height: auto !important; min-height: 500px !important; }
+            .grid.grid-cols-1.md\\:grid-cols-4.grid-rows-2 { grid-template-columns: 1fr !important; grid-template-rows: auto !important; }
+        }
     </style>
 <script id="tailwind-config">
         tailwind.config = {

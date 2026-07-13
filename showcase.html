@@ -126,6 +126,17 @@
         @media (max-width: 768px) {
             body { padding-bottom: 80px; }
         }
+        /* Mobile layout fixes */
+        @media (max-width: 768px) {
+            .flex.flex-col.md\\:flex-row { flex-direction: column !important; gap: 24px !important; }
+            .max-w-2xl { max-width: 100% !important; }
+            .flex.items-center.space-x-6 { flex-wrap: wrap !important; justify-content: center !important; gap: 16px !important; }
+            .overflow-x-auto.no-scrollbar.whitespace-nowrap { justify-content: center !important; padding-bottom: 8px !important; }
+            .grid.grid-cols-1.md\\:grid-cols-2 { grid-template-columns: 1fr !important; }
+            .grid-item-wide { grid-column: span 1 !important; }
+            .flex.justify-between.items-center { flex-direction: column !important; gap: 16px !important; text-align: center !important; }
+            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; text-align: center !important; }
+        }
         .group:hover .hover-reveal-ui {
             transform: translateY(0);
         }

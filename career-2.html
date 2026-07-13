@@ -32,6 +32,21 @@
         @media (max-width: 768px) {
             body { padding-bottom: 80px; }
         }
+        /* Mobile layout fixes */
+        @media (max-width: 768px) {
+            .grid.grid-cols-1.md\\:grid-cols-3, .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; }
+            .md\\:col-span-2, .md\\:col-span-3 { grid-column: auto !important; }
+            .md\\:row-span-2 { grid-row: auto !important; }
+            .h-\\[600px\\], .h-\\[400px\\] { height: auto !important; min-height: 400px !important; }
+            .grid.grid-cols-1.md\\:grid-cols-4.grid-rows-2 { grid-template-columns: 1fr !important; grid-template-rows: auto !important; }
+            .flex.flex-col.md\\:flex-row { flex-direction: column !important; gap: 16px !important; }
+            .hidden.md\\:block { display: none !important; }
+            .absolute.left-0.md\\:left-1\\/2 { left: 0 !important; transform: none !important; }
+            .w-\\[2px\\].thread-line-bold { display: none !important; }
+            .mb-section-gap { margin-bottom: 48px !important; }
+            .flex.justify-between { flex-direction: column !important; text-align: center !important; gap: 16px !important; }
+            .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; }
+        }
         .experience-card {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
