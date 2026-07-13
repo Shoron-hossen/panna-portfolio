@@ -58,15 +58,12 @@ function populateList(containerId, path, renderFn) {
 }
 
 function populateLists() {
-    // Core Principles
     populateList('core-principles-list', 'about.corePrinciples',
         item => `<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> ${item}</li>`);
 
-    // Primary Domains
     populateList('primary-domains-list', 'about.primaryDomains',
         item => `<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span> ${item}</li>`);
 
-    // Key Skills
     populateList('key-skills-list', 'career.keySkills',
         item => {
             if (typeof item === 'object' && item !== null) {
@@ -76,7 +73,6 @@ function populateLists() {
             return `<span class="inline-flex items-center px-3 py-1.5 bg-surface-container-high rounded-full text-xs font-label-md">${item}</span>`;
         });
 
-    // Soft Skills
     populateList('soft-skills-list', 'career.softSkills',
         item => {
             if (typeof item === 'object' && item !== null) {
@@ -86,29 +82,44 @@ function populateLists() {
             return `<span class="inline-flex items-center px-3 py-1.5 bg-surface-container-high rounded-full text-xs font-label-md">${item}</span>`;
         });
 
-    // Career Tasks
     populateList('career-tasks-list-1', 'career.mainExperience.tasks',
-        (item, i) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
+        (item) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
     populateList('career-tasks-list-2', 'career.mainExperience.tasks',
-        (item, i) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
+        (item) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
+}
+
+function fireEvent() {
+    document.dispatchEvent(new CustomEvent('contentLoaded', { detail: window.appContent }));
 }
 
 async function loadContent() {
+    // Wait for Firebase SDK and db to be ready (max 10 seconds)
+    let attempts = 0;
+    while ((!window.firebase || !db) && attempts < 100) {
+        await new Promise(r => setTimeout(r, 100));
+        attempts++;
+    }
+
+    if (!window.firebase || !db) {
+        console.error('Firebase SDK or db not available after waiting');
+        populateSimple();
+        populateLists();
+        fireEvent();
+        return;
+    }
+
     try {
-        if (typeof db === 'undefined') {
-            console.warn('Firestore not initialized');
-            return;
-        }
         const doc = await db.collection('portfolio').doc('content').get();
         if (doc.exists) {
             window.appContent = doc.data();
         }
     } catch (e) {
-        console.warn('Firestore load failed:', e.message);
+        console.error('Firestore read error:', e.code || e.message || e);
     }
+
     populateSimple();
     populateLists();
-    document.dispatchEvent(new CustomEvent('contentLoaded', { detail: window.appContent }));
+    fireEvent();
 }
 
 if (document.readyState === 'loading') {
