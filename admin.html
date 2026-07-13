@@ -670,14 +670,14 @@
                     <button class="btn btn-outline" style="margin-top: 12px;" onclick="openEducationModal()">+ Add Education</button>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3>Soft Skills (Career 1)</h3></div>
+                    <div class="card-header"><h3>Professional Attributes</h3></div>
                     <div id="cp-c1-softskills-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openSoftSkillModal()">+ Add Soft Skill</button>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openSoftSkillModal()">+ Add Attribute</button>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3>Extracurricular (Career 1)</h3></div>
+                    <div class="card-header"><h3>Beyond the Lab</h3></div>
                     <div id="cp-c1-extra-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openExtraModal()">+ Add Extracurricular</button>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openExtraModal()">+ Add Activity</button>
                 </div>
                 <div class="card">
                     <div class="card-header"><h3>Expertise Pillars</h3></div>
@@ -685,9 +685,14 @@
                     <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPillarModal()">+ Add Pillar</button>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3>Career Timeline</h3></div>
-                    <div id="cp-c2-timeline-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openTimelineModal()">+ Add Timeline Entry</button>
+                    <div class="card-header"><h3>Current Career Positions</h3></div>
+                    <div id="cp-c2-current-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openCurrentCareerModal()">+ Add Current Position</button>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Previous Career Positions</h3></div>
+                    <div id="cp-c2-previous-list"></div>
+                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPreviousCareerModal()">+ Add Previous Position</button>
                 </div>
             </div>
         </div>
@@ -794,21 +799,34 @@
         </div>
     </div>
 
-    <!-- Timeline Modal -->
-    <div id="timelineModal" class="modal-overlay">
+    <!-- Current Career Modal -->
+    <div id="currentCareerModal" class="modal-overlay">
         <div class="modal">
-            <h3>Add/Edit Timeline Entry</h3>
+            <h3>Add/Edit Current Career</h3>
             <div class="form-row">
-                <div class="form-group"><label>Badge (optional)</label><input type="text" id="tl-badge" placeholder="CURRENT"></div>
-                <div class="form-group"><label>Period</label><input type="text" id="tl-period" placeholder="JAN 2024 — MAR 2024"></div>
+                <div class="form-group"><label>Badge</label><input type="text" id="cc-badge" placeholder="CURRENT"></div>
+                <div class="form-group"><label>Period</label><input type="text" id="cc-period" placeholder="JAN 2024 — MAR 2024"></div>
             </div>
-            <div class="form-group"><label>Title</label><input type="text" id="tl-title" placeholder="Industrial Intern"></div>
-            <div class="form-group"><label>Company</label><input type="text" id="tl-company" placeholder="Company Name"></div>
-            <div class="form-group"><label>Type (for milestones)</label><input type="text" id="tl-type" placeholder="VERTICAL INTEGRATION STUDY"></div>
-            <div class="form-group"><label>Description / Accomplishments (one per line)</label><textarea id="tl-description" rows="4" placeholder="Optimized workflows..."></textarea></div>
+            <div class="form-group"><label>Title / Role</label><input type="text" id="cc-title" placeholder="Industrial Intern"></div>
+            <div class="form-group"><label>Company</label><input type="text" id="cc-company" placeholder="Company Name"></div>
+            <div class="form-group"><label>Accomplishments (one per line)</label><textarea id="cc-accomplishments" rows="4" placeholder="Optimized merchandising workflows..."></textarea></div>
             <div class="modal-actions">
-                <button class="btn btn-outline" onclick="closeModal('timelineModal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveTimeline()">Save</button>
+                <button class="btn btn-outline" onclick="closeModal('currentCareerModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCurrentCareer()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Previous Career Modal -->
+    <div id="previousCareerModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Previous Career</h3>
+            <div class="form-group"><label>Company</label><input type="text" id="pc-company" placeholder="Company Name"></div>
+            <div class="form-group"><label>Subtitle / Type</label><input type="text" id="pc-subtitle" placeholder="VERTICAL INTEGRATION STUDY"></div>
+            <div class="form-group"><label>Description</label><textarea id="pc-description" rows="3" placeholder="Deep dive into..."></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('previousCareerModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="savePreviousCareer()">Save</button>
             </div>
         </div>
     </div>
@@ -914,7 +932,7 @@
                     { name: "Instagram", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png" },
                     { name: "WhatsApp", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/733/733585.png" }
                 ],
-                careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [] } }
+                careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [], currentCareers: [ { badge: "CURRENT", period: "JAN 2024 — MAR 2024", title: "Industrial Intern", company: "Crown Wears Pvt. Ltd", accomplishments: [ "Optimized merchandising workflows reducing documentation lead time.", "Spearheaded quality inspection protocols for international export compliance.", "Conducted cross-departmental analysis of yarn-to-garment production cycles." ] } ], previousCareers: [ { company: "Square Fashions Ltd.", subtitle: "VERTICAL INTEGRATION STUDY", description: "Deep dive into large-scale knit production and global supply chain logistics." }, { company: "Paramount Textile Ltd.", subtitle: "ADVANCED WEAVING & DYEING", description: "Analysis of sophisticated yarn dyeing technologies and high-speed weaving efficiency." } ] } }
             };
         }
         
@@ -1232,7 +1250,21 @@
             renderEducation(contentData.careerPage?.career1?.education || []);
             renderSoftSkills(contentData.careerPage?.career1?.softSkills || []);
             renderExtras(contentData.careerPage?.career1?.extracurricular || []);
-            renderTimeline(contentData.careerPage?.career2?.timeline || []);
+            // Migrate old timeline data to new format
+            if (contentData.careerPage?.career2?.timeline && !contentData.careerPage?.career2?.currentCareers?.length && !contentData.careerPage?.career2?.previousCareers?.length) {
+                contentData.careerPage.career2.currentCareers = [];
+                contentData.careerPage.career2.previousCareers = [];
+                contentData.careerPage.career2.timeline.forEach(function(e) {
+                    if (e.badge || e.period || e.accomplishments) {
+                        contentData.careerPage.career2.currentCareers.push({ badge: e.badge, period: e.period, title: e.title, company: e.company, accomplishments: e.accomplishments || [] });
+                    } else {
+                        contentData.careerPage.career2.previousCareers.push({ company: e.title, subtitle: e.type, description: e.description });
+                    }
+                });
+                delete contentData.careerPage.career2.timeline;
+            }
+            renderCurrentCareers(contentData.careerPage?.career2?.currentCareers || []);
+            renderPreviousCareers(contentData.careerPage?.career2?.previousCareers || []);
             renderListItems('industrialVisits', contentData.career?.industrialVisits || []);
             
             // Dashboard
@@ -1658,34 +1690,85 @@
         }
         function removeExtra(i) { contentData.careerPage.career1.extracurricular.splice(i, 1); renderExtras(contentData.careerPage.career1.extracurricular); }
 
-        // === Timeline ===
-        let editingTimelineIndex = -1;
-        function renderTimeline(items) {
-            const c = document.getElementById('cp-c2-timeline-list');
+        // === Current Career ===
+        let editingCurrentIndex = -1;
+        function renderCurrentCareers(items) {
+            const c = document.getElementById('cp-c2-current-list');
             if (!c) return;
             c.innerHTML = (items || []).map((item, i) =>
-                `<div class="list-item"><div><strong>${item.title}</strong>${item.company ? ' — ' + item.company : ''}<br><small style="color:#888;">${item.period || item.type || ''}${item.accomplishments ? ' (' + item.accomplishments.length + ' accomplishements)' : ''}</small></div><div class="list-item-actions"><button onclick="editTimeline(${i})" title="Edit">✎</button><button onclick="removeTimeline(${i})" title="Remove">✕</button></div></div>`
+                `<div class="list-item"><div><strong>${item.title || ''}</strong>${item.company ? ' — ' + item.company : ''}<br><small style="color:#888;">${item.period || ''}${item.accomplishments ? ' (' + item.accomplishments.length + ' accomplishements)' : ''}</small></div><div class="list-item-actions"><button onclick="editCurrentCareer(${i})" title="Edit">✎</button><button onclick="removeCurrentCareer(${i})" title="Remove">✕</button></div></div>`
             ).join('');
         }
-        function openTimelineModal(index) {
-            editingTimelineIndex = index !== undefined ? index : -1;
+        function openCurrentCareerModal(index) {
+            editingCurrentIndex = index !== undefined ? index : -1;
             if (!contentData.careerPage) contentData.careerPage = {};
             if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
-            if (!contentData.careerPage.career2.timeline) contentData.careerPage.career2.timeline = [];
-            if (editingTimelineIndex >= 0) { const t = contentData.careerPage.career2.timeline[editingTimelineIndex]; document.getElementById('tl-badge').value = t.badge || ''; document.getElementById('tl-period').value = t.period || ''; document.getElementById('tl-title').value = t.title || ''; document.getElementById('tl-company').value = t.company || ''; document.getElementById('tl-type').value = t.type || ''; document.getElementById('tl-description').value = (t.accomplishments || []).join('\n') || t.description || ''; }
-            else { ['tl-badge','tl-period','tl-title','tl-company','tl-type','tl-description'].forEach(id => document.getElementById(id).value = ''); }
-            document.getElementById('timelineModal').classList.add('show');
+            if (!contentData.careerPage.career2.currentCareers) contentData.careerPage.career2.currentCareers = [];
+            if (editingCurrentIndex >= 0) {
+                const t = contentData.careerPage.career2.currentCareers[editingCurrentIndex];
+                document.getElementById('cc-badge').value = t.badge || '';
+                document.getElementById('cc-period').value = t.period || '';
+                document.getElementById('cc-title').value = t.title || '';
+                document.getElementById('cc-company').value = t.company || '';
+                document.getElementById('cc-accomplishments').value = (t.accomplishments || []).join('\n');
+            } else {
+                ['cc-badge','cc-period','cc-title','cc-company','cc-accomplishments'].forEach(id => document.getElementById(id).value = '');
+            }
+            document.getElementById('currentCareerModal').classList.add('show');
         }
-        function editTimeline(i) { openTimelineModal(i); }
-        function saveTimeline() {
-            const badge = document.getElementById('tl-badge').value, period = document.getElementById('tl-period').value, title = document.getElementById('tl-title').value, company = document.getElementById('tl-company').value, type = document.getElementById('tl-type').value, descLines = document.getElementById('tl-description').value.split('\n').filter(l => l.trim());
-            const entry = (badge || period || company) ? { badge, period, title, company, accomplishments: descLines } : { title, type, description: descLines.join('\n') };
-            if (editingTimelineIndex >= 0) contentData.careerPage.career2.timeline[editingTimelineIndex] = entry;
-            else contentData.careerPage.career2.timeline.push(entry);
-            renderTimeline(contentData.careerPage.career2.timeline);
-            closeModal('timelineModal');
+        function editCurrentCareer(i) { openCurrentCareerModal(i); }
+        function saveCurrentCareer() {
+            const badge = document.getElementById('cc-badge').value;
+            const period = document.getElementById('cc-period').value;
+            const title = document.getElementById('cc-title').value;
+            const company = document.getElementById('cc-company').value;
+            const accomplishments = document.getElementById('cc-accomplishments').value.split('\n').filter(l => l.trim());
+            const entry = { badge, period, title, company, accomplishments };
+            if (!contentData.careerPage.career2.currentCareers) contentData.careerPage.career2.currentCareers = [];
+            if (editingCurrentIndex >= 0) contentData.careerPage.career2.currentCareers[editingCurrentIndex] = entry;
+            else contentData.careerPage.career2.currentCareers.push(entry);
+            renderCurrentCareers(contentData.careerPage.career2.currentCareers);
+            closeModal('currentCareerModal');
         }
-        function removeTimeline(i) { contentData.careerPage.career2.timeline.splice(i, 1); renderTimeline(contentData.careerPage.career2.timeline); }
+        function removeCurrentCareer(i) { contentData.careerPage.career2.currentCareers.splice(i, 1); renderCurrentCareers(contentData.careerPage.career2.currentCareers); }
+
+        // === Previous Career ===
+        let editingPreviousIndex = -1;
+        function renderPreviousCareers(items) {
+            const c = document.getElementById('cp-c2-previous-list');
+            if (!c) return;
+            c.innerHTML = (items || []).map((item, i) =>
+                `<div class="list-item"><div><strong>${item.company || ''}</strong><br><small style="color:#888;">${item.subtitle || ''}${item.description ? ' — ' + item.description.substring(0, 50) : ''}</small></div><div class="list-item-actions"><button onclick="editPreviousCareer(${i})" title="Edit">✎</button><button onclick="removePreviousCareer(${i})" title="Remove">✕</button></div></div>`
+            ).join('');
+        }
+        function openPreviousCareerModal(index) {
+            editingPreviousIndex = index !== undefined ? index : -1;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.career2) contentData.careerPage.career2 = {};
+            if (!contentData.careerPage.career2.previousCareers) contentData.careerPage.career2.previousCareers = [];
+            if (editingPreviousIndex >= 0) {
+                const t = contentData.careerPage.career2.previousCareers[editingPreviousIndex];
+                document.getElementById('pc-company').value = t.company || '';
+                document.getElementById('pc-subtitle').value = t.subtitle || '';
+                document.getElementById('pc-description').value = t.description || '';
+            } else {
+                ['pc-company','pc-subtitle','pc-description'].forEach(id => document.getElementById(id).value = '');
+            }
+            document.getElementById('previousCareerModal').classList.add('show');
+        }
+        function editPreviousCareer(i) { openPreviousCareerModal(i); }
+        function savePreviousCareer() {
+            const company = document.getElementById('pc-company').value;
+            const subtitle = document.getElementById('pc-subtitle').value;
+            const description = document.getElementById('pc-description').value;
+            const entry = { company, subtitle, description };
+            if (!contentData.careerPage.career2.previousCareers) contentData.careerPage.career2.previousCareers = [];
+            if (editingPreviousIndex >= 0) contentData.careerPage.career2.previousCareers[editingPreviousIndex] = entry;
+            else contentData.careerPage.career2.previousCareers.push(entry);
+            renderPreviousCareers(contentData.careerPage.career2.previousCareers);
+            closeModal('previousCareerModal');
+        }
+        function removePreviousCareer(i) { contentData.careerPage.career2.previousCareers.splice(i, 1); renderPreviousCareers(contentData.careerPage.career2.previousCareers); }
 
         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 

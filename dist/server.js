@@ -150,7 +150,7 @@ const defaultContent = {
                 { icon: "factory", title: "Operations & Optimization", description: "Implementing Lean methodology and Six Sigma principles to maximize floor efficiency.", tags: ["Lean Mfg", "KPI Tracking"] },
                 { icon: "biotech", title: "Innovation & R&D", description: "Pioneering sustainable fabric technologies and performance-driven textile chemistry.", tags: ["Eco-Dyeing", "R&D Strategy"] }
             ],
-            timeline: [
+            currentCareers: [
                 {
                     badge: "CURRENT",
                     period: "JAN 2024 — MAR 2024",
@@ -161,15 +161,17 @@ const defaultContent = {
                         "Spearheaded quality inspection protocols for international export compliance.",
                         "Conducted cross-departmental analysis of yarn-to-garment production cycles."
                     ]
-                },
+                }
+            ],
+            previousCareers: [
                 {
-                    title: "Square Fashions Ltd.",
-                    type: "VERTICAL INTEGRATION STUDY",
+                    company: "Square Fashions Ltd.",
+                    subtitle: "VERTICAL INTEGRATION STUDY",
                     description: "Deep dive into large-scale knit production and global supply chain logistics."
                 },
                 {
-                    title: "Paramount Textile Ltd.",
-                    type: "ADVANCED WEAVING & DYEING",
+                    company: "Paramount Textile Ltd.",
+                    subtitle: "ADVANCED WEAVING & DYEING",
                     description: "Analysis of sophisticated yarn dyeing technologies and high-speed weaving efficiency."
                 }
             ]

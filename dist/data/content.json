@@ -225,7 +225,7 @@
           ]
         }
       ],
-      "timeline": [
+      "currentCareers": [
         {
           "badge": "CURRENT",
           "period": "JAN 2024 — MAR 2024",
@@ -236,15 +236,17 @@
             "Spearheaded quality inspection protocols for international export compliance.",
             "Conducted cross-departmental analysis of yarn-to-garment production cycles."
           ]
-        },
+        }
+      ],
+      "previousCareers": [
         {
-          "title": "Square Fashions Ltd.",
-          "type": "VERTICAL INTEGRATION STUDY",
+          "company": "Square Fashions Ltd.",
+          "subtitle": "VERTICAL INTEGRATION STUDY",
           "description": "Deep dive into large-scale knit production and global supply chain logistics."
         },
         {
-          "title": "Paramount Textile Ltd.",
-          "type": "ADVANCED WEAVING & DYEING",
+          "company": "Paramount Textile Ltd.",
+          "subtitle": "ADVANCED WEAVING & DYEING",
           "description": "Analysis of sophisticated yarn dyeing technologies and high-speed weaving efficiency."
         }
       ]
