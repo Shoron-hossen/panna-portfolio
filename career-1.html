@@ -12,6 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100..900&family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/>
 <style>
+        body:not(.content-loaded) [data-content-links] { opacity: 0; }
+        body.content-loaded [data-content-links] { opacity: 1; transition: opacity 0.3s; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -307,11 +309,7 @@
 <span class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-inverse-on-surface">Portfolio</span>
 <p class="font-body-md text-body-md text-on-surface-variant dark:text-on-secondary-fixed-variant">Engineering excellence. Artistic precision.</p>
 </div>
-<div class="flex flex-col gap-2">
-<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-inverse-primary underline decoration-2 underline-offset-4" href="#">LinkedIn</a>
-<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-inverse-primary underline decoration-2 underline-offset-4" href="#">Instagram</a>
-<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-inverse-primary underline decoration-2 underline-offset-4" href="#">Behance</a>
-</div>
+                    <div class="flex flex-col gap-2" data-content-links></div>
 <div class="flex items-end md:justify-end">
 <p class="font-body-md text-body-md text-on-surface-variant dark:text-on-secondary-fixed-variant">© 2024 Textile Engineer & Photographer. All rights reserved.</p>
 </div>

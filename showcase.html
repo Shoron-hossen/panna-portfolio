@@ -106,6 +106,8 @@
       }
     </script>
 <style>
+        body:not(.content-loaded) [data-content-links] { opacity: 0; }
+        body.content-loaded [data-content-links] { opacity: 1; transition: opacity 0.3s; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -245,11 +247,7 @@
 </div>
 <div class="md:col-span-2 flex flex-col space-y-6">
 <span class="font-label-md text-label-md text-primary uppercase tracking-widest">Connect</span>
-<nav class="flex flex-col space-y-4 font-body-md text-on-surface-variant">
-<a class="hover:text-primary transition-colors underline decoration-1 underline-offset-4" href="#">LinkedIn</a>
-<a class="hover:text-primary transition-colors underline decoration-1 underline-offset-4" href="#">Instagram</a>
-<a class="hover:text-primary transition-colors underline decoration-1 underline-offset-4" href="#">Behance</a>
-</nav>
+<nav class="flex flex-col space-y-4 font-body-md text-on-surface-variant" data-content-links></nav>
 </div>
 <div class="md:col-span-2 flex flex-col justify-between">
 <div class="flex flex-col space-y-6">

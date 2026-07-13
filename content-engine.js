@@ -88,37 +88,88 @@ function populateLists() {
         (item) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
 }
 
+function populateSocialLinks() {
+    document.querySelectorAll('[data-content-links]').forEach(container => {
+        let links = window.appContent.links;
+        if (!links) { container.innerHTML = ''; return; }
+        if (!Array.isArray(links)) {
+            links = Object.entries(links).map(([name, url]) => ({ name, url, logo: '' }));
+        }
+        if (!links.length) { container.innerHTML = ''; return; }
+        container.innerHTML = links.map(link => {
+            const href = link.url && link.url !== '#' ? `href="${link.url}"` : '';
+            const logoHtml = link.logo
+                ? `<img src="${link.logo}" alt="${link.name}" class="w-6 h-6 object-contain" onerror="this.remove()">`
+                : '';
+            return `<a ${href} class="social-link-item inline-flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">${logoHtml}<span>${link.name || ''}</span></a>`;
+        }).join('');
+    });
+}
+
 function fireEvent() {
     document.dispatchEvent(new CustomEvent('contentLoaded', { detail: window.appContent }));
 }
 
-async function loadContent() {
-    let attempts = 0;
-    while ((!window.firebase || !db) && attempts < 30) {
-        await new Promise(r => setTimeout(r, 50));
-        attempts++;
-    }
-
-    if (!window.firebase || !db) {
-        console.error('Firebase SDK or db not available');
-        populateSimple();
-        populateLists();
-        fireEvent();
-        return;
-    }
-
-    try {
-        const doc = await db.collection('portfolio').doc('content').get();
-        if (doc.exists) {
-            window.appContent = doc.data();
-        }
-    } catch (e) {
-        console.error('Firestore read error:', e.code || e.message || e);
-    }
-
+function populateEverything() {
     populateSimple();
     populateLists();
+    populateSocialLinks();
     fireEvent();
+}
+
+function migrateLinks(data) {
+    if (data && data.links && !Array.isArray(data.links)) {
+        data.links = Object.entries(data.links).map(([name, url]) => ({ name, url, logo: '' }));
+    }
+    return data;
+}
+
+function saveCache(data) {
+    try { localStorage.setItem('panna_portfolio_cache', JSON.stringify(data)); } catch (e) {}
+}
+
+function loadCache() {
+    try {
+        const d = localStorage.getItem('panna_portfolio_cache');
+        return d ? migrateLinks(JSON.parse(d)) : null;
+    } catch (e) { return null; }
+}
+
+function setupListener() {
+    db.collection('portfolio').doc('content')
+        .onSnapshot((doc) => {
+            if (doc.exists) {
+                const data = migrateLinks(doc.data());
+                window.appContent = data;
+                saveCache(data);
+            }
+            populateEverything();
+            document.body.classList.add('content-loaded');
+        }, (error) => {
+            console.error('Firestore error:', error);
+            populateEverything();
+            document.body.classList.add('content-loaded');
+        });
+}
+
+function loadContent() {
+    const cached = loadCache();
+    if (cached) {
+        window.appContent = cached;
+        populateEverything();
+    }
+    let attempts = 0;
+    const iv = setInterval(function() {
+        attempts++;
+        if (window.firebase && db) {
+            clearInterval(iv);
+            setupListener();
+        } else if (attempts >= 60) {
+            clearInterval(iv);
+            if (!cached) populateEverything();
+            document.body.classList.add('content-loaded');
+        }
+    }, 50);
 }
 
 if (document.readyState === 'loading') {

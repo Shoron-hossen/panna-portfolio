@@ -81,11 +81,11 @@ const defaultContent = {
         heading: "Let's Create<br/>Something Exceptional",
         email: "sakawatpanna77@gmail.com"
     },
-    links: {
-        linkedin: "https://linkedin.com/in/sakawatpanna",
-        instagram: "#",
-        behance: "#"
-    },
+    links: [
+        { name: "Facebook", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/733/733547.png" },
+        { name: "Instagram", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png" },
+        { name: "WhatsApp", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/733/733585.png" }
+    ],
     careerPage: {
         career1: {
             subtitle: "Academic & Technical",

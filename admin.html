@@ -462,6 +462,28 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div class="card-header"><h3>Homepage Featured Images (3)</h3></div>
+                    <p style="font-size:12px; color:#888; margin-bottom:12px;">These 3 images appear in the Visual Narrative section on the homepage.</p>
+                    <div class="form-group">
+                        <label>Featured Image 1 (Large)</label>
+                        <input type="text" id="showcase-featured-0" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('showcase-featured-0').value = url; showPreview('showcase-featured-preview-0', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                        <div id="showcase-featured-preview-0" style="margin-top: 6px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Featured Image 2 (Small)</label>
+                        <input type="text" id="showcase-featured-1" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('showcase-featured-1').value = url; showPreview('showcase-featured-preview-1', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                        <div id="showcase-featured-preview-1" style="margin-top: 6px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Featured Image 3 (Small)</label>
+                        <input type="text" id="showcase-featured-2" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('showcase-featured-2').value = url; showPreview('showcase-featured-preview-2', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                        <div id="showcase-featured-preview-2" style="margin-top: 6px;"></div>
+                    </div>
+                </div>
+                <div class="card">
                     <div class="card-header"><h3>Categories</h3></div>
                     <p style="font-size: 12px; color: #888; margin-bottom: 12px;">Create categories to organize your gallery images.</p>
                     <div style="display: flex; gap: 8px; margin-bottom: 12px;">
@@ -501,17 +523,16 @@
                 </div>
                 <div class="card">
                     <div class="card-header"><h3>Social Links</h3></div>
-                    <div class="form-group">
-                        <label>LinkedIn URL</label>
-                        <input type="url" id="links-linkedin">
-                    </div>
-                    <div class="form-group">
-                        <label>Instagram URL</label>
-                        <input type="url" id="links-instagram">
-                    </div>
-                    <div class="form-group">
-                        <label>Behance URL</label>
-                        <input type="url" id="links-behance">
+                    <p style="font-size:12px;color:#888;margin-bottom:12px;">Each social platform needs a name, profile URL, and optional logo image URL (upload or paste a direct image link).</p>
+                    <div id="social-links-list"></div>
+                    <div class="form-row" style="gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid #e5e5e5;">
+                        <input type="text" id="social-link-name" placeholder="Platform name (e.g. Facebook)" style="flex:1;min-width:120px;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                        <input type="url" id="social-link-url" placeholder="Profile URL" style="flex:1;min-width:150px;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                        <div style="display:flex;gap:6px;align-items:center;flex:1;min-width:200px;">
+                            <input type="url" id="social-link-logo" placeholder="Logo image URL" style="flex:1;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('social-link-logo').value = url; })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addSocialLink()" style="white-space:nowrap;">+ Add</button>
                     </div>
                 </div>
             </div>
@@ -548,6 +569,21 @@
                     <div class="form-group">
                         <label>Extracurricular Section Title</label>
                         <input type="text" id="cp-c1-extra-heading" placeholder="Beyond the Lab">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Career 1 - Images</h3></div>
+                    <div class="form-group">
+                        <label>Education Image (Thumbnail)</label>
+                        <input type="text" id="cp-c1-eduImage" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('cp-c1-eduImage').value = url; showPreview('cp-c1-eduPreview', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                        <div id="cp-c1-eduPreview" style="margin-top: 6px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Photography Card Background</label>
+                        <input type="text" id="cp-c1-photoImage" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('cp-c1-photoImage').value = url; showPreview('cp-c1-photoPreview', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                        <div id="cp-c1-photoPreview" style="margin-top: 6px;"></div>
                     </div>
                 </div>
                 <div class="card">
@@ -764,8 +800,11 @@
                 const doc = await db.collection('portfolio').doc('content').get();
                 if (doc.exists) {
                     contentData = doc.data();
+                    // Migrate old links format to new array format
+                    if (contentData.links && !Array.isArray(contentData.links)) {
+                        contentData.links = Object.entries(contentData.links).map(([name, url]) => ({ name, url, logo: '' }));
+                    }
                 } else {
-                    // Initialize with defaults if no data exists
                     contentData = getDefaultContent();
                     await db.collection('portfolio').doc('content').set(contentData);
                 }
@@ -834,9 +873,13 @@
                 hero: { subtitle: "Precision in Textiles & Light", heading: "MD Sakawat<br/>Hossain Panna", description: "A specialized Textile Engineer and visual storyteller.", focus: "Sustainable R&D", expertise: "Fabric Engineering", portraitUrl: "", degreeTitle: "B.Sc. Textile Engineering", degreeCollege: "Pabna Textile Engineering College" },
                 about: { subtitle: "Mission", heading: "Career Objective", description: "", quote: "", corePrinciples: ["Technical Integrity", "Creative Discipline", "Continuous Learning"], primaryDomains: ["Fiber & Yarn Analysis", "Industrial Photography", "Supply Chain Management"] },
                 career: { subtitle: "The Track Record", heading: "Professional Highlights", mainExperience: { badge: "Professional Internship", company: "Crown Wears Pvt. Ltd", role: "Merchandising, Production & IE", period: "Feb — March, 2024", tasks: [] }, keySkills: [{name: "Adobe Photoshop", logo: ""}, {name: "Illustrator", logo: ""}, {name: "MS Office", logo: ""}], softSkills: [{name: "Leadership", logo: ""}, {name: "Time Management", logo: ""}], academics: { ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate" }, bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering" } } },
-                showcase: { subtitle: "Creative Gallery", heading: "Visual Narrative", description: "", categories: [], gallery: [] },
+                showcase: { subtitle: "Creative Gallery", heading: "Visual Narrative", description: "", categories: [], gallery: [], featuredImages: ["", "", ""] },
                 contact: { subtitle: "Available for projects", heading: "Let's Create<br/>Something Exceptional", email: "sakawatpanna77@gmail.com" },
-                links: { linkedin: "https://linkedin.com/in/sakawatpanna", instagram: "#", behance: "#" },
+                links: [
+                    { name: "Facebook", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/733/733547.png" },
+                    { name: "Instagram", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png" },
+                    { name: "WhatsApp", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/733/733585.png" }
+                ],
                 careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [] } }
             };
         }
@@ -899,6 +942,31 @@
                     showToast('Image added to gallery', 'success');
                 }
             });
+        }
+
+        // Generic Cloudinary upload with callback
+        function openUpload(callback) {
+            cloudinary.openUploadWidget({
+                cloudName: CLOUDINARY_CLOUD_NAME,
+                uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+                folder: 'portfolio/misc',
+                maxImageWidth: 2400,
+                maxImageHeight: 2400,
+                sources: ['local', 'url', 'camera'],
+                styles: {
+                    palette: { window: '#1a1a1a', sourceBg: '#222', windowBorder: '#444', tabIcon: '#7c3aed', menuIcons: '#ccc', textDark: '#fff', textLight: '#999', activeTab: '#7c3aed' }
+                }
+            }, function(error, result) {
+                if (!error && result && result.event === 'success') {
+                    callback(result.info.secure_url);
+                    showToast('Image uploaded', 'success');
+                }
+            });
+        }
+
+        function showPreview(elId, url) {
+            const el = document.getElementById(elId);
+            if (el) el.innerHTML = `<img src="${url}" style="max-width:150px; max-height:100px; border-radius:6px; border:1px solid #eee; object-fit:cover;">`;
         }
 
         function addGalleryItem(url, title, description, category, w, h) {
@@ -1076,6 +1144,12 @@
             setVal('showcase-description', contentData.showcase?.description);
             renderCategories();
             renderGalleryList();
+            // Showcase Featured Images (homepage)
+            for (let i = 0; i < 3; i++) {
+                const url = contentData.showcase?.featuredImages?.[i];
+                setVal('showcase-featured-' + i, url);
+                if (url) showPreview('showcase-featured-preview-' + i, url);
+            }
             
             // Contact
             setVal('contact-subtitle', contentData.contact?.subtitle);
@@ -1083,14 +1157,16 @@
             setVal('contact-email', contentData.contact?.email);
             
             // Links
-            setVal('links-linkedin', contentData.links?.linkedin);
-            setVal('links-instagram', contentData.links?.instagram);
-            setVal('links-behance', contentData.links?.behance);
+            renderSocialLinks();
             
             // Career Pages
             setVal('cp-c1-subtitle', contentData.careerPage?.career1?.subtitle);
             setVal('cp-c1-heading', contentData.careerPage?.career1?.heading);
             setVal('cp-c1-description', contentData.careerPage?.career1?.description);
+            setVal('cp-c1-eduImage', contentData.careerPage?.career1?.education?.[0]?.image);
+            if (contentData.careerPage?.career1?.education?.[0]?.image) showPreview('cp-c1-eduPreview', contentData.careerPage.career1.education[0].image);
+            setVal('cp-c1-photoImage', contentData.careerPage?.career1?.photographyImage);
+            if (contentData.careerPage?.career1?.photographyImage) showPreview('cp-c1-photoPreview', contentData.careerPage.career1.photographyImage);
             // Career 1 - Section Headings
             setVal('cp-c1-tech-heading', contentData.careerPage?.career1?.sectionHeadings?.technicalSkills);
             setVal('cp-c1-ss-heading', contentData.careerPage?.career1?.sectionHeadings?.softSkills);
@@ -1125,6 +1201,48 @@
             document.getElementById('dash-full-name').textContent = contentData.site?.fullName || '-';
         }
         
+        // Social Links management
+        function renderSocialLinks() {
+            const container = document.getElementById('social-links-list');
+            const links = contentData.links || [];
+            if (!links.length) {
+                container.innerHTML = '<p style="color:#aaa;font-size:13px;">No social links added yet. Add one below.</p>';
+                return;
+            }
+            container.innerHTML = links.map((link, i) => {
+                const logoHtml = link.logo ? `<img src="${link.logo}" style="width:24px;height:24px;object-fit:contain;border-radius:4px;" onerror="this.style.display='none'">` : '';
+                return `<div class="list-item">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        ${logoHtml}
+                        <div><strong>${link.name || 'Unnamed'}</strong><br><small style="color:#888;">${link.url ? link.url.substring(0, 60) : 'No URL'}</small></div>
+                    </div>
+                    <div class="list-item-actions">
+                        <button onclick="removeSocialLink(${i})" title="Remove">✕</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function addSocialLink() {
+            const name = document.getElementById('social-link-name').value.trim();
+            const url = document.getElementById('social-link-url').value.trim();
+            const logo = document.getElementById('social-link-logo').value.trim();
+            if (!name) { showToast('Platform name is required', 'error'); return; }
+            if (!contentData.links) contentData.links = [];
+            contentData.links.push({ name: name, url: url, logo: logo });
+            renderSocialLinks();
+            document.getElementById('social-link-name').value = '';
+            document.getElementById('social-link-url').value = '';
+            document.getElementById('social-link-logo').value = '';
+        }
+
+        function removeSocialLink(index) {
+            if (contentData.links) {
+                contentData.links.splice(index, 1);
+                renderSocialLinks();
+            }
+        }
+
         function setVal(id, value) {
             const el = document.getElementById(id);
             if (el) el.value = value || '';
@@ -1197,7 +1315,12 @@
                 heading: getVal('showcase-heading'),
                 description: getVal('showcase-description'),
                 categories: contentData.showcase?.categories || [],
-                gallery: contentData.showcase?.gallery || []
+                gallery: contentData.showcase?.gallery || [],
+                featuredImages: [
+                    getVal('showcase-featured-0'),
+                    getVal('showcase-featured-1'),
+                    getVal('showcase-featured-2')
+                ]
             };
             
             // Contact
@@ -1207,12 +1330,7 @@
                 email: getVal('contact-email')
             };
             
-            // Links
-            contentData.links = {
-                linkedin: getVal('links-linkedin'),
-                instagram: getVal('links-instagram'),
-                behance: getVal('links-behance')
-            };
+            // Links - managed via addSocialLink/removeSocialLink, no form fields
             
             // Career Pages
             if (!contentData.careerPage) contentData.careerPage = {};
@@ -1220,6 +1338,10 @@
             contentData.careerPage.career1.subtitle = getVal('cp-c1-subtitle');
             contentData.careerPage.career1.heading = getVal('cp-c1-heading');
             contentData.careerPage.career1.description = getVal('cp-c1-description');
+            contentData.careerPage.career1.photographyImage = getVal('cp-c1-photoImage');
+            if (!contentData.careerPage.career1.education) contentData.careerPage.career1.education = [];
+            if (!contentData.careerPage.career1.education[0]) contentData.careerPage.career1.education[0] = {};
+            contentData.careerPage.career1.education[0].image = getVal('cp-c1-eduImage');
             // Career 1 - Section Headings
             if (!contentData.careerPage.career1.sectionHeadings) contentData.careerPage.career1.sectionHeadings = {};
             contentData.careerPage.career1.sectionHeadings.technicalSkills = getVal('cp-c1-tech-heading');

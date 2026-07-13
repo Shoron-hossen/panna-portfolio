@@ -24,6 +24,8 @@
         .hero-gradient {
             background: linear-gradient(135deg, #f7f9fb 0%, #eceef0 100%);
         }
+        body:not(.content-loaded) [data-content-links] { opacity: 0; }
+        body.content-loaded [data-content-links] { opacity: 1; transition: opacity 0.3s; }
         .section-divider {
             width: 100%;
             height: 3px;
@@ -339,7 +341,7 @@
                     <h2 class="font-headline-xl text-headline-xl text-primary" data-content="showcase.heading">Visual Narrative</h2>
                     <p class="font-body-md text-body-md text-on-surface-variant mt-4" data-content="showcase.description">Photography focusing on the intersection of human labor, mechanical symmetry, and the raw texture of materials.</p>
 </div>
-<a class="font-label-md text-label-md text-primary flex items-center gap-2 group border-b-2 border-primary pb-2" href="#">
+<a class="font-label-md text-label-md text-primary flex items-center gap-2 group border-b-2 border-primary pb-2" href="/showcase">
                 Explore Complete Gallery <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </a>
 </div>
@@ -348,14 +350,14 @@
 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-center justify-center">
 <span class="text-white font-label-md tracking-widest uppercase border border-white/40 px-8 py-3">View Series</span>
 </div>
-<img alt="Textile Machinery Close-up" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyD7DGTFmv7Ho0YiEVXXT1cWJ3m5wVSkzbTr9_6rc3_35y8YP63bQDDRNMGrh8eW4VEoRN3EOgzKJtDsqA4ZdxANMtm_tz9bWewHHPLTyD1BSBAscQwurBvTPGWYyKZsxWSuj3Y5qvL-n4aVLgEwBuC6eLC19jyX4hNE-oQkBD9EZqRwCitkxeV0uv0a67-00o8yIUuypmkXASnNxvjC7LYYYVX2bD0ODvPpTAslexNrq3N8v-z7bEBjArlGvHY7O-J0xJvjVUNMPY"/>
+<img alt="Featured Image 1" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" style="opacity:0; transition:opacity 0.5s;" data-content-src="showcase.featuredImages[0]" data-cld-w="1200" onload="this.style.opacity=1"/>
 </div>
 <div class="md:col-span-4 flex flex-col gap-8">
 <div class="h-1/2 bg-surface-container overflow-hidden relative group">
-<img alt="Fabric Texture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr0UcmR4M6RAThmup1Jh3awBeKPxGVxSqMO0GUCb8jXeiXp5EJfaAZ1J665y7U4Vqhpa4oI9HmYp9qot0XDXv1-9SReC4_nn6RRAolIrAxpLw2CeZrZI3zXGmE_VuaYACMXS_BVjbDPqxFBVT-CFF2BajqkOvAx3d9I88eZttc3aHgmcDmZsOpi2kLWv5BoQW-so87ZBgjPeQ5M_rgmkMa6NZ4s-5TODTSJ6FUDzSfj3kQEaO4XLSFT6D1jISzv_b3tnsvKXUZQzYs"/>
+<img alt="Featured Image 2" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" style="opacity:0; transition:opacity 0.5s;" data-content-src="showcase.featuredImages[1]" data-cld-w="600" onload="this.style.opacity=1"/>
 </div>
 <div class="h-1/2 bg-surface-container overflow-hidden relative group">
-<img alt="Industrial Environment" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYyGJdaek8v816THpCLHmIrQdeH_-P4s6cu11QrUa7qDDDaI0n61QnteOENZIt5WCuJvz9ld72oGkVD0-3yms_vh0OR6udtbaEfUr0g6czY3BTek4uF_KlTf8_hDi1N8Mvnpebtw9uIcdsPSFIvXtBr4KRcvHbm93ItuNayotNlhNuj4OLPE37To0FjRNqVScoNXS_GhbIJREU_jICOFEkoMPIG4sKd_VvXykSMsCTNby04qVqQbL1xTQ9GaDQmh8mB7TJtSF0RHBk"/>
+<img alt="Featured Image 3" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" style="opacity:0; transition:opacity 0.5s;" data-content-src="showcase.featuredImages[2]" data-cld-w="600" onload="this.style.opacity=1"/>
 </div>
 </div>
 </div>
@@ -397,11 +399,7 @@
 </div>
 <div class="flex flex-col gap-6">
 <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Connect</h4>
-<div class="flex flex-col gap-3">
-                    <a class="font-body-md text-on-surface-variant hover:text-primary transition-all border-b border-transparent hover:border-primary inline-block w-fit" href="https://linkedin.com/in/sakawatpanna" id="link-linkedin" data-content="links.linkedin">LinkedIn</a>
-                    <a class="font-body-md text-on-surface-variant hover:text-primary transition-all border-b border-transparent hover:border-primary inline-block w-fit" href="#" id="link-instagram" data-content="links.instagram">Instagram</a>
-                    <a class="font-body-md text-on-surface-variant hover:text-primary transition-all border-b border-transparent hover:border-primary inline-block w-fit" href="#" id="link-behance" data-content="links.behance">Behance</a>
-                </div>
+                <div class="flex flex-col gap-3" data-content-links></div>
 </div>
 </div>
 <div class="max-w-[1280px] mx-auto px-gutter mt-20 pt-10 border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-6">

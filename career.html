@@ -15,6 +15,8 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        body:not(.content-loaded) [data-content-links] { opacity: 0; }
+        body.content-loaded [data-content-links] { opacity: 1; transition: opacity 0.3s; }
         .thread-line {
             background: linear-gradient(to bottom, transparent, theme('colors.outline-variant') 10%, theme('colors.outline-variant') 90%, transparent);
         }
@@ -221,7 +223,7 @@
                                 <p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-content="careerPage.career1.education[0].description">Specializing in apparel manufacturing and textile physics. My studies focus on sustainable fabrication techniques, structural integrity of high-performance fabrics, and industrial R&D processes.</p>
                             </div>
                             <div class="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
-                                <img class="w-full h-full object-cover" alt="Textile fibers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0rwnSnEvMqxlyBdCVyd9vYrZCL_hqV-Q-vCJZzYM3jQKUrriz1dHbEt4HBg-uhqIZvd3GB2_m29ACGDY8V_ZwTJ7eR_C01V2rbABELGSlGARPuyTow_EdIW__c_7Bkg9xBmF-eD3GzcmFNv95AvcKDMY5Jc4UnoIcuMLNGP22DBUxJIsHhkkfu5IBLQJ47uVp0ZfnAQ8JmWMc-98ZnQdnXHCVUYFCsv9LCQV8uI0ZEBeH-Ywg2iS7EH1sklQy9OZPWMrFzCdovOCr"/>
+                                <img class="w-full h-full object-cover" alt="Textile fibers" data-content-src="careerPage.career1.education[0].image" onload="this.style.opacity=1" style="opacity:0; transition: opacity 0.5s;"/>
                             </div>
                         </div>
                     </div>
@@ -284,7 +286,7 @@
                     <!-- Photography -->
                     <div class="md:col-span-4 md:row-span-2 relative overflow-hidden bento-card bg-surface-container-low border border-outline-variant">
                         <div class="absolute inset-0 z-0">
-                            <img class="w-full h-full object-cover" alt="Camera lens" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1o_XSvrb9NsQbJB2f4iuHwCyyHReSjmCTUwj3oQd8Rv6DORwxZPsOLzsvDZlLmdw7rJP-ohQ-vhnB3-BedFTackMJm6q3lPl8sd2K6naM5_4aPWk0hAxCpsxJnA_MhFfy-0TeTBaoYVjUMCbZC2uPGRjRBjOZ8vHhOERNjXGdFSWkE9XyGDYyNOo3_YiSn8NjtzNosFK9FR1gMEzeVPyZ4NMGjN0nGfu5UkB4Q9sSi_Fkjnw3ILhUSGgQLFck9hQCfv5aZd-SucGM"/>
+                            <img class="w-full h-full object-cover" alt="Camera lens" data-content-src="careerPage.career1.photographyImage" onload="this.style.opacity=1" style="opacity:0; transition: opacity 0.5s;"/>
                             <div class="absolute inset-0 bg-primary/40"></div>
                         </div>
                         <div class="relative z-10 p-6 flex flex-col h-full justify-end text-on-primary">
@@ -512,9 +514,7 @@
             </div>
             <div class="flex flex-col gap-3">
                 <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-2">Connect</h4>
-                <a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="https://linkedin.com/in/sakawatpanna">LinkedIn</a>
-                <a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Instagram</a>
-                <a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Behance</a>
+                <div data-content-links></div>
             </div>
             <div class="flex items-end md:justify-end">
                 <p class="font-body-md text-sm text-on-surface-variant">© 2024 Textile Engineer & Photographer. All rights reserved.</p>
