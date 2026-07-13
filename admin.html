@@ -128,11 +128,11 @@
         }
         .login-overlay.hidden { display: none; }
         
-        .login-container { width: 100%; max-width: 420px; }
+        .login-container { width: 100%; max-width: 380px; }
         
         .login-card {
-            background: #fff; border-radius: 16px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
-            padding: 48px 40px; border: 1px solid #e5e7eb;
+            background: #fff; border-radius: 14px; box-shadow: 0 16px 32px -12px rgba(0,0,0,0.08);
+            padding: 40px 32px; border: 1px solid #e5e7eb;
         }
         
         .login-header { text-align: center; margin-bottom: 32px; }
@@ -194,9 +194,20 @@
                         </svg>
                     </div>
                     <h1>Admin Panel</h1>
-                    <p>Enter password to access content manager</p>
+                    <p>Sign in to access content manager</p>
                 </div>
                 <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-username">Email</label>
+                        <input 
+                            type="email" 
+                            id="login-username" 
+                            name="username" 
+                            placeholder="panna@gmail.com" 
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
                     <div class="form-group password-group">
                         <label for="login-password">Password</label>
                         <div class="password-input-wrapper">
@@ -1970,6 +1981,7 @@
         }
 
         // ===== Authentication =====
+        const ADMIN_USERNAME = 'panna@gmail.com';
         const ADMIN_PASSWORD = 'panna4545@';
 
         function checkAuth() {
@@ -1989,15 +2001,16 @@
 
         function handleLogin(e) {
             e.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
             const password = document.getElementById('login-password').value;
             const errorEl = document.getElementById('login-error');
             
-            if (password === ADMIN_PASSWORD) {
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
                 sessionStorage.setItem('admin_authed', 'true');
                 errorEl.classList.add('hidden');
                 checkAuth();
             } else {
-                errorEl.textContent = 'Invalid password. Please try again.';
+                errorEl.textContent = 'Invalid email or password. Please try again.';
                 errorEl.classList.remove('hidden');
                 document.getElementById('login-password').value = '';
             }
