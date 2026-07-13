@@ -84,8 +84,6 @@ function populateLists() {
 
     populateList('career-tasks-list-1', 'career.mainExperience.tasks',
         (item) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
-    populateList('career-tasks-list-2', 'career.mainExperience.tasks',
-        (item) => `<li class="flex gap-4"><span class="material-symbols-outlined text-primary/40">check_circle</span><span class="font-body-md text-on-surface">${item}</span></li>`);
 }
 
 function populateSocialLinks() {

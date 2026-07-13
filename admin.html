@@ -428,6 +428,24 @@
                             <label>SSC Label</label>
                             <input type="text" id="career-ssc-label">
                         </div>
+                        <div class="form-group">
+                            <label>SSC School</label>
+                            <input type="text" id="career-ssc-institution">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>HSC GPA</label>
+                            <input type="text" id="career-hsc-gpa">
+                        </div>
+                        <div class="form-group">
+                            <label>HSC Label</label>
+                            <input type="text" id="career-hsc-label">
+                        </div>
+                        <div class="form-group">
+                            <label>HSC College</label>
+                            <input type="text" id="career-hsc-institution">
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -437,6 +455,10 @@
                         <div class="form-group">
                             <label>BSc Label</label>
                             <input type="text" id="career-bsc-label">
+                        </div>
+                        <div class="form-group">
+                            <label>BSc College</label>
+                            <input type="text" id="career-bsc-institution">
                         </div>
                     </div>
                 </div>
@@ -872,7 +894,7 @@
                 site: { name: "Panna.", fullName: "MD Sakawat Hossain Panna", tagline: "Textile Engineer & Photographer", copyright: "© 2024 MD SAKAWAT HOSSAIN PANNA", footerText: "Designed for Excellence", cvUrl: "" },
                 hero: { subtitle: "Precision in Textiles & Light", heading: "MD Sakawat<br/>Hossain Panna", description: "A specialized Textile Engineer and visual storyteller.", focus: "Sustainable R&D", expertise: "Fabric Engineering", portraitUrl: "", degreeTitle: "B.Sc. Textile Engineering", degreeCollege: "Pabna Textile Engineering College" },
                 about: { subtitle: "Mission", heading: "Career Objective", description: "", quote: "", corePrinciples: ["Technical Integrity", "Creative Discipline", "Continuous Learning"], primaryDomains: ["Fiber & Yarn Analysis", "Industrial Photography", "Supply Chain Management"] },
-                career: { subtitle: "The Track Record", heading: "Professional Highlights", mainExperience: { badge: "Professional Internship", company: "Crown Wears Pvt. Ltd", role: "Merchandising, Production & IE", period: "Feb — March, 2024", tasks: [] }, keySkills: [{name: "Adobe Photoshop", logo: ""}, {name: "Illustrator", logo: ""}, {name: "MS Office", logo: ""}], softSkills: [{name: "Leadership", logo: ""}, {name: "Time Management", logo: ""}], academics: { ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate" }, bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering" } } },
+                career: { subtitle: "The Track Record", heading: "Professional Highlights", mainExperience: { badge: "Professional Internship", company: "Crown Wears Pvt. Ltd", role: "Merchandising, Production & IE", period: "Feb — March, 2024", tasks: [] }, keySkills: [{name: "Adobe Photoshop", logo: ""}, {name: "Illustrator", logo: ""}, {name: "MS Office", logo: ""}], softSkills: [{name: "Leadership", logo: ""}, {name: "Time Management", logo: ""}], academics: { ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate", institution: "Pabna Zilla School" }, hsc: { gpa: "GPA 5.00/5.00", label: "Higher Secondary Certificate", institution: "Pabna College" }, bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering", institution: "Pabna Textile Engineering College" } } },
                 showcase: { subtitle: "Creative Gallery", heading: "Visual Narrative", description: "", categories: [], gallery: [], featuredImages: ["", "", ""] },
                 contact: { subtitle: "Available for projects", heading: "Let's Create<br/>Something Exceptional", email: "sakawatpanna77@gmail.com" },
                 links: [
@@ -1135,8 +1157,13 @@
             renderTags('softSkills', contentData.career?.softSkills || []);
             setVal('career-ssc-gpa', contentData.career?.academics?.ssc?.gpa);
             setVal('career-ssc-label', contentData.career?.academics?.ssc?.label);
+            setVal('career-ssc-institution', contentData.career?.academics?.ssc?.institution);
+            setVal('career-hsc-gpa', contentData.career?.academics?.hsc?.gpa);
+            setVal('career-hsc-label', contentData.career?.academics?.hsc?.label);
+            setVal('career-hsc-institution', contentData.career?.academics?.hsc?.institution);
             setVal('career-bsc-gpa', contentData.career?.academics?.bsc?.gpa);
             setVal('career-bsc-label', contentData.career?.academics?.bsc?.label);
+            setVal('career-bsc-institution', contentData.career?.academics?.bsc?.institution);
             
             // Showcase
             setVal('showcase-subtitle', contentData.showcase?.subtitle);
@@ -1302,11 +1329,18 @@
             if (!contentData.career.academics) contentData.career.academics = {};
             contentData.career.academics.ssc = {
                 gpa: getVal('career-ssc-gpa'),
-                label: getVal('career-ssc-label')
+                label: getVal('career-ssc-label'),
+                institution: getVal('career-ssc-institution')
+            };
+            contentData.career.academics.hsc = {
+                gpa: getVal('career-hsc-gpa'),
+                label: getVal('career-hsc-label'),
+                institution: getVal('career-hsc-institution')
             };
             contentData.career.academics.bsc = {
                 gpa: getVal('career-bsc-gpa'),
-                label: getVal('career-bsc-label')
+                label: getVal('career-bsc-label'),
+                institution: getVal('career-bsc-institution')
             };
             
             // Showcase

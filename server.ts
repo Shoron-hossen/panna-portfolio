@@ -67,8 +67,9 @@ const defaultContent: Record<string, any> = {
         keySkills: ["Adobe Photoshop", "Illustrator", "MS Office", "Data Analysis", "Public Speaking"],
         softSkills: ["Leadership", "Time Management", "Adaptable", "Determined"],
         academics: {
-            ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate" },
-            bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering" }
+            ssc: { gpa: "GPA 5.00/5.00", label: "Secondary School Certificate", institution: "Pabna Zilla School" },
+            hsc: { gpa: "GPA 5.00/5.00", label: "Higher Secondary Certificate", institution: "Pabna College" },
+            bsc: { gpa: "CGPA 3.52", label: "B.Sc. Textile Engineering", institution: "Pabna Textile Engineering College" }
         }
     },
     showcase: {
