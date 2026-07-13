@@ -402,18 +402,24 @@
                 <div class="card">
                     <div class="card-header"><h3>Key Skills</h3></div>
                     <div class="tag-container" id="keySkills-tags"></div>
-                    <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <input type="text" id="keySkills-input" placeholder="Skill name..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
-                        <input type="text" id="keySkills-logo" placeholder="Logo URL (optional)" style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                        <input type="text" id="keySkills-input" placeholder="Skill name..." style="flex: 1; min-width: 120px; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <div style="display: flex; gap: 6px; align-items: center; flex: 1; min-width: 180px;">
+                            <input type="text" id="keySkills-logo" placeholder="Logo URL (optional)" style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                            <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('keySkills-logo').value = url; })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                        </div>
                         <button class="btn btn-primary" onclick="addTag('keySkills')">Add</button>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header"><h3>Soft Skills</h3></div>
                     <div class="tag-container" id="softSkills-tags"></div>
-                    <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <input type="text" id="softSkills-input" placeholder="Skill name..." style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
-                        <input type="text" id="softSkills-logo" placeholder="Logo URL (optional)" style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                        <input type="text" id="softSkills-input" placeholder="Skill name..." style="flex: 1; min-width: 120px; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                        <div style="display: flex; gap: 6px; align-items: center; flex: 1; min-width: 180px;">
+                            <input type="text" id="softSkills-logo" placeholder="Logo URL (optional)" style="flex: 1; padding: 10px 14px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px;">
+                            <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('softSkills-logo').value = url; })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                        </div>
                         <button class="btn btn-primary" onclick="addTag('softSkills')">Add</button>
                     </div>
                 </div>
@@ -1417,8 +1423,22 @@
             const container = document.getElementById(key + '-tags');
             container.innerHTML = items.map((item, i) => {
                 if (typeof item === 'object' && item !== null) {
-                    const logo = item.logo ? `<img src="${item.logo}" style="width:16px;height:16px;border-radius:3px;object-fit:cover;margin-right:6px;" onerror="this.style.display='none'">` : '';
-                    return `<span class="tag">${logo}${item.name || ''} <button onclick="removeTag('${key}', ${i})">&times;</button></span>`;
+                    const logo = item.logo
+                        ? `<img src="${item.logo}" style="width:24px;height:24px;border-radius:4px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'">`
+                        : '';
+                    const urlDisplay = item.logo
+                        ? `<span style="display:block;font-size:11px;color:#999;margin-top:2px;word-break:break-all;">${item.logo}</span>`
+                        : '';
+                    return `<div class="list-item" style="display:flex;align-items:center;gap:10px;">
+                        ${logo}
+                        <div style="flex:1;min-width:0;">
+                            <strong>${item.name || ''}</strong>
+                            ${urlDisplay}
+                        </div>
+                        <div class="list-item-actions">
+                            <button onclick="removeTag('${key}', ${i})" title="Remove">✕</button>
+                        </div>
+                    </div>`;
                 }
                 return `<span class="tag">${item} <button onclick="removeTag('${key}', ${i})">&times;</button></span>`;
             }).join('');
