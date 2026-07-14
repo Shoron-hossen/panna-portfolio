@@ -4,6 +4,8 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Admin Panel | Portfolio</title>
+    <link rel="preconnect" href="https://widget.cloudinary.com" crossorigin>
+    <link rel="dns-prefetch" href="https://widget.cloudinary.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1273,12 +1275,12 @@
                 cloudName: CLOUDINARY_CLOUD_NAME,
                 uploadPreset: CLOUDINARY_UPLOAD_PRESET,
                 folder: 'portfolio/misc',
-                maxImageWidth: 2400,
-                maxImageHeight: 2400,
                 sources: ['local', 'url', 'camera'],
                 styles: {
                     palette: { window: '#1a1a1a', sourceBg: '#222', windowBorder: '#444', tabIcon: '#7c3aed', menuIcons: '#ccc', textDark: '#fff', textLight: '#999', activeTab: '#7c3aed' }
-                }
+                },
+                cropping: false,
+                multiple: false
             }, function(error, result) {
                 if (!error && result && result.event === 'success') {
                     callback(result.info.secure_url);

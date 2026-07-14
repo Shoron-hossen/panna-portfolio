@@ -20,7 +20,7 @@ function cld(url, w, h) {
     if (!url || !url.includes('cloudinary.com')) return url;
     const parts = url.split('/upload/');
     if (parts.length !== 2) return url;
-    const transforms = ['f_auto', 'q_auto'];
+    const transforms = ['f_auto', 'q_100'];
     if (w) transforms.push('w_' + w);
     if (h) transforms.push('h_' + h);
     return parts[0] + '/upload/' + transforms.join(',') + '/' + parts[1];
