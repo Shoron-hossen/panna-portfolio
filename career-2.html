@@ -66,6 +66,9 @@
             .mb-section-gap { margin-bottom: 48px !important; }
             .flex.justify-between { flex-direction: column !important; text-align: center !important; gap: 16px !important; }
             .grid.grid-cols-1.md\\:grid-cols-4 { grid-template-columns: 1fr !important; }
+            /* ---- FOOTER: nav + connect side by side ---- */
+            footer .grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px 24px !important; text-align: left !important; }
+            footer .grid .col-span-1 { grid-column: span 2 !important; }
         }
         .experience-card {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);

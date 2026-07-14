@@ -214,13 +214,19 @@
                 width: 100% !important;
             }
 
+            /* ---- PROFESSIONAL HIGHLIGHTS: date below badge on mobile ---- */
+            .flex.justify-between.items-start { flex-direction: column !important; gap: 8px !important; }
+
+            /* ---- VISUAL NARRATIVE: button left on mobile ---- */
+            .flex.justify-between.items-end { align-items: flex-start !important; }
+
+            /* ---- MOBILE NAV: active page indicator ---- */
+            .mobile-bottom-nav a.active { color: #000 !important; border-top: 2px solid #000 !important; }
+
             /* ---- FOOTER ---- */
             footer.w-full { padding-top: 32px !important; padding-bottom: 32px !important; }
-            footer .grid.grid-cols-1.md\:grid-cols-4 {
-                grid-template-columns: 1fr !important;
-                gap: 20px !important;
-                text-align: left !important;
-            }
+            footer .grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px 24px !important; text-align: left !important; }
+            footer .grid .col-span-1 { grid-column: span 2 !important; }
             footer .flex.flex-col.md\:flex-row.justify-between {
                 flex-direction: column !important;
                 gap: 8px !important;
@@ -363,7 +369,7 @@
 <!-- Mobile Bottom Navigation -->
 <nav class="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-md border-t border-outline-variant">
     <div class="flex justify-around items-center h-16 px-4">
-        <a href="/" class="flex flex-col items-center gap-1 text-primary transition-colors" aria-label="Home">
+        <a href="/" class="flex flex-col items-center gap-1 active text-primary transition-colors" aria-label="Home">
             <span class="material-symbols-outlined text-lg">home</span>
             <span class="text-[10px] font-medium">Home</span>
         </a>

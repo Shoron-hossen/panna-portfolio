@@ -57,6 +57,9 @@
             .md\\:col-span-2.md\\:row-span-2, .md\\:col-span-2, .md\\:col-span-1 { grid-column: auto !important; grid-row: auto !important; }
             .h-\\[600px\\] { height: auto !important; min-height: 500px !important; }
             .grid.grid-cols-1.md\\:grid-cols-4.grid-rows-2 { grid-template-columns: 1fr !important; grid-template-rows: auto !important; }
+            /* ---- FOOTER: nav + connect side by side ---- */
+            footer .grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px 24px !important; text-align: left !important; }
+            footer .grid .col-span-1 { grid-column: span 2 !important; }
         }
     </style>
 <script id="tailwind-config">
