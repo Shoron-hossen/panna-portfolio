@@ -697,132 +697,191 @@
 
             <!-- Career Pages -->
             <div id="section-careerpage" class="section">
-                <div class="card">
-                    <div class="card-header"><h3>Career 1 - Engineering Path</h3></div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Subtitle</label>
-                            <input type="text" id="cp-c1-subtitle">
+                <!-- ============================================================ -->
+                <!-- SECTION 1: Engineering Path                                   -->
+                <!-- ============================================================ -->
+                <div style="background: #eef2ff; border: 2px solid #6366f1; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                        <span style="background: #6366f1; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px;">SECTION 1</span>
+                        <h3 style="font-size: 18px; font-weight: 700; color: #4338ca; margin: 0;">Engineering Path</h3>
+                    </div>
+                    <p style="color: #6b7280; font-size: 13px; margin-bottom: 16px;">Manage the academic & engineering foundation tab content.</p>
+
+                    <div class="card">
+                        <div class="card-header"><h3>Content</h3></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Subtitle</label>
+                                <input type="text" id="cp-c1-subtitle">
+                            </div>
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input type="text" id="cp-c1-heading">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Heading</label>
-                            <input type="text" id="cp-c1-heading">
+                            <label>Description</label>
+                            <textarea id="cp-c1-description" rows="3"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="cp-c1-description" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Career 1 - Section Headings</h3></div>
-                    <div class="form-group">
-                        <label>Technical Skills Section Title</label>
-                        <input type="text" id="cp-c1-tech-heading" placeholder="Technical Expertise">
-                    </div>
-                    <div class="form-group">
-                        <label>Soft Skills Section Title</label>
-                        <input type="text" id="cp-c1-ss-heading" placeholder="Professional Attributes">
-                    </div>
-                    <div class="form-group">
-                        <label>Extracurricular Section Title</label>
-                        <input type="text" id="cp-c1-extra-heading" placeholder="Beyond the Lab">
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Career 1 - Images</h3></div>
-                    <div class="form-group">
-                        <label>Education Image (Thumbnail)</label>
-                        <input type="text" id="cp-c1-eduImage" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
-                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('cp-c1-eduImage').value = url; showPreview('cp-c1-eduPreview', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
-                        <div id="cp-c1-eduPreview" style="margin-top: 6px;"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Photography Card Background</label>
-                        <input type="text" id="cp-c1-photoImage" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
-                        <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('cp-c1-photoImage').value = url; showPreview('cp-c1-photoPreview', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
-                        <div id="cp-c1-photoPreview" style="margin-top: 6px;"></div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Career 2 - Trajectory</h3></div>
-                    <div class="form-row">
+                    <div class="card">
+                        <div class="card-header"><h3>Section Headings</h3></div>
                         <div class="form-group">
-                            <label>Subtitle</label>
-                            <input type="text" id="cp-c2-subtitle">
+                            <label>Technical Skills Section Title</label>
+                            <input type="text" id="cp-c1-tech-heading" placeholder="Technical Expertise">
                         </div>
                         <div class="form-group">
-                            <label>Heading</label>
-                            <input type="text" id="cp-c2-heading">
+                            <label>Soft Skills Section Title</label>
+                            <input type="text" id="cp-c1-ss-heading" placeholder="Professional Attributes">
+                        </div>
+                        <div class="form-group">
+                            <label>Extracurricular Section Title</label>
+                            <input type="text" id="cp-c1-extra-heading" placeholder="Beyond the Lab">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Hero Description</label>
-                        <textarea id="cp-c2-heroDescription" rows="3"></textarea>
+                    <div class="card">
+                        <div class="card-header"><h3>Images</h3></div>
+                        <div class="form-group">
+                            <label>Education Image (Thumbnail)</label>
+                            <input type="text" id="cp-c1-eduImage" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                            <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('cp-c1-eduImage').value = url; showPreview('cp-c1-eduPreview', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                            <div id="cp-c1-eduPreview" style="margin-top: 6px;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Photography Card Background</label>
+                            <input type="text" id="cp-c1-photoImage" placeholder="Cloudinary URL..." style="margin-bottom: 6px;">
+                            <button type="button" class="btn" onclick="openUpload(function(url) { document.getElementById('cp-c1-photoImage').value = url; showPreview('cp-c1-photoPreview', url); })" style="background: #7c3aed; color: white; padding: 6px 14px; font-size: 12px;">Upload</button>
+                            <div id="cp-c1-photoPreview" style="margin-top: 6px;"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Technical Skills</h3></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Visual Design - Title</label><input type="text" id="cp-c1-ts-vd-title"></div>
+                            <div class="form-group"><label>Visual Design - Description</label><input type="text" id="cp-c1-ts-vd-desc"></div>
+                        </div>
+                        <div class="form-group"><label>Visual Design - Tags (comma separated)</label><input type="text" id="cp-c1-ts-vd-tags" placeholder="Adobe Photoshop, Lightroom, Digital Composition"></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Office Suite - Title</label><input type="text" id="cp-c1-ts-office-title"></div>
+                            <div class="form-group"><label>Office Suite - Description</label><input type="text" id="cp-c1-ts-office-desc"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Photography - Title</label><input type="text" id="cp-c1-ts-photo-title"></div>
+                            <div class="form-group"><label>Photography - Description</label><input type="text" id="cp-c1-ts-photo-desc"></div>
+                        </div>
+                        <div class="form-group"><label>Textile R&D - Title</label><input type="text" id="cp-c1-ts-rd-title"></div>
+                        <div class="form-group"><label>Textile R&D Items (one per line)</label><textarea id="cp-c1-ts-rd-items" rows="3" placeholder="Fabric Analysis&#10;Quality Control"></textarea></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Education Entries</h3></div>
+                        <div id="cp-c1-education-list"></div>
+                        <button class="btn btn-outline" style="margin-top: 12px;" onclick="openEducationModal()">+ Add Education</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Professional Attributes (Soft Skills)</h3></div>
+                        <div id="cp-c1-softskills-list"></div>
+                        <button class="btn btn-outline" style="margin-top: 12px;" onclick="openSoftSkillModal()">+ Add Attribute</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Beyond the Lab (Extracurricular)</h3></div>
+                        <div id="cp-c1-extra-list"></div>
+                        <button class="btn btn-outline" style="margin-top: 12px;" onclick="openExtraModal()">+ Add Activity</button>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header"><h3>Career 2 - Section Headings</h3></div>
-                    <div class="form-group">
-                        <label>Pillars Section Title</label>
-                        <input type="text" id="cp-c2-pillars-heading" placeholder="Core Verticals">
+
+                <!-- ============================================================ -->
+                <!-- SECTION 2: Career Trajectory                                  -->
+                <!-- ============================================================ -->
+                <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                        <span style="background: #22c55e; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px;">SECTION 2</span>
+                        <h3 style="font-size: 18px; font-weight: 700; color: #15803d; margin: 0;">Career Trajectory</h3>
                     </div>
-                    <div class="form-group">
-                        <label>Timeline Section Title</label>
-                        <input type="text" id="cp-c2-timeline-heading" placeholder="Career Journey">
+                    <p style="color: #6b7280; font-size: 13px; margin-bottom: 16px;">Manage the professional career trajectory tab content.</p>
+
+                    <div class="card">
+                        <div class="card-header"><h3>Content</h3></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Subtitle</label>
+                                <input type="text" id="cp-c2-subtitle">
+                            </div>
+                            <div class="form-group">
+                                <label>Heading</label>
+                                <input type="text" id="cp-c2-heading">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Description</label>
+                            <textarea id="cp-c2-heroDescription" rows="3"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Milestone Label (e.g., Industrial Foundations)</label>
-                        <input type="text" id="cp-c2-milestone-label" placeholder="Industrial Foundations">
+                    <div class="card">
+                        <div class="card-header"><h3>Section Headings</h3></div>
+                        <div class="form-group">
+                            <label>Pillars Section Title</label>
+                            <input type="text" id="cp-c2-pillars-heading" placeholder="Core Verticals">
+                        </div>
+                        <div class="form-group">
+                            <label>Timeline Section Title</label>
+                            <input type="text" id="cp-c2-timeline-heading" placeholder="Career Journey">
+                        </div>
+                        <div class="form-group">
+                            <label>Milestone Label (e.g., Industrial Foundations)</label>
+                            <input type="text" id="cp-c2-milestone-label" placeholder="Industrial Foundations">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Expertise Pillars</h3></div>
+                        <div id="cp-c2-pillars-list"></div>
+                        <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPillarModal()">+ Add Pillar</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Current Career Positions</h3></div>
+                        <div id="cp-c2-current-list"></div>
+                        <button class="btn btn-outline" style="margin-top: 12px;" onclick="openCurrentCareerModal()">+ Add Current Position</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3>Previous Career Positions</h3></div>
+                        <div id="cp-c2-previous-list"></div>
+                        <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPreviousCareerModal()">+ Add Previous Position</button>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header"><h3>Technical Skills (Career 1)</h3></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Visual Design - Title</label><input type="text" id="cp-c1-ts-vd-title"></div>
-                        <div class="form-group"><label>Visual Design - Description</label><input type="text" id="cp-c1-ts-vd-desc"></div>
+
+                <!-- ============================================================ -->
+                <!-- SECTION 3: Projects & Achievements                            -->
+                <!-- ============================================================ -->
+                <div style="background: #fefce8; border: 2px solid #eab308; border-radius: 12px; padding: 24px; margin-bottom: 32px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                        <span style="background: #eab308; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px;">SECTION 3</span>
+                        <h3 style="font-size: 18px; font-weight: 700; color: #a16207; margin: 0;">Projects & Achievements</h3>
                     </div>
-                    <div class="form-group"><label>Visual Design - Tags (comma separated)</label><input type="text" id="cp-c1-ts-vd-tags" placeholder="Adobe Photoshop, Lightroom, Digital Composition"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Office Suite - Title</label><input type="text" id="cp-c1-ts-office-title"></div>
-                        <div class="form-group"><label>Office Suite - Description</label><input type="text" id="cp-c1-ts-office-desc"></div>
+                    <p style="color: #6b7280; font-size: 13px; margin-bottom: 16px;">Manage the projects & achievements tab content.</p>
+
+                    <div class="card">
+                        <div class="card-header"><h3>Section Heading</h3></div>
+                        <div class="form-group">
+                            <label>Section Heading Text</label>
+                            <input type="text" id="cp-ach-heading" placeholder="Projects & Achievements">
+                        </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Photography - Title</label><input type="text" id="cp-c1-ts-photo-title"></div>
-                        <div class="form-group"><label>Photography - Description</label><input type="text" id="cp-c1-ts-photo-desc"></div>
+                    <div class="card">
+                        <div class="card-header"><h3>Categories</h3></div>
+                        <p style="font-size: 12px; color: #888; margin-bottom: 12px;">Default categories: Volunteering, Projects, Skills. Add or remove as needed.</p>
+                        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                            <input type="text" id="cp-ach-cat-input" placeholder="New category name..." style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px;">
+                            <button type="button" class="btn" onclick="addAchievementCategory()" style="background: #10b981; color: white; padding: 8px 16px;">Add</button>
+                        </div>
+                        <div id="cp-ach-categories-list" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
                     </div>
-                    <div class="form-group"><label>Textile R&D - Title</label><input type="text" id="cp-c1-ts-rd-title"></div>
-                    <div class="form-group"><label>Textile R&D Items (one per line)</label><textarea id="cp-c1-ts-rd-items" rows="3" placeholder="Fabric Analysis&#10;Quality Control"></textarea></div>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Education Entries</h3></div>
-                    <div id="cp-c1-education-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openEducationModal()">+ Add Education</button>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Professional Attributes</h3></div>
-                    <div id="cp-c1-softskills-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openSoftSkillModal()">+ Add Attribute</button>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Beyond the Lab</h3></div>
-                    <div id="cp-c1-extra-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openExtraModal()">+ Add Activity</button>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Expertise Pillars</h3></div>
-                    <div id="cp-c2-pillars-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPillarModal()">+ Add Pillar</button>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Current Career Positions</h3></div>
-                    <div id="cp-c2-current-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openCurrentCareerModal()">+ Add Current Position</button>
-                </div>
-                <div class="card">
-                    <div class="card-header"><h3>Previous Career Positions</h3></div>
-                    <div id="cp-c2-previous-list"></div>
-                    <button class="btn btn-outline" style="margin-top: 12px;" onclick="openPreviousCareerModal()">+ Add Previous Position</button>
+                    <div class="card">
+                        <div class="card-header"><h3>Items</h3></div>
+                        <p style="font-size: 12px; color: #888; margin-bottom: 12px;">Add volunteering, projects, or skills with logo, organization, dates, bullet points, and certificates.</p>
+                        <button type="button" class="btn" onclick="openAchievementItemModal()" style="background: #7c3aed; color: white; margin-bottom: 16px;">
+                            + Add Item
+                        </button>
+                        <div id="cp-ach-items-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -961,6 +1020,88 @@
         </div>
     </div>
 
+    <!-- Achievement Item Modal -->
+    <div id="achievementItemModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Add/Edit Achievement Item</h3>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="ach-item-category" style="width:100%;padding:12px 16px;border:1px solid #e5e5e5;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;background:#fff;">
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Title / Role</label>
+                    <input type="text" id="ach-item-title" placeholder="e.g. Social Media Contributor">
+                </div>
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" id="ach-item-org" placeholder="e.g. Hult Prize at CTEC">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Affiliated Institution (optional)</label>
+                    <input type="text" id="ach-item-institution" placeholder="e.g. Ahsanullah University of Science & Technology">
+                </div>
+                <div class="form-group">
+                    <label>Institution Logo (optional)</label>
+                    <div style="display:flex;gap:6px;">
+                        <input type="url" id="ach-item-institution-logo" placeholder="Cloudinary URL..." style="flex:1;">
+                        <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('ach-item-institution-logo').value = url; showPreview('ach-item-institution-logo-preview', url); })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                    </div>
+                    <div id="ach-item-institution-logo-preview" style="margin-top: 8px;"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date Range</label>
+                    <input type="text" id="ach-item-dates" placeholder="e.g. 2023 - 2024 · 1 yr">
+                </div>
+                <div class="form-group">
+                    <label>Logo (Organization icon)</label>
+                    <div style="display:flex;gap:6px;">
+                        <input type="url" id="ach-item-logo" placeholder="Cloudinary URL..." style="flex:1;">
+                        <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('ach-item-logo').value = url; showPreview('ach-item-logo-preview', url); })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                    </div>
+                    <div id="ach-item-logo-preview" style="margin-top: 8px;"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Bullet Points (one per line)</label>
+                <textarea id="ach-item-bullets" rows="3" placeholder="Conducted an analytical study on...&#10;Evaluated the relationship between..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Skills (comma separated)</label>
+                <input type="text" id="ach-item-skills" placeholder="e.g. Research Skills, Proofreading, Data Analysis">
+            </div>
+            <div class="form-group">
+                <label>Description (full text - shows truncated on site, full in popup)</label>
+                <textarea id="ach-item-description" rows="4" placeholder="Write the full description here. It will be truncated to 120 chars on the card, and shown fully in the detail popup."></textarea>
+            </div>
+            <hr style="margin: 20px 0; border: 1px solid #e5e7eb;">
+            <p style="font-size: 12px; color: #888; margin-bottom: 12px;">Certificate Section (optional)</p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Certificate Image</label>
+                    <div style="display:flex;gap:6px;">
+                        <input type="url" id="ach-item-cert-image" placeholder="Cloudinary URL..." style="flex:1;">
+                        <button type="button" class="btn" onclick="openUpload(function(url){ document.getElementById('ach-item-cert-image').value = url; showPreview('ach-item-cert-preview', url); })" style="background:#7c3aed;color:white;padding:6px 14px;font-size:12px;white-space:nowrap;">Upload</button>
+                    </div>
+                    <div id="ach-item-cert-preview" style="margin-top: 8px;"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Certificate Description</label>
+                <textarea id="ach-item-cert-desc" rows="3" placeholder="I worked as a volunteer for..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal('achievementItemModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAchievementItem()">Save</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Initialize Firebase
         firebase.initializeApp({
@@ -1062,7 +1203,7 @@
                     { name: "Instagram", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png" },
                     { name: "WhatsApp", url: "#", logo: "https://cdn-icons-png.flaticon.com/512/733/733585.png" }
                 ],
-                careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [], currentCareers: [ { badge: "CURRENT", period: "JAN 2024 — MAR 2024", title: "Industrial Intern", company: "Crown Wears Pvt. Ltd", accomplishments: [ "Optimized merchandising workflows reducing documentation lead time.", "Spearheaded quality inspection protocols for international export compliance.", "Conducted cross-departmental analysis of yarn-to-garment production cycles." ] } ], previousCareers: [ { company: "Square Fashions Ltd.", subtitle: "VERTICAL INTEGRATION STUDY", description: "Deep dive into large-scale knit production and global supply chain logistics." }, { company: "Paramount Textile Ltd.", subtitle: "ADVANCED WEAVING & DYEING", description: "Analysis of sophisticated yarn dyeing technologies and high-speed weaving efficiency." } ] } }
+                careerPage: { career1: { subtitle: "Academic & Technical", heading: "The fusion of structural engineering and visual precision.", description: "A journey from foundational science to specialized textile engineering, defined by meticulous research and technical excellence.", sectionHeadings: { technicalSkills: "Technical Expertise", softSkills: "Professional Attributes", extracurricular: "Beyond the Lab" }, technicalSkills: { visualDesign: { title: "Visual Identity & Design", description: "Advanced proficiency in Adobe Photoshop and digital imaging.", tags: ["Adobe Photoshop", "Lightroom", "Digital Composition"] }, office: { title: "Office Suite", description: "Expert handling of MS Excel, PowerPoint, and Word for technical reporting." }, photography: { title: "Visual Storytelling", description: "Capturing the soul of industrial processes through professional photography." }, textileRD: { title: "Textile R&D", items: ["Fabric Analysis", "Quality Control"] } } }, career2: { subtitle: "Trajectory & Growth", heading: "Career in Technical Excellence", heroDescription: "", sectionHeadings: { pillars: "Core Verticals", timeline: "Career Journey", milestone: "Industrial Foundations" }, pillars: [], currentCareers: [ { badge: "CURRENT", period: "JAN 2024 — MAR 2024", title: "Industrial Intern", company: "Crown Wears Pvt. Ltd", accomplishments: [ "Optimized merchandising workflows reducing documentation lead time.", "Spearheaded quality inspection protocols for international export compliance.", "Conducted cross-departmental analysis of yarn-to-garment production cycles." ] } ], previousCareers: [ { company: "Square Fashions Ltd.", subtitle: "VERTICAL INTEGRATION STUDY", description: "Deep dive into large-scale knit production and global supply chain logistics." }, { company: "Paramount Textile Ltd.", subtitle: "ADVANCED WEAVING & DYEING", description: "Analysis of sophisticated yarn dyeing technologies and high-speed weaving efficiency." } ] },                 achievements: { sectionHeading: "Projects & Achievements", categories: ["Volunteering", "Projects", "Skills"], items: [] } }
             };
         }
         
@@ -1396,6 +1537,10 @@
             renderCurrentCareers(contentData.careerPage?.career2?.currentCareers || []);
             renderPreviousCareers(contentData.careerPage?.career2?.previousCareers || []);
             renderListItems('industrialVisits', contentData.career?.industrialVisits || []);
+            // Achievements
+            setVal('cp-ach-heading', contentData.careerPage?.achievements?.sectionHeading);
+            renderAchievementCategories();
+            renderAchievementItemsList();
             
             // Dashboard
             document.getElementById('dash-site-name').textContent = contentData.site?.name || '-';
@@ -1578,6 +1723,11 @@
             if (savedSoftSkills) contentData.careerPage.career1.softSkills = savedSoftSkills;
             if (savedExtras) contentData.careerPage.career1.extracurricular = savedExtras;
             if (savedEducation && savedEducation.length > 1) contentData.careerPage.career1.education = savedEducation;
+            // Achievements
+            if (!contentData.careerPage.achievements) contentData.careerPage.achievements = {};
+            contentData.careerPage.achievements.sectionHeading = getVal('cp-ach-heading');
+            contentData.careerPage.achievements.categories = contentData.careerPage.achievements.categories || [];
+            contentData.careerPage.achievements.items = contentData.careerPage.achievements.items || [];
             // Career 1 - Technical Skills
             if (!contentData.careerPage.career1.technicalSkills) contentData.careerPage.career1.technicalSkills = {};
             const ts = contentData.careerPage.career1.technicalSkills;
@@ -1915,6 +2065,165 @@
         function removePreviousCareer(i) { contentData.careerPage.career2.previousCareers.splice(i, 1); renderPreviousCareers(contentData.careerPage.career2.previousCareers); }
 
         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        // === Achievement Categories & Items ===
+        let editingAchievementIndex = -1;
+
+        function renderAchievementCategories() {
+            const list = document.getElementById('cp-ach-categories-list');
+            if (!list) return;
+            const cats = contentData.careerPage?.achievements?.categories || [];
+            if (cats.length === 0) {
+                list.innerHTML = '<p style="color: #888; font-size: 12px;">No categories yet. Add one above.</p>';
+                return;
+            }
+            list.innerHTML = cats.map((cat, i) => `
+                <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 20px; font-size: 13px;">
+                    ${cat}
+                    <button onclick="removeAchievementCategory(${i})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 16px; line-height: 1;">&times;</button>
+                </span>
+            `).join('');
+        }
+
+        function addAchievementCategory() {
+            const input = document.getElementById('cp-ach-cat-input');
+            const name = input.value.trim();
+            if (!name) return;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.achievements) contentData.careerPage.achievements = {};
+            if (!contentData.careerPage.achievements.categories) contentData.careerPage.achievements.categories = [];
+            if (contentData.careerPage.achievements.categories.includes(name)) {
+                showToast('Category already exists', 'error');
+                return;
+            }
+            contentData.careerPage.achievements.categories.push(name);
+            input.value = '';
+            renderAchievementCategories();
+            showToast('Category added', 'success');
+        }
+
+        function removeAchievementCategory(index) {
+            if (contentData.careerPage?.achievements?.categories) {
+                const removed = contentData.careerPage.achievements.categories.splice(index, 1)[0];
+                if (contentData.careerPage.achievements.items) {
+                    contentData.careerPage.achievements.items.forEach(item => {
+                        if (item.category === removed) item.category = '';
+                    });
+                }
+                renderAchievementCategories();
+                renderAchievementItemsList();
+            }
+        }
+
+        function renderAchievementItemsList() {
+            const list = document.getElementById('cp-ach-items-list');
+            if (!list) return;
+            const items = contentData.careerPage?.achievements?.items || [];
+            if (items.length === 0) {
+                list.innerHTML = '<p style="color: #888; font-size: 13px;">No items yet. Click the add button above.</p>';
+                return;
+            }
+            list.innerHTML = items.map((item, i) => {
+                const thumb = item.logoUrl
+                    ? '<img src="' + item.logoUrl + '" style="width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0;border:1px solid #eee;" onerror="this.style.display=\'none\'">'
+                    : '<div style="width:48px;height:48px;background:#f3f4f6;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:20px;">&#128194;</div>';
+                const bullets = (item.bullets || []).length;
+                const skillsCount = (item.skills || []).length;
+                return '<div style="padding: 12px 16px; background: #f9f9f9; border-radius: 8px; display: flex; align-items: center; gap: 12px;">'
+                    + thumb
+                    + '<div style="flex: 1; min-width: 0;">'
+                    + '<div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">'
+                    + '<strong style="font-size: 13px;">' + (item.title || 'Untitled') + '</strong>'
+                    + (item.category ? '<span style="font-size: 11px; color: #6366f1; background: #eef2ff; padding: 2px 8px; border-radius: 10px;">' + item.category + '</span>' : '')
+                    + '</div>'
+                    + '<div style="font-size: 12px; color: #888; margin-top: 2px;">'
+                    + (item.organization || '') + (item.organization && item.dateRange ? ' · ' : '') + (item.dateRange || '')
+                    + (bullets ? ' · ' + bullets + ' bullet' + (bullets > 1 ? 's' : '') : '')
+                    + (skillsCount ? ' · ' + skillsCount + ' skill' + (skillsCount > 1 ? 's' : '') : '')
+                    + '</div></div>'
+                    + '<div style="display: flex; gap: 6px; flex-shrink: 0;">'
+                    + '<button onclick="moveAchievementItem(' + i + ', -1)" title="Move up" style="background: #e5e7eb; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px;">&#9650;</button>'
+                    + '<button onclick="moveAchievementItem(' + i + ', 1)" title="Move down" style="background: #e5e7eb; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px;">&#9660;</button>'
+                    + '<button onclick="editAchievementItem(' + i + ')" title="Edit" style="background: #e5e7eb; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 14px;">&#9998;</button>'
+                    + '<button onclick="removeAchievementItem(' + i + ')" title="Remove" style="background: #ef4444; color: white; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 14px;">&times;</button>'
+                    + '</div></div>';
+            }).join('');
+        }
+
+        function openAchievementItemModal(index) {
+            editingAchievementIndex = index !== undefined ? index : -1;
+            if (!contentData.careerPage) contentData.careerPage = {};
+            if (!contentData.careerPage.achievements) contentData.careerPage.achievements = {};
+            if (!contentData.careerPage.achievements.categories) contentData.careerPage.achievements.categories = [];
+            if (!contentData.careerPage.achievements.items) contentData.careerPage.achievements.items = [];
+            var catSelect = document.getElementById('ach-item-category');
+            var cats = contentData.careerPage.achievements.categories;
+            catSelect.innerHTML = '<option value="">No category</option>' + cats.map(function(c){ return '<option value="' + c + '">' + c + '</option>'; }).join('');
+            if (editingAchievementIndex >= 0) {
+                var item = contentData.careerPage.achievements.items[editingAchievementIndex];
+                document.getElementById('ach-item-category').value = item.category || '';
+                document.getElementById('ach-item-title').value = item.title || '';
+                document.getElementById('ach-item-org').value = item.organization || '';
+                document.getElementById('ach-item-institution').value = item.institution || '';
+                document.getElementById('ach-item-institution-logo').value = item.institutionLogo || '';
+                document.getElementById('ach-item-dates').value = item.dateRange || '';
+                document.getElementById('ach-item-logo').value = item.logoUrl || '';
+                document.getElementById('ach-item-bullets').value = (item.bullets || []).join('\n');
+                document.getElementById('ach-item-skills').value = (item.skills || []).join(', ');
+                document.getElementById('ach-item-description').value = item.description || '';
+                document.getElementById('ach-item-cert-image').value = item.certificateImage || '';
+                document.getElementById('ach-item-cert-desc').value = item.certificateDescription || '';
+                if (item.logoUrl) showPreview('ach-item-logo-preview', item.logoUrl);
+                else document.getElementById('ach-item-logo-preview').innerHTML = '';
+                if (item.institutionLogo) showPreview('ach-item-institution-logo-preview', item.institutionLogo);
+                else document.getElementById('ach-item-institution-logo-preview').innerHTML = '';
+                if (item.certificateImage) showPreview('ach-item-cert-preview', item.certificateImage);
+                else document.getElementById('ach-item-cert-preview').innerHTML = '';
+            } else {
+                ['ach-item-category','ach-item-title','ach-item-org','ach-item-institution','ach-item-institution-logo','ach-item-dates','ach-item-logo','ach-item-bullets','ach-item-skills','ach-item-description','ach-item-cert-image','ach-item-cert-desc'].forEach(function(id){ document.getElementById(id).value = ''; });
+                document.getElementById('ach-item-logo-preview').innerHTML = '';
+                document.getElementById('ach-item-cert-preview').innerHTML = '';
+            }
+            document.getElementById('achievementItemModal').classList.add('show');
+        }
+
+        function editAchievementItem(i) { openAchievementItemModal(i); }
+
+        function saveAchievementItem() {
+            var item = {
+                category: document.getElementById('ach-item-category').value,
+                title: document.getElementById('ach-item-title').value,
+                organization: document.getElementById('ach-item-org').value,
+                institution: document.getElementById('ach-item-institution').value,
+                institutionLogo: document.getElementById('ach-item-institution-logo').value,
+                dateRange: document.getElementById('ach-item-dates').value,
+                logoUrl: document.getElementById('ach-item-logo').value,
+                bullets: document.getElementById('ach-item-bullets').value.split('\n').map(function(t){return t.trim();}).filter(function(t){return t;}),
+                skills: document.getElementById('ach-item-skills').value.split(',').map(function(t){return t.trim();}).filter(function(t){return t;}),
+                description: document.getElementById('ach-item-description').value,
+                certificateImage: document.getElementById('ach-item-cert-image').value,
+                certificateDescription: document.getElementById('ach-item-cert-desc').value
+            };
+            if (!contentData.careerPage.achievements.items) contentData.careerPage.achievements.items = [];
+            if (editingAchievementIndex >= 0) contentData.careerPage.achievements.items[editingAchievementIndex] = item;
+            else contentData.careerPage.achievements.items.push(item);
+            renderAchievementItemsList();
+            closeModal('achievementItemModal');
+        }
+
+        function removeAchievementItem(i) {
+            contentData.careerPage.achievements.items.splice(i, 1);
+            renderAchievementItemsList();
+        }
+
+        function moveAchievementItem(index, dir) {
+            const items = contentData.careerPage?.achievements?.items;
+            if (!items) return;
+            const newIndex = index + dir;
+            if (newIndex < 0 || newIndex >= items.length) return;
+            [items[index], items[newIndex]] = [items[newIndex], items[index]];
+            renderAchievementItemsList();
+        }
 
         function renderListItems(key, items) {
             const container = document.getElementById(key + '-list');

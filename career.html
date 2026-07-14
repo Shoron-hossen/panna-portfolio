@@ -41,6 +41,18 @@
         .career-content.active {
             display: block;
         }
+        #achievement-items-container ul {
+            list-style-type: disc !important;
+        }
+        #achievement-items-container ul li {
+            list-style-type: disc !important;
+        }
+        #ach-detail-body ul {
+            list-style-type: disc !important;
+        }
+        #ach-detail-body ul li {
+            list-style-type: disc !important;
+        }
         .toggle-btn {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -56,6 +68,14 @@
         .toggle-btn:not(.active):hover {
             color: #000000;
             background-color: #f2f4f6;
+        }
+        /* ---- EDUCATION: logo same position on desktop ---- */
+        .edu-logo img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 1px solid #d0d1d6;
         }
         /* Desktop body padding only */
         @media (min-width: 769px) {
@@ -109,14 +129,17 @@
             .inline-flex.p-1\.5 {
                 width: 100% !important;
                 box-sizing: border-box !important;
+                overflow: visible !important;
             }
             .toggle-btn {
                 flex: 1 !important;
-                padding: 10px 4px !important;
-                font-size: 10px !important;
-                letter-spacing: 0.04em !important;
+                padding: 10px 2px !important;
+                font-size: 9px !important;
+                letter-spacing: 0.02em !important;
                 text-align: center !important;
                 white-space: nowrap;
+                overflow: hidden !important;
+                text-overflow: ellipsis;
             }
             /* ---- SECTION SPACING ---- */
             .mb-section-gap { margin-bottom: 32px !important; }
@@ -133,6 +156,10 @@
             .sticky.top-32 { position: static !important; margin-bottom: 6px !important; }
             .relative.pl-8.pt-2 { padding-left: 18px !important; padding-top: 0 !important; }
             .pr-8 { padding-right: 0 !important; }
+            /* ---- EDUCATION DOT: center on bar ---- */
+            #education-entries-list .relative.group > .absolute { left: -26px !important; top: 4px !important; width: 12px !important; height: 12px !important; }
+            /* ---- EDUCATION LOGO: small on mobile, aligned with name ---- */
+            .edu-logo img { width: 32px !important; height: 32px !important; }
             /* ---- SECTION HEADINGS ---- */
             .font-headline-xl { font-size: 22px !important; line-height: 1.2 !important; }
             .font-headline-lg { font-size: 19px !important; line-height: 1.25 !important; }
@@ -164,18 +191,35 @@
                 grid-template-columns: 1fr !important;
                 gap: 14px !important;
             }
-            /* ---- TIMELINE — single col left-rail ---- */
-            .absolute.left-0.md\:left-1\/2 { left: 0 !important; transform: none !important; }
-            #career2-timeline .grid {
-                grid-template-columns: 1fr !important;
-                gap: 0 !important;
-            }
-            #career2-timeline .hidden.md\:block { display: none !important; }
-            #career2-timeline .pl-8, #career2-timeline .md\:pl-12 { padding-left: 18px !important; }
+            /* ---- TIMELINE — left rail ---- */
+            .thread-line-bold { left: 14px !important; transform: none !important; width: 1.5px !important; background: #d0d1d6 !important; }
+            #career2-timeline { padding-bottom: 24px !important; }
+            /* Grid: single column */
+            #career2-timeline .relative.grid { grid-template-columns: 1fr !important; gap: 0 !important; padding-left: 34px !important; }
+            /* Show dots on mobile, all at same spot on the line */
+            #career2-timeline .hidden.md\:block { display: block !important; }
+            #career2-timeline .relative.grid .absolute { left: 14px !important; top: 8px !important; transform: translateX(-50%) !important; }
+            /* Current dots: 10px black */
+            #career2-timeline .w-5 { width: 10px !important; height: 10px !important; }
+            #career2-timeline .bg-primary { background: #000 !important; }
+            #career2-timeline .border-4 { border-width: 2px !important; border-color: #fff !important; }
+            #career2-timeline .shadow-md { box-shadow: 0 0 0 2px #d0d1d6 !important; }
+            /* Previous dots: 8px */
+            #career2-timeline .w-3 { width: 8px !important; height: 8px !important; }
+            #career2-timeline .bg-outline { background: #fff !important; }
+            #career2-timeline .border-2 { border-width: 1.5px !important; border-color: #d0d1d6 !important; }
+            /* Reset inner padding so grid padding handles it */
+            #career2-timeline .pl-8 { padding-left: 0 !important; }
+            #career2-timeline .md\:pl-12 { padding-left: 0 !important; }
+            #career2-timeline .border-l-2 { border-left: none !important; }
             #career2-timeline .md\:text-right { text-align: left !important; }
             #career2-timeline .md\:pr-12 { padding-right: 0 !important; }
-            #career2-timeline .p-8 { padding: 12px !important; }
-            #career2-timeline .mb-24 { margin-bottom: 16px !important; }
+            /* Smaller accomplishments box */
+            #career2-timeline .p-8 { padding: 10px !important; }
+            #career2-timeline .mb-24 { margin-bottom: 14px !important; }
+            #career2-timeline .mb-16 { margin-bottom: 14px !important; }
+            #career2-timeline .rounded-xl { border-radius: 8px !important; }
+            #career2-timeline .flex.justify-center { padding-left: 0 !important; }
             /* ---- PORTFOLIO GRID ---- */
             .grid.grid-cols-1.md\:grid-cols-4.grid-rows-2 {
                 grid-template-columns: 1fr !important;
@@ -187,12 +231,34 @@
             .grid.grid-cols-1.md\:grid-cols-4.grid-rows-2 > div { min-height: 180px !important; }
             /* ---- FOOTER ---- */
             footer { padding-top: 24px !important; padding-bottom: 24px !important; }
-            footer .grid { grid-template-columns: 1fr !important; gap: 16px !important; text-align: left !important; }
+            /* ---- FOOTER: nav + connect side by side ---- */
+            footer .grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px 24px !important; text-align: left !important; }
+            footer .grid .col-span-1 { grid-column: span 2 !important; }
             footer .flex.flex-col.md\:flex-row { flex-direction: column !important; gap: 6px !important; text-align: center !important; }
             footer .mt-20 { margin-top: 16px !important; }
             /* ---- GLOBAL ---- */
             * { word-break: break-word; overflow-wrap: break-word; }
             img { max-width: 100% !important; }
+            /* ---- ACHIEVEMENT GRID ---- */
+            #achievement-items-container .ml-\[72px\] { margin-left: 0 !important; }
+            #achievement-items-container .flex.gap-4.mt-6 { flex-direction: column !important; }
+            #achievement-items-container img.w-40 { width: 100% !important; max-height: 180px !important; }
+            .achievement-tab { font-size: 10px !important; padding: 8px 12px !important; letter-spacing: 0.04em !important; }
+            /* ---- TOGGLE BUTTONS: stack vertically ---- */
+            .inline-flex.p-1\.5 { flex-wrap: wrap !important; gap: 4px !important; }
+            .toggle-btn { flex: 0 0 auto !important; width: 100% !important; padding: 10px 12px !important; font-size: 11px !important; }
+            /* ---- CERTIFICATE BOX: stack vertically on mobile ---- */
+            #achievement-items-container > div > div[style*="display:flex"][style*="gap:16px"] {
+                flex-direction: column !important;
+            }
+            #achievement-items-container > div > div[style*="display:flex"][style*="gap:16px"] > div:first-child {
+                width: 100% !important;
+            }
+            #achievement-items-container > div > div[style*="display:flex"][style*="gap:16px"] > div:first-child img {
+                width: 100% !important;
+                height: auto !important;
+                max-height: 200px !important;
+            }
         }
 
         .fade-in {
@@ -345,13 +411,16 @@
         </section>
 
         <!-- Toggle Buttons -->
-        <section class="mb-16 flex justify-center">
-            <div class="inline-flex p-1.5 bg-white border border-outline-variant rounded-full shadow-sm">
-                <button id="btn-career1" onclick="switchCareer('career1')" class="toggle-btn active px-10 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300">
+        <section class="mb-16 flex justify-center px-4">
+            <div class="inline-flex p-1.5 bg-white border border-outline-variant rounded-full shadow-sm w-full max-w-[680px]">
+                <button id="btn-career1" onclick="switchCareer('career1')" class="toggle-btn active flex-1 px-6 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300 min-w-0">
                     Engineering Path
                 </button>
-                <button id="btn-career2" onclick="switchCareer('career2')" class="toggle-btn px-10 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300">
+                <button id="btn-career2" onclick="switchCareer('career2')" class="toggle-btn flex-1 px-6 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300 min-w-0">
                     Career Trajectory
+                </button>
+                <button id="btn-career3" onclick="switchCareer('career3')" class="toggle-btn flex-1 px-6 py-3 font-label-md text-label-md uppercase tracking-widest rounded-full transition-all duration-300 min-w-0">
+                    Projects & Achievements
                 </button>
             </div>
         </section>
@@ -551,7 +620,35 @@
                 </div>
             </section>
         </div>
+
+        <!-- Career 3 Content: Projects & Achievements -->
+        <div id="career3" class="career-content">
+            <section class="mb-section-gap">
+                <div class="flex flex-col items-center mb-16">
+                    <span class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-4">Portfolio</span>
+                    <h2 class="font-headline-lg text-headline-lg text-primary" data-content="careerPage.achievements.sectionHeading">Projects & Achievements</h2>
+                    <div class="w-12 h-0.5 bg-primary mt-6"></div>
+                </div>
+                <!-- Category Filter Tabs -->
+                <div id="achievement-category-tabs" class="flex flex-wrap justify-center gap-3 mb-12"></div>
+                <!-- Achievement Items Grid -->
+                <div id="achievement-items-container"></div>
+            </section>
+        </div>
     </main>
+
+    <!-- Achievement Detail Popup (must be outside main for fixed positioning) -->
+    <div id="ach-detail-popup" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.5);overflow:hidden;" onclick="if(event.target===this)closeAchDetail()">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;">
+            <div style="width:100%;max-width:900px;max-height:90vh;background:#fff;border-radius:12px;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+                <div style="flex-shrink:0;padding:16px 24px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;border-radius:12px 12px 0 0;background:#fff;">
+                    <span style="font-size:16px;font-weight:700;color:#191919;">Details</span>
+                    <button onclick="closeAchDetail()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#666;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background 0.2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='none'">&#10005;</button>
+                </div>
+                <div id="ach-detail-body" style="flex:1;overflow-y:auto;padding:24px;"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="w-full py-20 bg-white border-t border-outline-variant">
@@ -606,6 +703,205 @@
             setTimeout(() => {
                 selectedContent.classList.remove('fade-in');
             }, 500);
+        }
+
+        // Achievement Categories & Items
+        let achievementActiveCategory = 'all';
+
+        function renderAchievementTabs(categories) {
+            const tabsContainer = document.getElementById('achievement-category-tabs');
+            if (!tabsContainer) return;
+            const cats = categories || [];
+            let html = '<button onclick="filterAchievements(\'all\')" class="achievement-tab px-5 py-2 font-label-md text-[13px] uppercase tracking-widest border border-outline-variant rounded-full transition-all duration-300" data-cat="all">All</button>';
+            cats.forEach(cat => {
+                html += '<button onclick="filterAchievements(\'' + cat.replace(/'/g, "\\'") + '\')" class="achievement-tab px-5 py-2 font-label-md text-[13px] uppercase tracking-widest border border-outline-variant rounded-full transition-all duration-300" data-cat="' + cat + '">' + cat + '</button>';
+            });
+            tabsContainer.innerHTML = html;
+            updateActiveTab();
+        }
+
+        function filterAchievements(cat) {
+            achievementActiveCategory = cat;
+            updateActiveTab();
+            renderAchievementItems();
+        }
+
+        function updateActiveTab() {
+            document.querySelectorAll('.achievement-tab').forEach(tab => {
+                if (tab.getAttribute('data-cat') === achievementActiveCategory) {
+                    tab.classList.add('active');
+                    tab.style.backgroundColor = '#000000';
+                    tab.style.color = '#ffffff';
+                    tab.style.borderColor = '#000000';
+                } else {
+                    tab.classList.remove('active');
+                    tab.style.backgroundColor = 'transparent';
+                    tab.style.color = '#45464d';
+                    tab.style.borderColor = '#c6c6cd';
+                }
+            });
+        }
+
+        function renderAchievementItems() {
+            const container = document.getElementById('achievement-items-container');
+            if (!container) return;
+            const data = window.appContent?.careerPage?.achievements;
+            const items = data?.items || [];
+            const cat = achievementActiveCategory;
+            const filtered = cat === 'all' ? items : items.filter(item => item.category === cat);
+            if (!filtered.length) {
+                container.innerHTML = '<p style="text-align:center;color:#00000066;font-size:14px;padding:48px 0;">No items to display yet.</p>';
+                return;
+            }
+            let html = '';
+            filtered.forEach(function(item, idx) {
+                html += '<div style="background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);border:1px solid #e5e7eb;border-radius:12px;padding:20px 24px;margin-bottom:16px;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow=\'0 2px 12px rgba(0,0,0,0.06)\'" onmouseout="this.style.boxShadow=\'none\'">';
+                // Header row: logo + title + org + dates
+                html += '<div style="display:flex;gap:12px;align-items:flex-start;">';
+                if (item.logoUrl) {
+                    html += '<img src="' + item.logoUrl + '" alt="" style="width:48px;height:48px;border-radius:8px;object-fit:contain;flex-shrink:0;background:#f3f4f6;padding:2px;" onerror="this.style.display=\'none\'">';
+                }
+                html += '<div style="flex:1;min-width:0;word-wrap:break-word;overflow-wrap:both;">';
+                if (item.title) html += '<h3 style="font-size:16px;font-weight:700;color:#191919;margin:0 0 2px 0;line-height:1.3;">' + item.title + '</h3>';
+                if (item.organization) html += '<p style="font-size:14px;color:#00000099;margin:0;">' + item.organization + '</p>';
+                if (item.institution) {
+                    html += '<div style="display:flex;align-items:center;gap:8px;margin-top:4px;">';
+                    if (item.institutionLogo) html += '<img src="' + item.institutionLogo + '" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:contain;border:1px solid #e5e7eb;" onerror="this.style.display=\'none\'">';
+                    html += '<p style="font-size:14px;font-weight:600;color:#191919;margin:0;">' + item.institution + '</p>';
+                    html += '</div>';
+                }
+                if (item.dateRange) html += '<p style="font-size:12px;color:#00000066;margin:2px 0 0 0;">' + item.dateRange + '</p>';
+                html += '</div></div>';
+                // Certificate area (only cert image + cert description, vertically small, horizontally wide)
+                if (item.certificateImage || item.certificateDescription) {
+                    html += '<div style="margin-top:14px;display:flex;gap:16px;align-items:flex-start;background:#fafafa;border:1px solid #e5e7eb;border-radius:10px;padding:14px;">';
+                    if (item.certificateImage) {
+                        html += '<div style="position:relative;flex-shrink:0;width:220px;">';
+                        html += '<img src="' + item.certificateImage + '" alt="Certificate" style="width:100%;height:100px;object-fit:cover;border-radius:8px;" onerror="this.parentElement.style.display=\'none\'">';
+                        html += '<button onclick="openCertFullscreen(\'' + item.certificateImage + '\')" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.55);color:#fff;border:none;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px;backdrop-filter:blur(4px);" onmouseover="this.style.background=\'rgba(0,0,0,0.75)\'" onmouseout="this.style.background=\'rgba(0,0,0,0.55)\'"><span class="material-symbols-outlined" style="font-size:14px;">fullscreen</span>View</button>';
+                        html += '</div>';
+                    }
+                    if (item.certificateDescription) {
+                        html += '<div style="flex:1;min-width:0;word-wrap:break-word;overflow-wrap:both;">';
+                        html += '<p style="font-size:13px;color:#191919;line-height:1.55;margin:0;">' + item.certificateDescription + '</p>';
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                }
+                // Description (below certificate box, not italic, black)
+                if (item.description) {
+                    var preview = item.description.length > 160 ? item.description.substring(0, 160) + '...' : item.description;
+                    html += '<div style="margin-top:12px;word-wrap:break-word;overflow-wrap:both;">';
+                    html += '<p style="font-size:13px;color:#191919;line-height:1.55;margin:0;font-style:normal;">' + preview + '</p>';
+                    if (item.description.length > 160) {
+                        html += '<button onclick="openAchDetail(' + idx + ')" style="background:none;border:none;color:#0a66c2;font-size:13px;font-weight:600;cursor:pointer;padding:4px 0;margin:0;">Show more</button>';
+                    }
+                    html += '</div>';
+                }
+                // Key Points with bullet dots
+                if (item.bullets && item.bullets.length) {
+                    html += '<div style="margin-top:12px;word-wrap:break-word;overflow-wrap:both;">';
+                    html += '<p style="font-size:12px;font-weight:700;color:#191919;margin:0 0 6px 0;text-transform:uppercase;letter-spacing:0.5px;">Key Points</p>';
+                    html += '<ul style="margin:0;padding-left:20px;list-style-type:disc;">';
+                    item.bullets.forEach(function(b) { html += '<li style="font-size:13px;color:#191919;line-height:1.5;margin-bottom:3px;word-wrap:break-word;list-style-type:disc;">' + b + '</li>'; });
+                    html += '</ul></div>';
+                }
+                // Skills tags
+                if (item.skills && item.skills.length) {
+                    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">';
+                    item.skills.forEach(function(s) { html += '<span style="display:inline-block;padding:3px 10px;background:#f3f4f6;border-radius:12px;font-size:11px;font-weight:500;color:#191919;">' + s + '</span>'; });
+                    html += '</div>';
+                }
+                // View details button
+                html += '<button onclick="openAchDetail(' + idx + ')" style="margin-top:12px;background:none;border:1px solid #e5e7eb;color:#0a66c2;font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background=\'#f3f4f6\'" onmouseout="this.style.background=\'none\'">View details</button>';
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        // Certificate Fullscreen View
+        function openCertFullscreen(imgUrl) {
+            var overlay = document.createElement('div');
+            overlay.id = 'cert-fullscreen-overlay';
+            overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:24px;';
+            overlay.onclick = function() { overlay.remove(); };
+            overlay.innerHTML = '<img src="' + imgUrl + '" alt="Certificate" style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.4);">';
+            document.body.appendChild(overlay);
+        }
+
+        // Achievement Detail Popup
+        function openAchDetail(idx) {
+            var data = window.appContent?.careerPage?.achievements;
+            var items = data?.items || [];
+            var cat = achievementActiveCategory;
+            var filtered = cat === 'all' ? items : items.filter(function(item){ return item.category === cat; });
+            var item = filtered[idx];
+            if (!item) return;
+            var popup = document.getElementById('ach-detail-popup');
+            var body = document.getElementById('ach-detail-body');
+            var html = '';
+            // Header with logo
+            html += '<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;word-wrap:break-word;overflow-wrap:both;">';
+            if (item.logoUrl) html += '<img src="' + item.logoUrl + '" alt="" style="width:56px;height:56px;border-radius:10px;object-fit:contain;flex-shrink:0;background:#f3f4f6;padding:4px;" onerror="this.style.display=\'none\'">';
+            html += '<div style="flex:1;min-width:0;word-wrap:break-word;overflow-wrap:both;">';
+            if (item.title) html += '<h2 style="font-size:20px;font-weight:700;color:#191919;margin:0 0 4px 0;line-height:1.3;">' + item.title + '</h2>';
+            if (item.organization) html += '<p style="font-size:14px;color:#00000099;margin:0;">' + item.organization + '</p>';
+            if (item.institution) {
+                html += '<div style="display:flex;align-items:center;gap:6px;margin-top:4px;">';
+                if (item.institutionLogo) html += '<img src="' + item.institutionLogo + '" alt="" style="width:20px;height:20px;border-radius:50%;object-fit:contain;border:1px solid #e5e7eb;" onerror="this.style.display=\'none\'">';
+                html += '<p style="font-size:13px;color:#191919;font-weight:600;margin:0;">' + item.institution + '</p>';
+                html += '</div>';
+            }
+            if (item.dateRange) html += '<p style="font-size:12px;color:#00000066;margin:4px 0 0 0;">' + item.dateRange + '</p>';
+            if (item.category) html += '<p style="display:inline-block;margin-top:6px;padding:2px 10px;background:#f3f4f6;border-radius:10px;font-size:11px;font-weight:500;color:#191919;">' + item.category + '</p>';
+            html += '</div></div>';
+            // Certificate first (image + its own description)
+            if (item.certificateImage || item.certificateDescription) {
+                html += '<div style="margin-bottom:20px;padding:16px;background:#fafafa;border:1px solid #e5e7eb;border-radius:10px;">';
+                html += '<p style="font-size:12px;font-weight:700;color:#191919;margin:0 0 12px 0;text-transform:uppercase;letter-spacing:0.5px;">Certificate</p>';
+                html += '<div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">';
+                if (item.certificateImage) {
+                    html += '<div style="position:relative;flex-shrink:0;">';
+                    html += '<img src="' + item.certificateImage + '" alt="Certificate" style="width:240px;max-width:100%;height:auto;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;cursor:pointer;" onerror="this.parentElement.style.display=\'none\'" onclick="openCertFullscreen(this.src)">';
+                    html += '</div>';
+                }
+                if (item.certificateDescription) {
+                    html += '<div style="flex:1;min-width:200px;word-wrap:break-word;overflow-wrap:both;">';
+                    html += '<p style="font-size:14px;color:#191919;line-height:1.6;word-wrap:break-word;">' + item.certificateDescription + '</p>';
+                    html += '</div>';
+                }
+                html += '</div></div>';
+            }
+            // Description below certificate
+            if (item.description) {
+                html += '<div style="margin-bottom:20px;word-wrap:break-word;overflow-wrap:both;">';
+                html += '<p style="font-size:14px;color:#191919;line-height:1.65;white-space:pre-line;word-wrap:break-word;">' + item.description + '</p>';
+                html += '</div>';
+            }
+            // Bullet points
+            if (item.bullets && item.bullets.length) {
+                html += '<div style="margin-bottom:20px;">';
+                html += '<p style="font-size:12px;font-weight:700;color:#191919;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Key Points</p>';
+                html += '<ul style="margin:0;padding-left:20px;list-style-type:disc;">';
+                item.bullets.forEach(function(b) { html += '<li style="font-size:14px;color:#191919;line-height:1.6;margin-bottom:4px;word-wrap:break-word;list-style-type:disc;">' + b + '</li>'; });
+                html += '</ul></div>';
+            }
+            // Skills
+            if (item.skills && item.skills.length) {
+                html += '<div>';
+                html += '<p style="font-size:12px;font-weight:700;color:#191919;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:0.5px;">Skills</p>';
+                html += '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+                item.skills.forEach(function(s) { html += '<span style="display:inline-block;padding:5px 14px;background:#f3f4f6;border-radius:16px;font-size:13px;font-weight:500;color:#191919;">' + s + '</span>'; });
+                html += '</div></div>';
+            }
+            body.innerHTML = html;
+            popup.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAchDetail() {
+            document.getElementById('ach-detail-popup').style.display = 'none';
+            document.body.style.overflow = '';
         }
 
         // Intersection Observer for scroll animations
@@ -715,6 +1011,13 @@
                         </div>`
                     ).join('');
                 }
+            }
+
+            // --- Achievement Categories & Items ---
+            const achievements = data.careerPage?.achievements;
+            if (achievements) {
+                renderAchievementTabs(achievements.categories || []);
+                renderAchievementItems();
             }
 
             // --- Career 2 Timeline ---

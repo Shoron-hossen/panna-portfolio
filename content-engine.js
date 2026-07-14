@@ -126,16 +126,14 @@ function populateEducationEntries() {
             ? '<div class="w-24 h-24 flex-shrink-0 bg-surface-container rounded-lg overflow-hidden border border-outline-variant"><img class="w-full h-full object-cover" src="' + item.image + '" onload="this.style.opacity=1" style="opacity:0;transition:opacity 0.5s;"></div>'
             : '';
         return '<div class="' + mbClass + ' relative group">'
-            + '<div class="absolute -left-[36px] top-1 w-4 h-4 ' + dotClass + ' border-4 border-surface rounded-full z-10"></div>'
+            + '<div class="absolute -left-[40px] top-1 w-4 h-4 ' + dotClass + ' border-4 border-surface rounded-full z-10"></div>'
             + '<div class="flex flex-col md:flex-row md:items-start gap-4">'
-            + '<div class="flex-grow">'
-            + '<div class="flex items-center gap-4">'
-            + '<div>'
+            + '<div class="flex-grow min-w-0 pr-0 md:pr-20 relative">'
             + '<span class="font-label-md text-label-md text-secondary">' + (item.period || '') + '</span>'
             + '<h3 class="font-headline-md text-headline-md text-primary mt-1">' + (item.title || '') + '</h3>'
-            + '<p class="font-body-lg text-body-lg text-primary font-semibold inline">' + (item.institution || '') + '</p>'
-            + (logoHtml ? '<span class="inline-block ml-3 align-middle">' + logoHtml + '</span>' : '')
-            + '</div>'
+            + '<p class="font-body-lg text-body-lg text-primary font-semibold">' + (item.institution || '') + '</p>'
+            + (logoHtml ? '<span class="edu-logo hidden md:inline-flex absolute right-0 top-1">' + logoHtml + '</span>' : '')
+            + (logoHtml ? '<span class="edu-logo md:hidden inline-flex mt-1">' + logoHtml + '</span>' : '')
             + '</div>'
             + (item.description ? '<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">' + item.description + '</p>' : '')
             + '</div>'
