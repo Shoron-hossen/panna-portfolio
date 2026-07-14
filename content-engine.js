@@ -127,14 +127,15 @@ function populateEducationEntries() {
             : '';
         return '<div class="' + mbClass + ' relative group">'
             + '<div class="absolute -left-[40px] top-1 w-4 h-4 ' + dotClass + ' border-4 border-surface rounded-full z-10"></div>'
-            + '<div class="flex flex-col md:flex-row md:items-start gap-4">'
-            + '<div class="flex-grow min-w-0 pr-0 md:pr-20 relative">'
+            + '<div class="flex gap-4 items-center">'
+            + '<div class="flex-grow min-w-0">'
             + '<span class="font-label-md text-label-md text-secondary">' + (item.period || '') + '</span>'
             + '<h3 class="font-headline-md text-headline-md text-primary mt-1">' + (item.title || '') + '</h3>'
             + '<p class="font-body-lg text-body-lg text-primary font-semibold">' + (item.institution || '') + '</p>'
-            + (logoHtml ? '<span class="edu-logo hidden md:inline-flex absolute right-0 top-1">' + logoHtml + '</span>' : '')
-            + (logoHtml ? '<span class="edu-logo md:hidden inline-flex mt-1">' + logoHtml + '</span>' : '')
             + '</div>'
+            + (logoHtml ? '<div class="hidden md:flex flex-shrink-0 w-12 h-12 items-center justify-center">' + logoHtml + '</div>' : '')
+            + '</div>'
+            + (logoHtml ? '<div class="md:hidden flex mt-2"><span class="edu-logo inline-flex">' + logoHtml + '</span></div>' : '')
             + (item.description ? '<p class="mt-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">' + item.description + '</p>' : '')
             + '</div>'
             + imgHtml
